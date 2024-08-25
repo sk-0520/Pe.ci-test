@@ -11,77 +11,101 @@ import {
 	InputLabel,
 	Stack,
 	TextField,
+	Typography,
 } from "@mui/material";
-import type { FC } from "react";
-import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+import { type FC, useEffect, useState } from "react";
 import { HelpMarkdown } from "../../components/HelpMarkdown";
 import type { PageProps } from "../../types/PageProps";
 
-type InputParameter = {
-	projectDirectory: string;
-	pluginId: string;
-	pluginName: string;
-	projectNamespace: string;
-};
+function makeParameter(
+	projectDirectory: string,
+	pluginId: string,
+	pluginName: string,
+	projectNamespace: string,
+): string {
+	const items = {
+		ProjectDirectory: projectDirectory,
+		PluginId: pluginId,
+		PluginName: pluginName,
+		DefaultNamespace: projectNamespace,
+	};
+
+	const targetItems = Object.entries(items)
+		.filter(([_, v]) => 0 < v.trim().length)
+	;
+	if(targetItems.length !== Object.keys(items).length) {
+		return "";
+	}
+
+	return targetItems.map(([k, v]) => {
+			const key = `-${k}`;
+			const value = v.indexOf(" ") !== -1 ? `"${v}"` : v;
+
+			return `${key} ${value}`;
+		})
+		.join(" ");
+}
 
 export const DevPluginTemplatePage: FC<PageProps> = (props: PageProps) => {
-	const {
-		control,
-		handleSubmit,
-		watch,
-		formState: { errors },
-	} = useForm<InputParameter>();
+	const [projectDirectory, setProjectDirectory] = useState("");
+	const [pluginId, setPluginId] = useState("");
+	const [pluginName, setPluginName] = useState("");
+	const [projectNamespace, setProjectNamespace] = useState("");
+	const [parameter, setParameter] = useState("");
 
-	const onSubmit: SubmitHandler<InputParameter> = (data) => console.log(data);
+	useEffect(() => {
+		const result = makeParameter(
+			projectDirectory,
+			pluginId,
+			pluginName,
+			projectNamespace,
+		);
+		if(result) {
+			setParameter(`.\\create-project.ps1 ${result}`);
+		} else {
+			setParameter("");
+		}
+	}, [projectDirectory, pluginId, pluginName, projectNamespace]);
 
 	return (
 		<>
 			<HelpMarkdown>{markdown_1}</HelpMarkdown>
 
-			<FormControl onSubmit={handleSubmit(onSubmit)}>
-				<Stack spacing={2} sx={{ m: 2, width: "25ch" }}>
-					<Controller
-						name="projectDirectory"
-						control={control}
-						render={({ field, formState: { errors } }) => (
-							<TextField {...field} label="projectDirectory" />
-						)}
-					/>
-					<Controller
-						name="pluginId"
-						control={control}
-						render={({ field, formState: { errors } }) => (
-							<TextField
-								{...field}
-								label="pluginId"
-								InputProps={{
-									endAdornment: (
-										<InputAdornment position="end">
-											<IconButton title="自動生成" edge="end" color="primary">
-												<ApiIcon />
-											</IconButton>
-										</InputAdornment>
-									),
-								}}
-							/>
-						)}
-					/>
-					<Controller
-						name="pluginName"
-						control={control}
-						render={({ field, formState: { errors } }) => (
-							<TextField {...field} label="pluginName" />
-						)}
-					/>
-					<Controller
-						name="projectNamespace"
-						control={control}
-						render={({ field, formState: { errors } }) => (
-							<TextField {...field} label="projectNamespace" />
-						)}
-					/>
-				</Stack>
-			</FormControl>
+			<Stack spacing={2} sx={{ m: 2, width: "25ch" }}>
+				<TextField
+					label="projectDirectory"
+					value={projectDirectory}
+					onChange={(ev) => setProjectDirectory(ev.target.value)}
+				/>
+
+				<TextField
+					label="pluginId"
+					value={pluginId}
+					onChange={(ev) => setPluginId(ev.target.value)}
+					InputProps={{
+						endAdornment: (
+							<InputAdornment position="end">
+								<IconButton title="自動生成" edge="end" color="primary">
+									<ApiIcon />
+								</IconButton>
+							</InputAdornment>
+						),
+					}}
+				/>
+				<TextField
+					label="pluginName"
+					value={pluginName}
+					onChange={(ev) => setPluginName(ev.target.value)}
+				/>
+
+				<TextField
+					label="projectNamespace"
+					value={projectNamespace}
+					onChange={(ev) => setProjectNamespace(ev.target.value)}
+				/>
+			</Stack>
+
+			<code>{parameter}</code>
 
 			<HelpMarkdown>{markdown_2}</HelpMarkdown>
 		</>
