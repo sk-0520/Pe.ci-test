@@ -26,4 +26,5 @@ export interface ChangelogContents {
 	contents: ChangelogContent;
 }
 
-export type Changelogs = ChangelogContents[];
+export type Changelog = ChangelogContents[];
+export type Changelogs = Changelog[];
