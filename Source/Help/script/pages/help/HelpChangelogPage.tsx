@@ -1,10 +1,12 @@
-import { Box } from "@mui/material";
 import type { FC } from "react";
+import { ChangelogContent } from "../../components/changelog/ChangelogContent";
 import type { PageProps } from "../../types/PageProps";
 import { getChangelogs } from "../../utils/changelog";
 
 const changelogs = getChangelogs();
 
 export const HelpChangelogPage: FC<PageProps> = (props: PageProps) => {
-	return <Box>気が向いたらやるよ！</Box>;
+	return changelogs.map((a, i) => (
+		<ChangelogContent key={`${i}-${a}`} changelog={a} />
+	));
 };

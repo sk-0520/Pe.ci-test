@@ -28,7 +28,7 @@
   },
   "include": [
     "**/*.ts"
-, "Source/Help/script/help.tsx"  ],
+, "Source/Help/script/help.tsx", "Source/Help/script/components/changelog/ChangelogContent.tsx"  ],
   "exclude": [
     "node_modules"
   ]
