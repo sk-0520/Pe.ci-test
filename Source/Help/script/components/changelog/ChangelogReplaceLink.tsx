@@ -9,34 +9,57 @@ interface Token {
 	value: string;
 }
 
-const TokenRegex =
-	/(#(?<ISSUE>\d+))?|(?<URL>(http|https|ftp):\/\/[\w?=&.\/\-;#~%]+(?![\w\s?&.\/;#~%"=-]*>))?/g;
+const IssueRegex = /(#(?<ISSUE>\d+))/;
+const UrlRegex = /(?<URL>https?:\/\/.+)/;
 
 function splitTokens(s: string): Token[] {
-	const regExpExecArrays = s.matchAll(TokenRegex);
 	const result: Token[] = [];
 
-	for (const regExpExecArray of regExpExecArrays) {
+	let prev = 0;
+	let i = 0;
+	while (i < s.length) {
+		const work = s.substring(i);
 
-		if (regExpExecArray.groups) {
-			if ("ISSUE" in regExpExecArray.groups) {
+		const issue = work.match(IssueRegex);
+		if (issue?.groups && "ISSUE" in issue.groups) {
+			if (prev !== i) {
 				result.push({
-					kind: "issue",
-					value: regExpExecArray.groups.ISSUE,
+					kind: "text",
+					value: s.substring(prev, i),
 				});
 			}
-			if ("URL" in regExpExecArray.groups) {
-				result.push({
-					kind: "url",
-					value: regExpExecArray.groups.URL,
-				});
-			}
-		} else {
 			result.push({
-				kind: "text",
-				value: regExpExecArray[0],
+				kind: "issue",
+				value: issue.groups.ISSUE,
 			});
+			i += issue.groups.ISSUE.length + 1;
+			prev = i;
+			continue;
 		}
+		const url = work.match(UrlRegex);
+		if (url?.groups && "URL" in url.groups) {
+			if (prev !== i) {
+				result.push({
+					kind: "text",
+					value: s.substring(prev, i),
+				});
+			}
+			result.push({
+				kind: "url",
+				value: url.groups.URL,
+			});
+			i += url.groups.URL.length;
+			prev = i;
+			continue;
+		}
+
+		i += 1;
+	}
+	if(prev !== i - 1) {
+		result.push({
+			kind: "text",
+			value: s.substring(prev, i),
+		});
 	}
 
 	return result;
@@ -60,7 +83,7 @@ export const ChangelogReplaceLink: FC<ChangelogReplaceLinkProps> = (
 	return tokens.map((a, i) => {
 		switch (a.kind) {
 			case "text":
-				return a.value;
+				return `text:${a.value}`;
 			case "issue":
 				return `issue:${a.value}`;
 			case "url":
