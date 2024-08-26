@@ -78,7 +78,6 @@ export const renderAlert: MarkdownRule = (node, renderChildren, state) => {
 		firstChildren[1].type === RuleType.text &&
 		firstChildren[2].type === RuleType.text
 	) {
-		console.debug(node);
 		const rawKind = firstChildren[1].text.substring(1) as AlertKind;
 
 		// [!xxxx] の末尾 ] を破棄

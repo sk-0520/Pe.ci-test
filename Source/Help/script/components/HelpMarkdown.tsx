@@ -70,8 +70,6 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 						return child;
 					}
 
-					console.debug(node);
-
 					return next();
 				},
 			}}
