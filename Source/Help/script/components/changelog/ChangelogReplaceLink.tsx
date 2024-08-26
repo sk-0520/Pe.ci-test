@@ -13,7 +13,7 @@ const IssueRegex = /(^#(?<ISSUE>\d+))/;
 const UrlRegex = /(?<URL>^(https?:\/\/[\w?=&./\-;#~%]+(?![\w?&./;#~%"=-]*>)))/;
 
 function splitTokens(s: string): Token[] {
-	const result: Token[] = [];
+	const buffer: Token[] = [];
 
 	let currentIndex = 0;
 	while (currentIndex < s.length) {
@@ -21,7 +21,7 @@ function splitTokens(s: string): Token[] {
 
 		const issueMatch = work.match(IssueRegex);
 		if (issueMatch?.groups && "ISSUE" in issueMatch.groups) {
-			result.push({
+			buffer.push({
 				kind: "issue",
 				value: issueMatch.groups.ISSUE,
 			});
@@ -31,7 +31,7 @@ function splitTokens(s: string): Token[] {
 
 		const urlMatch = work.match(UrlRegex);
 		if (urlMatch?.groups && "URL" in urlMatch.groups) {
-			result.push({
+			buffer.push({
 				kind: "url",
 				value: urlMatch.groups.URL,
 			});
@@ -39,7 +39,7 @@ function splitTokens(s: string): Token[] {
 			continue;
 		}
 
-		result.push({
+		buffer.push({
 			kind: "text",
 			value: work.substring(0, 1),
 		});
@@ -47,7 +47,19 @@ function splitTokens(s: string): Token[] {
 		currentIndex += 1;
 	}
 
-	console.debug(result);
+	const result: Token[] = [];
+	for (let i = 0; i < buffer.length; i++) {
+		if (i) {
+			const work = result[result.length - 1];
+			if (work.kind === "text" && buffer[i].kind === "text") {
+				work.value += buffer[i].value;
+			} else {
+				result.push(buffer[i]);
+			}
+		} else {
+			result.push(buffer[i]);
+		}
+	}
 
 	return result;
 }
