@@ -7,6 +7,16 @@ export const ChangelogContentKinds = [
 
 export type ChangelogContentKind = (typeof ChangelogContentKinds)[number];
 
+export const ChangelogContentItemTypes = [
+	"compatibility",
+	"notice",
+	"myget",
+	"plugin-compatibility",
+] as const;
+
+export type ChangelogContentItemType =
+	(typeof ChangelogContentItemTypes)[number];
+
 export interface ChangelogContentItem {
 	revision: string;
 	class?: string;
@@ -19,12 +29,11 @@ export interface ChangelogContent {
 	logs: ChangelogContentItem[];
 }
 
-export interface ChangelogContents {
+export interface ChangelogVersion {
 	date: string;
 	version: string;
 	group?: string;
-	contents: ChangelogContent;
+	contents: ChangelogContent[];
 }
 
-export type Changelog = ChangelogContents[];
-export type Changelogs = Changelog[];
+export type Changelogs = ChangelogVersion[];
