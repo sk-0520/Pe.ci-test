@@ -83,11 +83,11 @@ export const ChangelogReplaceLink: FC<ChangelogReplaceLinkProps> = (
 	return tokens.map((a, i) => {
 		switch (a.kind) {
 			case "text":
-				return `text:${a.value}`;
+				return `${a.value}`;
 			case "issue":
-				return `issue:${a.value}`;
+				return `${a.value}`;
 			case "url":
-				return `url:${a.value}`;
+				return `${a.value}`;
 		}
 	});
 };
