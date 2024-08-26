@@ -1,4 +1,4 @@
-import { Box, List } from "@mui/material";
+import { Box } from "@mui/material";
 import type { FC } from "react";
 import { ChangelogVersion } from "../../components/changelog/ChangelogVersion";
 import type { PageProps } from "../../types/PageProps";

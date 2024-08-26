@@ -10,6 +10,7 @@ export type ChangelogContentKind = (typeof ChangelogContentKinds)[number];
 export const ChangelogContentItemTypes = [
 	"compatibility",
 	"notice",
+	"nuget",
 	"myget",
 	"plugin-compatibility",
 ] as const;
@@ -19,7 +20,7 @@ export type ChangelogContentItemType =
 
 export interface ChangelogContentItem {
 	revision: string;
-	class?: string;
+	class?: ChangelogContentItemType;
 	subject: string;
 	comments?: string[];
 }

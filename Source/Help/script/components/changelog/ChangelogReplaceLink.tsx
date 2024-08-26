@@ -1,6 +1,4 @@
-import { Box, Link, Typography } from "@mui/material";
 import type { FC } from "react";
-import type * as changelog from "../../types/changelog";
 
 interface ChangelogReplaceLinkProps {
 	children: string;

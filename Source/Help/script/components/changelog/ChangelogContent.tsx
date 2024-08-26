@@ -1,7 +1,6 @@
 import {
 	Box,
 	List,
-	ListItem,
 	type SxProps,
 	type Theme,
 	Typography,
@@ -59,12 +58,7 @@ export const ChangelogContent: FC<ChangelogContentProps> = (
 			<List disablePadding sx={{ marginLeft: "30pt" }}>
 				{logs.map((a, i) => (
 					// biome-ignore lint/suspicious/noArrayIndexKey: キーがねぇ
-					<ListItem
-						key={i}
-						sx={{ listStyleType: "disc", display: "list-item" }}
-					>
-						<ChangelogContentItem {...a} />
-					</ListItem>
+					<ChangelogContentItem key={i} {...a} />
 				))}
 			</List>
 		</Box>
