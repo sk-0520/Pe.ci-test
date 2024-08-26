@@ -10,57 +10,65 @@ interface Token {
 }
 
 const IssueRegex = /(#(?<ISSUE>\d+))/;
-const UrlRegex = /(?<URL>https?:\/\/.+)/;
+const UrlRegex = /(?<URL>(https?:\/\/[\w?=&./\-;#~%]+(?![\w?&./;#~%"=-]*>)))/;
 
 function splitTokens(s: string): Token[] {
 	const result: Token[] = [];
 
-	let prev = 0;
-	let i = 0;
-	while (i < s.length) {
-		const work = s.substring(i);
+	// if(s.startsWith(".NET Framework 4.6 は")) {
+	// 	debugger
+	// }
 
-		const issue = work.match(IssueRegex);
-		if (issue?.groups && "ISSUE" in issue.groups) {
-			if (prev !== i) {
+	let prevIndex = 0;
+	let currentIndex = 0;
+	while (currentIndex < s.length) {
+		const work = s.substring(currentIndex);
+
+		const issueMatch = work.match(IssueRegex);
+		if (issueMatch?.groups && "ISSUE" in issueMatch.groups) {
+			if(issueMatch.index && prevIndex < issueMatch.index) {
 				result.push({
 					kind: "text",
-					value: s.substring(prev, i),
+					value: work.substring(0, issueMatch.index),
 				});
 			}
+
 			result.push({
 				kind: "issue",
-				value: issue.groups.ISSUE,
+				value: issueMatch.groups.ISSUE,
 			});
-			i += issue.groups.ISSUE.length + 1;
-			prev = i;
-			continue;
-		}
-		const url = work.match(UrlRegex);
-		if (url?.groups && "URL" in url.groups) {
-			if (prev !== i) {
-				result.push({
-					kind: "text",
-					value: s.substring(prev, i),
-				});
-			}
-			result.push({
-				kind: "url",
-				value: url.groups.URL,
-			});
-			i += url.groups.URL.length;
-			prev = i;
+			prevIndex = currentIndex += issueMatch.groups.ISSUE.length + 1 + 1;
 			continue;
 		}
 
-		i += 1;
+		const urlMatch = work.match(UrlRegex);
+		if (urlMatch?.groups && "URL" in urlMatch.groups) {
+			if(urlMatch.index && prevIndex < urlMatch.index) {
+				result.push({
+					kind: "text",
+					value: work.substring(0, urlMatch.index),
+				});
+			}
+
+			result.push({
+				kind: "url",
+				value: urlMatch.groups.URL,
+			});
+			prevIndex = currentIndex += urlMatch.groups.URL.length + 1;
+			continue;
+		}
+
+		currentIndex += 1;
 	}
-	if(prev !== i - 1) {
+
+	if(prevIndex < currentIndex) {
 		result.push({
 			kind: "text",
-			value: s.substring(prev, i),
+			value: s.substring(prevIndex, currentIndex),
 		});
 	}
+
+	console.debug(result)
 
 	return result;
 }
@@ -83,11 +91,11 @@ export const ChangelogReplaceLink: FC<ChangelogReplaceLinkProps> = (
 	return tokens.map((a, i) => {
 		switch (a.kind) {
 			case "text":
-				return `${a.value}`;
+				return `<${a.value}>`;
 			case "issue":
-				return `${a.value}`;
+				return `{#${a.value}}`;
 			case "url":
-				return `${a.value}`;
+				return `[${a.value}]`;
 		}
 	});
 };
