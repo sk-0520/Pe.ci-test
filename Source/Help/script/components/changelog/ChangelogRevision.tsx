@@ -23,12 +23,16 @@ export const ChangelogRevision: FC<ChangelogRevisionProps> = (
 				padding: "1px",
 				fontSize: "70%",
 				lineHeight: "1em",
+				width: "8ch",
 				whiteSpace: "nowrap",
+				overflow: "hidden",
 				fontFamily: "Consolas",
+				textOverflow: "ellipsis",
+				textDecoration: "none",
 			}}
 			href={revisionLink + revision}
 		>
-			{revision.substring(0, 6)}…
+			{revision}…
 		</Link>
 	);
 };
