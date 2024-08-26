@@ -1,10 +1,4 @@
-import {
-	Box,
-	List,
-	type SxProps,
-	type Theme,
-	Typography,
-} from "@mui/material";
+import { Box, List, type SxProps, type Theme, Typography } from "@mui/material";
 import type { FC } from "react";
 import type * as changelog from "../../types/changelog";
 import type { ChangelogContentKind } from "../../types/changelog";

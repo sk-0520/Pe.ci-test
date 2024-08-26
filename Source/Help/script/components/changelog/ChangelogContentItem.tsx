@@ -1,5 +1,4 @@
 import {
-	Link,
 	List,
 	ListItem,
 	type SxProps,
@@ -10,6 +9,7 @@ import type { FC } from "react";
 import type * as changelog from "../../types/changelog";
 import type { ChangelogContentItemType } from "../../types/changelog";
 import { ChangelogReplaceLink } from "./ChangelogReplaceLink";
+import { ChangelogRevision } from "./ChangelogRevision";
 
 const TypeTitleMap: { [key in ChangelogContentItemType]: string } = {
 	notice: "事前通知",
@@ -33,11 +33,19 @@ const TypeStyleRootMap: { [key in ChangelogContentItemType]: SxProps<Theme> } =
 const TypeStyleHeaderMap: {
 	[key in ChangelogContentItemType]: SxProps<Theme>;
 } = {
-	notice: {},
+	notice: {
+		color: "#f00",
+	},
 	compatibility: {},
-	nuget: {},
-	myget: {},
-	"plugin-compatibility": {},
+	nuget: {
+		color: "#0a0",
+	},
+	myget: {
+		color: "#0a0",
+	},
+	"plugin-compatibility": {
+		color: "#f74",
+	},
 };
 
 interface ChangelogContentItemProps extends changelog.ChangelogContentItem {}
@@ -71,7 +79,7 @@ export const ChangelogContentItem: FC<ChangelogContentItemProps> = (
 					</Typography>
 				)}
 				<ChangelogReplaceLink>{subject}</ChangelogReplaceLink>
-				{revision && <Link>{revision}</Link>}
+				{revision && <ChangelogRevision revision={revision} />}
 			</Typography>
 			{comments && (
 				<List disablePadding>
@@ -80,7 +88,11 @@ export const ChangelogContentItem: FC<ChangelogContentItemProps> = (
 							// biome-ignore lint/suspicious/noArrayIndexKey: キーがねぇ
 							key={i}
 							disablePadding
-							sx={{ listStyleType: "disc", display: "list-item" }}
+							sx={{
+								listStyleType: "disc",
+								display: "list-item",
+								marginLeft: "3ch",
+							}}
 						>
 							<ChangelogReplaceLink>{a}</ChangelogReplaceLink>
 						</ListItem>
