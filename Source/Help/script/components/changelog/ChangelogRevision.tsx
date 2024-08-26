@@ -32,7 +32,7 @@ export const ChangelogRevision: FC<ChangelogRevisionProps> = (
 			}}
 			href={revisionLink + revision}
 		>
-			{revision}…
+			{revision}
 		</Link>
 	);
 };

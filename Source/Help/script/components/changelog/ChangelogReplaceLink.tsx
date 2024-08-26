@@ -1,3 +1,4 @@
+import { Link } from "@mui/material";
 import type { FC } from "react";
 
 const issueLink = "https://github.com/sk-0520/Pe/issues/";
@@ -10,7 +11,7 @@ interface Token {
 }
 
 const IssueRegex = /(^#(?<ISSUE>\d+))/;
-const UrlRegex = /(?<URL>^(https?:\/\/[\w?=&./\-;#~%]+(?![\w?&./;#~%"=-]*>)))/;
+const UrlRegex = /^(?<URL>(https?:\/\/[\w?=&./\-;#~%]+(?![\w?&./;#~%"=-]*>)))/;
 
 function splitTokens(s: string): Token[] {
 	const buffer: Token[] = [];
@@ -25,7 +26,7 @@ function splitTokens(s: string): Token[] {
 				kind: "issue",
 				value: issueMatch.groups.ISSUE,
 			});
-			currentIndex += issueMatch.groups.ISSUE.length + 1 + 1;
+			currentIndex += issueMatch.groups.ISSUE.length + 1 ;
 			continue;
 		}
 
@@ -82,11 +83,15 @@ export const ChangelogReplaceLink: FC<ChangelogReplaceLinkProps> = (
 	return tokens.map((a, i) => {
 		switch (a.kind) {
 			case "text":
-				return `<${a.value}>`;
+				return `${a.value}`;
 			case "issue":
-				return `{#${a.value}}`;
+				return (
+					<Link href={issueLink + a.value} target={`issue_${a.value}`}>
+						#{a.value}
+					</Link>
+				);
 			case "url":
-				return `[${a.value}]`;
+				return <Link href={a.value}>{a.value}</Link>;
 		}
 	});
 };

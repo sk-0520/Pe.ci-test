@@ -73,6 +73,7 @@ export const ChangelogContentItem: FC<ChangelogContentItemProps> = (
 							...(type && type in TypeStyleHeaderMap
 								? TypeStyleHeaderMap[type]
 								: {}),
+							marginRight: "1ch",
 						}}
 					>
 						[{TypeTitleMap[type]}]
