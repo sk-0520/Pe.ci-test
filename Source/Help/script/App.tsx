@@ -7,7 +7,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useAtom } from "jotai";
-import { type FC, useEffect } from "react";
+import { type FC, useEffect, useState } from "react";
 import { PageContent } from "./components/layouts/PageContent";
 import { SideMenu } from "./components/layouts/SideMenu";
 import { type PageKey, Pages } from "./pages";
@@ -17,6 +17,7 @@ import { getPage, getPageKey, makeUrl } from "./utils/page";
 const sidebarWidth = 240;
 
 export const App: FC = () => {
+	const [isLoading, setIsLoading] = useState(true);
 	const [selectedPageKey, setSelectedPageKey] = useAtom(SelectedPageKeyAtom);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: 初回にイベント設定
@@ -49,6 +50,7 @@ export const App: FC = () => {
 				console.warn(ex);
 			}
 		}
+		setIsLoading(false);
 	}, []);
 
 	const handleSelectPageKey = (pageKey: PageKey) => {
@@ -58,6 +60,10 @@ export const App: FC = () => {
 	};
 
 	const currentPage = getPage(selectedPageKey, Pages);
+
+	if(isLoading) {
+		return <>loading...</>
+	}
 
 	return (
 		<Box sx={{ display: "flex" }}>
