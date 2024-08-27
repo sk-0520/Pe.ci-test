@@ -10,4 +10,20 @@ export const AppTheme: ThemeOptions = {
 			main: "#f50057",
 		},
 	},
+	typography: {
+		fontFamily: [
+			"Verdana",
+			"Skia-Regular_Condensed",
+			"Tahoma",
+			"Meiryo UI",
+			"メイリオ",
+			"Meiryo",
+			"Osaka",
+			"YuGothic",
+			"Yu Gothic",
+			"sans-serif",
+		]
+			.map((a) => (a.includes(" ") ? `"${a}"` : a))
+			.join(","),
+	},
 };
