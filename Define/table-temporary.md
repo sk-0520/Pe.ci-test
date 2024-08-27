@@ -1,9 +1,6 @@
+# InstallPlugins
 
-___
-
-## InstallPlugins
-
-### layout
+## layout
 
 | PK | NN | FK | 論理カラム名                       | 物理カラム名           | 論理データ型 | マッピング型    | チェック制約 | コメント     |
 |:--:|:--:|:---|:-----------------------------------|:-----------------------|:-------------|:----------------|:-------------|:-------------|
@@ -18,7 +15,7 @@ ___
 |    | o  |    | 展開ディレクトリパス               | ExtractedDirectoryPath | text         | System.String   |              |              |
 |    | o  |    | プラグインディレクトリパス         | PluginDirectoryPath    | text         | System.String   |              |              |
 
-### index
+## index
 
 *NONE*
 
