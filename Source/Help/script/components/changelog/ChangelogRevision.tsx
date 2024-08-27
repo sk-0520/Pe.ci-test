@@ -31,6 +31,7 @@ export const ChangelogRevision: FC<ChangelogRevisionProps> = (
 				textDecoration: "none",
 			}}
 			href={revisionLink + revision}
+			target="_blank"
 		>
 			{revision}
 		</Link>

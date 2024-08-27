@@ -25,12 +25,16 @@ export const ChangelogReplaceLink: FC<ChangelogReplaceLinkProps> = (
 				return `${a.value}`;
 			case "issue":
 				return (
-					<Link href={issueLink + a.value} target={`issue_${a.value}`}>
+					<Link href={issueLink + a.value} target="_blank">
 						#{a.value}
 					</Link>
 				);
 			case "url":
-				return <Link href={a.value}>{a.value}</Link>;
+				return (
+					<Link href={a.value} target="_blank">
+						{a.value}
+					</Link>
+				);
 		}
 	});
 };

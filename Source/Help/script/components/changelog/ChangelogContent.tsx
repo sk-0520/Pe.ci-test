@@ -3,28 +3,45 @@ import type { FC } from "react";
 import type * as changelog from "../../types/changelog";
 import type { ChangelogContentKind } from "../../types/changelog";
 import { ChangelogContentItem } from "./ChangelogContentItem";
-
-const KindTitleMap: { [key in ChangelogContentKind]: string } = {
-	note: "メモ",
-	features: "機能",
-	fixes: "修正",
-	developer: "開発",
-};
-
-const KindStyleMap: { [key in ChangelogContentKind]: SxProps<Theme> } = {
+const KindMap: {
+	[key in ChangelogContentKind]: {
+		title: string;
+		styles: { header: SxProps<Theme> };
+	};
+} = {
 	note: {
-		background: "#ffc",
+		title: "メモ",
+		styles: {
+			header: {
+				background: "#ffc",
+			},
+		},
 	},
 	features: {
-		background: "#cfc",
+		title: "機能",
+		styles: {
+			header: {
+				background: "#cfc",
+			},
+		},
 	},
 	fixes: {
-		background: "#fcc",
+		title: "修正",
+		styles: {
+			header: {
+				background: "#fcc",
+			},
+		},
 	},
 	developer: {
-		background: "#ccf",
+		title: "開発",
+		styles: {
+			header: {
+				background: "#ccf",
+			},
+		},
 	},
-};
+} as const;
 
 interface ChangelogContentProps extends changelog.ChangelogContent {}
 
@@ -38,7 +55,7 @@ export const ChangelogContent: FC<ChangelogContentProps> = (
 			<Typography
 				variant="h2"
 				sx={{
-					...KindStyleMap[type],
+					...KindMap[type].styles.header,
 					padding: "0.2ex 0.5ex",
 					marginBlock: "1rem",
 					fontSize: "16pt",
@@ -46,7 +63,7 @@ export const ChangelogContent: FC<ChangelogContentProps> = (
 					lineHeight: "1.25em",
 				}}
 			>
-				{KindTitleMap[type]}
+				{KindMap[type].title}
 			</Typography>
 
 			<List disablePadding sx={{ marginLeft: "30pt" }}>

@@ -11,42 +11,58 @@ import type { ChangelogContentItemType } from "../../types/changelog";
 import { ChangelogReplaceLink } from "./ChangelogReplaceLink";
 import { ChangelogRevision } from "./ChangelogRevision";
 
-const TypeTitleMap: { [key in ChangelogContentItemType]: string } = {
-	notice: "事前通知",
-	compatibility: "互換性",
-	nuget: "Nuget",
-	myget: "MyGet",
-	"plugin-compatibility": "プラグイン互換性",
-};
-
-const TypeStyleRootMap: { [key in ChangelogContentItemType]: SxProps<Theme> } =
-	{
-		notice: {},
-		compatibility: {
-			color: "red",
-		},
-		nuget: {},
-		myget: {},
-		"plugin-compatibility": {},
+const TypeMap: {
+	[key in ChangelogContentItemType]: {
+		title: string;
+		styles: { root: SxProps<Theme>; header: SxProps<Theme> };
 	};
-
-const TypeStyleHeaderMap: {
-	[key in ChangelogContentItemType]: SxProps<Theme>;
 } = {
 	notice: {
-		color: "#f00",
+		title: "事前通知",
+		styles: {
+			root: {},
+			header: {
+				color: "#f00",
+			},
+		},
 	},
-	compatibility: {},
+	compatibility: {
+		title: "互換性",
+		styles: {
+			root: {
+				color: "red",
+			},
+			header: {},
+		},
+	},
 	nuget: {
-		color: "#0a0",
+		title: "Nuget",
+		styles: {
+			root: {},
+			header: {
+				color: "#0a0",
+			},
+		},
 	},
 	myget: {
-		color: "#0a0",
+		title: "MyGet",
+		styles: {
+			root: {},
+			header: {
+				color: "#0a0",
+			},
+		},
 	},
 	"plugin-compatibility": {
-		color: "#f74",
+		title: "プラグイン互換性",
+		styles: {
+			root: {},
+			header: {
+				color: "#f74",
+			},
+		},
 	},
-};
+} as const;
 
 interface ChangelogContentItemProps extends changelog.ChangelogContentItem {}
 
@@ -60,7 +76,7 @@ export const ChangelogContentItem: FC<ChangelogContentItemProps> = (
 		<ListItem
 			disablePadding
 			sx={{
-				...(type && type in TypeStyleRootMap ? TypeStyleRootMap[type] : {}),
+				...(type && type in TypeMap ? TypeMap[type].styles.root : {}),
 				listStyleType: "disc",
 				display: "list-item",
 			}}
@@ -70,13 +86,11 @@ export const ChangelogContentItem: FC<ChangelogContentItemProps> = (
 					<Typography
 						component="span"
 						sx={{
-							...(type && type in TypeStyleHeaderMap
-								? TypeStyleHeaderMap[type]
-								: {}),
+							...(type && type in TypeMap ? TypeMap[type].styles.header : {}),
 							marginRight: "1ch",
 						}}
 					>
-						[{TypeTitleMap[type]}]
+						[{TypeMap[type].title}]
 					</Typography>
 				)}
 				<ChangelogReplaceLink>{subject}</ChangelogReplaceLink>
