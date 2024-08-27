@@ -12,7 +12,7 @@ export const ChangelogVersion: FC<ChangelogVersionProps> = (
 	const theme = useTheme();
 
 	return (
-		<Box>
+		<Box id={version}>
 			<Typography
 				variant="h1"
 				sx={{
