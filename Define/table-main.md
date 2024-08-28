@@ -170,7 +170,7 @@ ___
 
 | UK | 名前 | カラム(CSV)            |
 |:--:|:-----|:-----------------------|
-| x  | 1    | Generation, HiddenMode |
+| x  | idx_AppNoteHiddenSetting_1 | Generation, HiddenMode |
 
 
 
@@ -359,7 +359,7 @@ ___
 
 | UK | 名前 | カラム(CSV) |
 |:--:|:-----|:------------|
-| x  | 1    | Code        |
+| x  | idx_LauncherItems_1 | Code        |
 
 
 
