@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { type FC, useMemo } from "react";
 import {
 	convertTable,
@@ -25,9 +25,15 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 
 	return (
 		<Box>
-			{tables.map((a, i) => (
-				<DatabaseTable key={a.name} {...a} />
-			))}
+			<Box>
+				{tables.map((a, i) => (
+					<DatabaseTable key={a.name} {...a} />
+				))}
+			</Box>
+			<Box>
+				<Button>Copy Markdown</Button>
+				<Button>Copy SQL</Button>
+			</Box>
 		</Box>
 	);
 };
