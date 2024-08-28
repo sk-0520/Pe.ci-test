@@ -89,3 +89,9 @@ export function trim(s: string, characters?: ReadonlySet<string>): string {
 
 	return trimEnd(trimStart(s, workCharacters), workCharacters);
 }
+
+const NewLine = /\r\n|\n|\r/;
+
+export function splitLines(s: string): string[] {
+	return s.split(NewLine);
+}
