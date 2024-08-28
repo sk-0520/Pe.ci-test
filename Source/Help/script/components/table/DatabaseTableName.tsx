@@ -1,4 +1,4 @@
-import { Box, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import { type FC, useState } from "react";
 
 interface DatabaseTableNameProps {
@@ -12,12 +12,10 @@ export const DatabaseTableName: FC<DatabaseTableNameProps> = (
 	const [tableName, setTableName] = useState(name);
 
 	return (
-		<Box>
-			<TextField
-				label="テーブル名"
-				value={tableName}
-				onChange={(ev) => setTableName(ev.target.value)}
-			/>
-		</Box>
+		<TextField
+			label="テーブル名"
+			value={tableName}
+			onChange={(ev) => setTableName(ev.target.value)}
+		/>
 	);
 };
