@@ -61,8 +61,8 @@ export const App: FC = () => {
 
 	const currentPage = getPage(selectedPageKey, Pages);
 
-	if(isLoading) {
-		return <>loading...</>
+	if (isLoading) {
+		return <>loading...</>;
 	}
 
 	return (

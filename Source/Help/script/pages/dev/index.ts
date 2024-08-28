@@ -5,3 +5,4 @@ export * from "./DevCiPage";
 export * from "./DevPluginPage";
 export * from "./DevPluginReferencePage";
 export * from "./DevPluginTemplatePage";
+export * from "./DevTableMainPage";

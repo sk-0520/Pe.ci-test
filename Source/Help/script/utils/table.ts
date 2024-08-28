@@ -28,12 +28,12 @@ interface RawSection {
 	index: string[];
 }
 
-interface ForeignKey {
+export interface ForeignKey {
 	table: string;
 	column: string;
 }
 
-interface TableColumn {
+export interface TableColumn {
 	isPrimary: boolean;
 	notNull: boolean;
 	foreignKey: ForeignKey | undefined;
@@ -49,13 +49,13 @@ interface TableColumn {
 	comment: string;
 }
 
-interface TableIndex {
+export interface TableIndex {
 	isUnique: boolean;
 	name: string;
 	columns: string[];
 }
 
-interface TableDefine {
+export interface TableDefine {
 	name: string;
 	columns: TableColumn[];
 	indexes: TableIndex[];
@@ -248,6 +248,6 @@ export function convertTable(section: RawSection): TableDefine {
 	return {
 		name: section.table,
 		columns: convertColumns(section.layout),
-		indexes: convertIndexes(section.index),
+		indexes: section.index.length ? convertIndexes(section.index) : [],
 	};
 }

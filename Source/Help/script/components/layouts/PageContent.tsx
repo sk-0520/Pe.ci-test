@@ -8,6 +8,7 @@ import {
 	DevPluginPage,
 	DevPluginReferencePage,
 	DevPluginTemplatePage,
+	DevTableMainPage,
 } from "../../pages/dev";
 import {
 	HelpChangelogPage,
@@ -72,9 +73,7 @@ const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"dev.build": (props: PageProps) => <DevBuildPage {...props} />,
 	"dev.branch": (props: PageProps) => <DevBranchPage {...props} />,
 	"dev.ci": (props: PageProps) => <DevCiPage {...props} />,
-	"dev.table_main": (props: PageProps) => {
-		throw new NotImplError("not impl");
-	},
+	"dev.table_main": (props: PageProps) => <DevTableMainPage {...props} />,
 	"dev.table_large": (props: PageProps) => {
 		throw new NotImplError("not impl");
 	},
