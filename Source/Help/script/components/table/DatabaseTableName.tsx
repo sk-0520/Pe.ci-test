@@ -5,7 +5,7 @@ import { Controller, useForm } from "react-hook-form";
 import { TableDefinesAtom } from "../../stores/TableStore";
 import type { TableDefineProps } from "../../types/table";
 
-interface InputForm {
+interface InputValues {
 	name: string;
 }
 
@@ -18,7 +18,7 @@ export const DatabaseTableName: FC<DatabaseTableNameProps> = (
 ) => {
 	const { name, tableDefine } = props;
 	const [_, setTableDefines] = useAtom(TableDefinesAtom);
-	const { control, handleSubmit } = useForm<InputForm>({
+	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
@@ -27,7 +27,7 @@ export const DatabaseTableName: FC<DatabaseTableNameProps> = (
 	});
 
 	function handleInput(
-		data: InputForm,
+		data: InputValues,
 		event?: BaseSyntheticEvent<object>,
 	): void {
 		setTableDefines((state) => {

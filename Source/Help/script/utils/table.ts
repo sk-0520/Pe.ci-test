@@ -41,10 +41,8 @@ export interface TableColumn {
 		name: string;
 		type: string;
 	};
-	physical: {
-		name: string;
-		type: string;
-	};
+	physicalName: string;
+	cliType: string;
 	checkConstraints: string;
 	comment: string;
 }
@@ -189,10 +187,8 @@ export function convertColumns(lines: string[]): TableColumn[] {
 				name: logicalName,
 				type: logicalType,
 			},
-			physical: {
-				name: physicalName,
-				type: cliType,
-			},
+			physicalName: physicalName,
+			cliType: cliType,
 			checkConstraints: check,
 			comment: comment,
 		};

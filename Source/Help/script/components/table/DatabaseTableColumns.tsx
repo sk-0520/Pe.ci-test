@@ -1,3 +1,10 @@
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+} from "@mui/material";
 import type { FC } from "react";
 import type { TableDefineProps } from "../../types/table";
 import type { TableColumn } from "../../utils/table";
@@ -12,11 +19,32 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 ) => {
 	const { columns, tableDefine } = props;
 
-	return columns.map((a) => (
-		<DatabaseTableColumn
-			key={a.physical.name}
-			tableDefine={tableDefine}
-			{...a}
-		/>
-	));
+	return (
+		<Table>
+			<TableHead>
+				<TableRow>
+					<TableCell>PK</TableCell>
+					<TableCell>NN</TableCell>
+					<TableCell>FK</TableCell>
+					<TableCell>論理名</TableCell>
+					<TableCell>物理名</TableCell>
+					<TableCell>論理型</TableCell>
+					<TableCell>物理型</TableCell>
+					<TableCell>CLR</TableCell>
+					<TableCell>チェック制約</TableCell>
+					<TableCell>コメント</TableCell>
+					<TableCell>削除</TableCell>
+				</TableRow>
+			</TableHead>
+			<TableBody>
+				{columns.map((a) => (
+					<DatabaseTableColumn
+						key={a.physicalName}
+						tableDefine={tableDefine}
+						{...a}
+					/>
+				))}
+			</TableBody>
+		</Table>
+	);
 };
