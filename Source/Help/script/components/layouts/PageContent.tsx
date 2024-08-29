@@ -31,7 +31,7 @@ import {
 } from "../../pages/help";
 
 import { Typography } from "@mui/material";
-import type { PageProps } from "../../types/PageProps";
+import type { PageProps } from "../../types/page";
 
 interface PageContentProps extends PageProps {}
 
