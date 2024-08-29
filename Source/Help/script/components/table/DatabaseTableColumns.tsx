@@ -44,6 +44,7 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 						{...a}
 					/>
 				))}
+				<TableRow>add</TableRow>
 			</TableBody>
 		</Table>
 	);

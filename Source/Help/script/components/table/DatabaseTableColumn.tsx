@@ -1,4 +1,11 @@
-import { Box, Checkbox, Select, TableCell, TableRow, TextField } from "@mui/material";
+import {
+	Box,
+	Checkbox,
+	Select,
+	TableCell,
+	TableRow,
+	TextField,
+} from "@mui/material";
 import { useAtom } from "jotai";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -91,14 +98,22 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 						name="foreignKeyTable"
 						control={control}
 						render={({ field, formState: { errors } }) => (
-							<Select {...field} onBlur={handleSubmit(handleInput)} />
+							<Select
+								size="small"
+								{...field}
+								onBlur={handleSubmit(handleInput)}
+							/>
 						)}
 					/>
 					<Controller
 						name="foreignKeyColumn"
 						control={control}
 						render={({ field, formState: { errors } }) => (
-							<Select {...field} onBlur={handleSubmit(handleInput)} />
+							<Select
+								size="small"
+								{...field}
+								onBlur={handleSubmit(handleInput)}
+							/>
 						)}
 					/>
 				</Box>
@@ -160,9 +175,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					)}
 				/>
 			</TableCell>
-			<TableCell>
-				delete
-			</TableCell>
+			<TableCell>delete</TableCell>
 		</TableRow>
 	);
 };

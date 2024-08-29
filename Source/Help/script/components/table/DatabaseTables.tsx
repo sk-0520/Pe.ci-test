@@ -28,15 +28,14 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	setTableDefines(tables);
 
 	return (
-		<Box>
-			<Box>
-				{tables.map((a, i) => (
-					<>
-						{i !== 0 && <Divider sx={{ marginBottom: "1rem"}} />}
-						<DatabaseTable key={a.name} tableDefine={a} {...a} />
-					</>
-				))}
-			</Box>
+		<>
+			{tables.map((a, i) => (
+				<>
+					{i !== 0 && <Divider sx={{ marginBlock: "5rem" }} />}
+					<DatabaseTable key={a.name} tableDefine={a} {...a} />
+				</>
+			))}
+
 			<Box>
 				<Button>Copy Markdown</Button>
 				<Button>Copy SQL</Button>
@@ -52,11 +51,11 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 					overflow: "auto",
 					background: "gray",
 					fontSize: 10,
-					fontFamily: "monospace"
+					fontFamily: "monospace",
 				}}
 			>
 				<pre>{JSON.stringify(tableDefines, undefined, 2)}</pre>
 			</Box>
-		</Box>
+		</>
 	);
 };

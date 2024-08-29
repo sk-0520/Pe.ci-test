@@ -1,4 +1,10 @@
-import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import {
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
+} from "@mui/material";
 import type { FC } from "react";
 import type { TableDefineProps } from "../../types/table";
 import type { TableIndex } from "../../utils/table";
@@ -26,6 +32,7 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 				{indexes.map((a) => (
 					<DatabaseTableIndex key={a.name} tableDefine={tableDefine} {...a} />
 				))}
+				<TableRow>add</TableRow>
 			</TableBody>
 		</Table>
 	);

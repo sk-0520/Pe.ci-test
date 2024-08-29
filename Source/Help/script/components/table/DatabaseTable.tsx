@@ -1,4 +1,3 @@
-import { Box } from "@mui/material";
 import type { FC } from "react";
 import type { TableDefineProps } from "../../types/table";
 import type { TableDefine } from "../../utils/table";
@@ -14,10 +13,10 @@ export const DatabaseTable: FC<DatabaseTableProps> = (
 	const { name, columns, indexes, tableDefine } = props;
 
 	return (
-		<Box>
+		<>
 			<DatabaseTableName tableDefine={tableDefine} name={name} />
 			<DatabaseTableColumns tableDefine={tableDefine} columns={columns} />
 			<DatabaseTableIndexes tableDefine={tableDefine} indexes={indexes} />
-		</Box>
+		</>
 	);
 };

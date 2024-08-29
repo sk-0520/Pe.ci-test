@@ -10,7 +10,6 @@ interface InputValues {
 	columns: string[];
 }
 
-
 interface DatabaseTableIndexProps extends TableIndex, TableDefineProps {}
 
 export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
@@ -27,8 +26,10 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 		},
 	});
 
-
-	function handleInput(data: InputValues, event?: BaseSyntheticEvent<object, unknown, unknown> | undefined): void {
+	function handleInput(
+		data: InputValues,
+		event?: BaseSyntheticEvent<object, unknown, unknown> | undefined,
+	): void {
 		console.debug(data);
 	}
 
@@ -44,17 +45,19 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 				/>
 			</TableCell>
 			<TableCell>
-			<Controller
+				<Controller
 					name="name"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<TextField {...field} onBlur={handleSubmit(handleInput)} />
+						<TextField
+							fullWidth
+							{...field}
+							onBlur={handleSubmit(handleInput)}
+						/>
 					)}
 				/>
 			</TableCell>
-			<TableCell>
-				list
-			</TableCell>
+			<TableCell>list</TableCell>
 		</TableRow>
 	);
 	//return <pre>{JSON.stringify(props)}</pre>;

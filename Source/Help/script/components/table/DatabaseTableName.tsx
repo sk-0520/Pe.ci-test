@@ -45,6 +45,7 @@ export const DatabaseTableName: FC<DatabaseTableNameProps> = (
 			render={({ field, formState: { errors } }) => (
 				<TextField
 					label="テーブル名"
+					fullWidth
 					{...field}
 					onBlur={handleSubmit(handleInput)}
 				/>
