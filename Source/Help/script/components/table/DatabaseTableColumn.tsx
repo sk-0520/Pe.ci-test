@@ -97,14 +97,22 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 						name="foreignKeyTable"
 						control={control}
 						render={({ field, formState: { errors } }) => (
-							<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
+							<EditorSelect
+								{...field}
+								sx={{ fontSize: "80%" }}
+								onBlur={handleSubmit(handleInput)}
+							/>
 						)}
 					/>
 					<Controller
 						name="foreignKeyColumn"
 						control={control}
 						render={({ field, formState: { errors } }) => (
-							<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
+							<EditorSelect
+								{...field}
+								sx={{ fontSize: "80%" }}
+								onBlur={handleSubmit(handleInput)}
+							/>
 						)}
 					/>
 				</Box>

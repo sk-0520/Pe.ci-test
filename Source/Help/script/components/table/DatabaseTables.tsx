@@ -1,4 +1,4 @@
-import { Box, Button, Divider } from "@mui/material";
+import { Box, Button, Divider, FormControl } from "@mui/material";
 import { useAtom } from "jotai";
 import { type FC, useMemo } from "react";
 import { TableDefinesAtom } from "../../stores/TableStore";
@@ -28,7 +28,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	setTableDefines(tables);
 
 	return (
-		<>
+		<FormControl variant="standard">
 			{tables.map((a, i) => (
 				<>
 					{i !== 0 && <Divider sx={{ marginBlock: "5rem" }} />}
@@ -56,6 +56,6 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			>
 				<pre>{JSON.stringify(tableDefines, undefined, 2)}</pre>
 			</Box>
-		</>
+		</FormControl>
 	);
 };
