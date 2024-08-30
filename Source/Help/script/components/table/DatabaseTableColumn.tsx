@@ -1,4 +1,13 @@
-import { Box, Checkbox, Select, TableRow, TextField } from "@mui/material";
+import {
+	Box,
+	Checkbox,
+	ListItem,
+	ListSubheader,
+	MenuItem,
+	Select,
+	TableRow,
+	TextField,
+} from "@mui/material";
 import { useAtom } from "jotai";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -11,6 +20,29 @@ import {
 	EditorSelect,
 	EditorTextField,
 } from "./editor";
+
+const DatabaseTypeMap = new Map([
+	// 通常
+	["integer", "integer"],
+	["real", "real"],
+	["text", "text"],
+	["blob", "blob"],
+	// 意味だけ
+	["datetime", "text"],
+	["boolean", "integer"],
+]) as ReadonlyMap<string, string>;
+
+const ClrMap = new Map([
+	["integer", ["System.Int64"]],
+	["real", ["System.Decimal", "System.Single", "System.Double"]],
+	[
+		"text",
+		["System.String", "System.Guid", "System.Version", "System.TimeSpan"],
+	],
+	["blob", ["System.Byte[]"]],
+	["datetime", ["System.DateTime", "System.String"]],
+	["boolean", ["System.Boolean", "System.Int64"]],
+]) as ReadonlyMap<string, ReadonlyArray<string>>;
 
 interface InputValues {
 	isPrimary: boolean;
@@ -140,7 +172,16 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					name="logicalType"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorSelect {...field} onBlur={handleSubmit(handleInput)}>
+							<ListSubheader>SQLite3</ListSubheader>
+							<MenuItem value="integer">integer</MenuItem>
+							<MenuItem value="real">real</MenuItem>
+							<MenuItem value="text">text</MenuItem>
+							<MenuItem value="blob">blob</MenuItem>
+							<ListSubheader>affinity</ListSubheader>
+							<MenuItem value="datetime">datetime</MenuItem>
+							<MenuItem value="boolean">boolean</MenuItem>
+						</EditorSelect>
 					)}
 				/>
 			</EditorCell>
@@ -152,7 +193,19 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					name="cliType"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorSelect {...field} onBlur={handleSubmit(handleInput)}>
+							<MenuItem value="System.String">string</MenuItem>
+							<MenuItem value="System.Int64">long</MenuItem>
+							<MenuItem value="System.Decimal">decimal</MenuItem>
+							<MenuItem value="System.Byte[]">byte[]</MenuItem>
+							<MenuItem value="System.Boolean">bool</MenuItem>
+							<MenuItem value="System.Single">float</MenuItem>
+							<MenuItem value="System.Double">double</MenuItem>
+							<MenuItem value="System.Guid">Guid</MenuItem>
+							<MenuItem value="System.DateTime">DateTime</MenuItem>
+							<MenuItem value="System.Version">Version</MenuItem>
+							<MenuItem value="System.TimeSpan">TimeSpan</MenuItem>
+						</EditorSelect>
 					)}
 				/>
 			</EditorCell>

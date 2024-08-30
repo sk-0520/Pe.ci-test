@@ -24,9 +24,9 @@ export function EditorCheckbox(props: CheckboxProps) {
 }
 
 export function EditorTextField(props: TextFieldProps) {
-	return <TextField size="small" {...props} />;
+	return <TextField size="small" variant="standard" fullWidth {...props} />;
 }
 
 export function EditorSelect(props: SelectProps) {
-	return <Select size="small" {...props} />;
+	return <Select size="small" variant="standard" fullWidth {...props} />;
 }

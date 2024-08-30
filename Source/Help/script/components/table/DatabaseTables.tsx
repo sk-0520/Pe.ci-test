@@ -28,7 +28,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	setTableDefines(tables);
 
 	return (
-		<FormControl variant="standard">
+		<>
 			{tables.map((a, i) => (
 				<>
 					{i !== 0 && <Divider sx={{ marginBlock: "5rem" }} />}
@@ -56,6 +56,6 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			>
 				<pre>{JSON.stringify(tableDefines, undefined, 2)}</pre>
 			</Box>
-		</FormControl>
+		</>
 	);
 };
