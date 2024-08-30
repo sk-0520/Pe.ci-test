@@ -1,17 +1,16 @@
-import {
-	Box,
-	Checkbox,
-	Select,
-	TableCell,
-	TableRow,
-	TextField,
-} from "@mui/material";
+import { Box, Checkbox, Select, TableRow, TextField } from "@mui/material";
 import { useAtom } from "jotai";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TableDefinesAtom } from "../../stores/TableStore";
 import type { TableDefineProps } from "../../types/table";
 import type { TableColumn } from "../../utils/table";
+import {
+	EditorCell,
+	EditorCheckbox,
+	EditorSelect,
+	EditorTextField,
+} from "./editor";
 
 interface InputValues {
 	isPrimary: boolean;
@@ -74,108 +73,100 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 
 	return (
 		<TableRow>
-			<TableCell>
+			<EditorCell>
 				<Controller
 					name="isPrimary"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<Checkbox {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="notNull"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<Checkbox {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Box>
 					<Controller
 						name="foreignKeyTable"
 						control={control}
 						render={({ field, formState: { errors } }) => (
-							<Select
-								size="small"
-								{...field}
-								onBlur={handleSubmit(handleInput)}
-							/>
+							<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
 						)}
 					/>
 					<Controller
 						name="foreignKeyColumn"
 						control={control}
 						render={({ field, formState: { errors } }) => (
-							<Select
-								size="small"
-								{...field}
-								onBlur={handleSubmit(handleInput)}
-							/>
+							<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
 						)}
 					/>
 				</Box>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="logicalName"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<TextField {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorTextField {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="physicalName"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<TextField {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorTextField {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="logicalType"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<Select {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
-				<TextField />
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
+				<EditorTextField />
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="cliType"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<Select {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorSelect {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="checkConstraints"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<TextField {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorTextField {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="comment"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<TextField {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorTextField {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>delete</TableCell>
+			</EditorCell>
+			<EditorCell>delete</EditorCell>
 		</TableRow>
 	);
 };

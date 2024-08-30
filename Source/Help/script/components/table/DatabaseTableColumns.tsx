@@ -9,6 +9,7 @@ import type { FC } from "react";
 import type { TableDefineProps } from "../../types/table";
 import type { TableColumn } from "../../utils/table";
 import { DatabaseTableColumn } from "./DatabaseTableColumn";
+import { EditorCell, EditorTable } from "./editor";
 
 interface DatabaseTableColumnsProps extends TableDefineProps {
 	columns: TableColumn[];
@@ -20,20 +21,20 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 	const { columns, tableDefine } = props;
 
 	return (
-		<Table>
+		<EditorTable>
 			<TableHead>
 				<TableRow>
-					<TableCell>PK</TableCell>
-					<TableCell>NN</TableCell>
-					<TableCell>FK</TableCell>
-					<TableCell>論理名</TableCell>
-					<TableCell>物理名</TableCell>
-					<TableCell>論理型</TableCell>
-					<TableCell>物理型</TableCell>
-					<TableCell>CLR</TableCell>
-					<TableCell>チェック制約</TableCell>
-					<TableCell>コメント</TableCell>
-					<TableCell>削除</TableCell>
+					<EditorCell>PK</EditorCell>
+					<EditorCell>NN</EditorCell>
+					<EditorCell>FK</EditorCell>
+					<EditorCell>論理名</EditorCell>
+					<EditorCell>物理名</EditorCell>
+					<EditorCell>論理型</EditorCell>
+					<EditorCell>物理型</EditorCell>
+					<EditorCell>CLR</EditorCell>
+					<EditorCell>チェック制約</EditorCell>
+					<EditorCell>コメント</EditorCell>
+					<EditorCell>削除</EditorCell>
 				</TableRow>
 			</TableHead>
 			<TableBody>
@@ -46,6 +47,6 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 				))}
 				<TableRow>add</TableRow>
 			</TableBody>
-		</Table>
+		</EditorTable>
 	);
 };

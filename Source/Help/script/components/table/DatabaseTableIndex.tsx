@@ -1,12 +1,13 @@
-import { Checkbox, TableCell, TableRow, TextField } from "@mui/material";
+import { Checkbox, TableRow, TextField } from "@mui/material";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { TableDefineProps } from "../../types/table";
 import type { TableIndex } from "../../utils/table";
+import { EditorCell, EditorCheckbox, EditorTextField } from "./editor";
 
 interface InputValues {
 	isUnique: boolean;
-	name: boolean;
+	name: string;
 	columns: string[];
 }
 
@@ -35,29 +36,29 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 
 	return (
 		<TableRow>
-			<TableCell>
+			<EditorCell>
 				<Controller
 					name="isUnique"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<Checkbox {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</TableCell>
-			<TableCell>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="name"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<TextField
+						<EditorTextField
 							fullWidth
 							{...field}
 							onBlur={handleSubmit(handleInput)}
 						/>
 					)}
 				/>
-			</TableCell>
-			<TableCell>list</TableCell>
+			</EditorCell>
+			<EditorCell>list</EditorCell>
 		</TableRow>
 	);
 	//return <pre>{JSON.stringify(props)}</pre>;

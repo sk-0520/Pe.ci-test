@@ -9,6 +9,7 @@ import type { FC } from "react";
 import type { TableDefineProps } from "../../types/table";
 import type { TableIndex } from "../../utils/table";
 import { DatabaseTableIndex } from "./DatabaseTableIndex";
+import { EditorCell, EditorTable } from "./editor";
 
 interface DatabaseTableIndexesProps extends TableDefineProps {
 	indexes: TableIndex[];
@@ -20,12 +21,12 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 	const { tableDefine, indexes } = props;
 
 	return (
-		<Table>
+		<EditorTable>
 			<TableHead>
 				<TableRow>
-					<TableCell>UK</TableCell>
-					<TableCell>名前</TableCell>
-					<TableCell>カラム</TableCell>
+					<EditorCell>UK</EditorCell>
+					<EditorCell>名前</EditorCell>
+					<EditorCell>カラム</EditorCell>
 				</TableRow>
 			</TableHead>
 			<TableBody>
@@ -34,6 +35,6 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 				))}
 				<TableRow>add</TableRow>
 			</TableBody>
-		</Table>
+		</EditorTable>
 	);
 };
