@@ -9,11 +9,15 @@ import {
 	TextField,
 } from "@mui/material";
 import { useAtom, useAtomValue } from "jotai";
-import { type BaseSyntheticEvent, type FC, useState } from "react";
+import { type BaseSyntheticEvent, type FC, Fragment, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { WorkTablesAtom, useWorkColumn } from "../../stores/TableStore";
 import type { TableBaseProps, TableDefineProps } from "../../types/table";
-import type { TableColumn } from "../../utils/table";
+import type {
+	ForeignKey,
+	TableColumn,
+	WorkForeignKey,
+} from "../../utils/table";
 import {
 	EditorCell,
 	EditorCheckbox,
@@ -44,11 +48,22 @@ const ClrMap = new Map([
 	["boolean", ["System.Boolean", "System.Int64"]],
 ]) as ReadonlyMap<string, ReadonlyArray<string>>;
 
+const CommonColumns: ReadonlyArray<string> = [
+	"CreatedTimestamp",
+	"CreatedAccount",
+	"CreatedProgramName",
+	"CreatedProgramVersion",
+	"UpdatedTimestamp",
+	"UpdatedAccount",
+	"UpdatedProgramName",
+	"UpdatedProgramVersion",
+	"UpdatedCount",
+];
+
 interface InputValues {
 	isPrimary: boolean;
 	notNull: boolean;
-	foreignKeyTable: string;
-	foreignKeyColumn: string;
+	foreignKey: string;
 	logicalName: string;
 	logicalType: string;
 	physicalName: string;
@@ -71,7 +86,6 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 		id,
 		isPrimary,
 		notNull,
-		foreignKey,
 		foreignKeyId,
 		logical,
 		physicalName,
@@ -92,14 +106,19 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			? foreignTable.columns.items.find((a) => a.id === foreignKeyId.columnId)
 			: undefined;
 
+
+			console.debug(foreignTable && foreignColumn ? `ID: ${foreignTable.id}.${foreignColumn.id}`: 'no id')
+
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
 			isPrimary: isPrimary,
 			notNull: notNull,
-			foreignKeyTable: foreignTable?.id,
-			foreignKeyColumn: foreignColumn?.id,
+			foreignKey:
+				foreignTable && foreignColumn
+					? `${foreignTable.id}.${foreignColumn.id}`
+					: "",
 			logicalName: logical.name,
 			logicalType: logical.type,
 			physicalName: physicalName,
@@ -113,18 +132,40 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 		data: InputValues,
 		event?: BaseSyntheticEvent<object>,
 	): void {
+		let foreignKey: ForeignKey | undefined = undefined;
+		let foreignKeyId: WorkForeignKey | undefined = undefined;
+		if (data.foreignKey) {
+			const [foreignKeyTableId, foreignKeyColumnId] =
+				data.foreignKey.split(".");
+			foreignKeyId = {
+				tableId: foreignKeyTableId,
+				columnId: foreignKeyColumnId,
+			};
+			const foreignKeyTable = foreignTables.find(
+				(a) => a.id === foreignKeyTableId,
+			);
+			if (foreignKeyTable) {
+				const foreignKeyColumn = foreignKeyTable.columns.items.find(
+					(a) => a.id === foreignKeyColumnId,
+				);
+				if (foreignKeyColumn) {
+					foreignKey = {
+						table: foreignKeyTable.define.tableName,
+						column: foreignKeyColumn.logical.name,
+					};
+				}
+			}
+			if (!foreignKey) {
+				foreignKeyId = undefined;
+			}
+		}
+
 		updateWorkColumn({
 			id: id,
 			isPrimary: data.isPrimary,
 			notNull: data.notNull,
-			foreignKey:
-				data.foreignKeyTable && data.foreignKeyColumn
-					? {
-							table: data.foreignKeyTable,
-							column: data.foreignKeyColumn,
-						}
-					: undefined,
-			foreignKeyId: undefined, // 初回だけでしか使わない？
+			foreignKey: foreignKey,
+			foreignKeyId: foreignKeyId,
 			logical: {
 				name: data.logicalName,
 				type: data.logicalType,
@@ -159,7 +200,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			<EditorCell>
 				<Box>
 					<Controller
-						name="foreignKeyTable"
+						name="foreignKey"
 						control={control}
 						render={({ field, formState: { errors } }) => (
 							<EditorSelect
@@ -167,29 +208,19 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 								sx={{ fontSize: "80%" }}
 								onBlur={handleSubmit(handleInput)}
 							>
-								<MenuItem value="">{""}</MenuItem>
+								<MenuItem value="">{"未設定"}</MenuItem>
 								{foreignTables.map((a) => (
-									<MenuItem key={a.id} value={a.id}>
-										{a.define.tableName}
-									</MenuItem>
+									<Fragment key={a.id}>
+										<ListSubheader>{a.define.tableName}</ListSubheader>
+										{a.columns.items
+											.filter((a) => !CommonColumns.includes(a.physicalName))
+											.map((b) => (
+												<MenuItem key={b.id} value={`${a.id}.${b.id}`}>
+													{b.logical.name}
+												</MenuItem>
+											))}
+									</Fragment>
 								))}
-							</EditorSelect>
-						)}
-					/>
-					<Controller
-						name="foreignKeyColumn"
-						control={control}
-						render={({ field, formState: { errors } }) => (
-							<EditorSelect
-								{...field}
-								sx={{ fontSize: "80%" }}
-								onBlur={handleSubmit(handleInput)}
-							>
-								{foreignTable?.columns.items.map((a) => (
-										<MenuItem key={a.id} value={a.id}>
-											{a.logical.name}
-										</MenuItem>
-									))}
 							</EditorSelect>
 						)}
 					/>
