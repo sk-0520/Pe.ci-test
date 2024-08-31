@@ -1,5 +1,19 @@
 import { splitLines, trim } from "./string";
 
+export const CommonColumnNames: ReadonlyArray<string> = [
+	// create
+	"CreatedTimestamp",
+	"CreatedAccount",
+	"CreatedProgramName",
+	"CreatedProgramVersion",
+	// update
+	"UpdatedTimestamp",
+	"UpdatedAccount",
+	"UpdatedProgramName",
+	"UpdatedProgramVersion",
+	"UpdatedCount",
+];
+
 const NoneIndex = "*NONE*";
 
 const LayoutColumnIndex = {

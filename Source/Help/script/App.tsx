@@ -68,6 +68,7 @@ export const App: FC = () => {
 	return (
 		<Box sx={{ display: "flex" }}>
 			<AppBar
+				id="header"
 				position="fixed"
 				sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
 			>
