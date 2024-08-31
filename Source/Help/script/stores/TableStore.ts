@@ -3,6 +3,7 @@ import type {
 	TableDefine,
 	WorkColumn,
 	WorkColumns,
+	WorkIdMapping,
 	WorkIndex,
 	WorkIndexes,
 	WorkOptions,
@@ -11,7 +12,9 @@ import type {
 
 export const WorkTablesAtom = atom<WorkTable[]>([]);
 
-export const WorkOptionsListAtom = atom<WorkOptions[]>([])
+export const WorkIdMappingAtom = atom<{ [tableId in string]: WorkIdMapping }>(
+	{},
+);
 
 export function useWorkTable(tableId: string) {
 	const [workTables, setWorkTable] = useAtom(WorkTablesAtom);
@@ -28,8 +31,7 @@ export function useWorkTable(tableId: string) {
 				throw new Error(JSON.stringify({ tableId }));
 			}
 			workTables[index] = newValue;
-			setWorkTable([...workTables])
+			setWorkTable([...workTables]);
 		},
 	};
 }
-
