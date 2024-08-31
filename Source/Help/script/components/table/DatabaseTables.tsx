@@ -1,9 +1,10 @@
 import { Box, Button, Divider, FormControl } from "@mui/material";
 import { useAtom } from "jotai";
 import { type FC, useMemo } from "react";
-import { TableDefinesAtom } from "../../stores/TableStore";
+import { TableDefinesAtom, WorkTablesAtom } from "../../stores/TableStore";
 import {
 	convertTable,
+	convertWorkTable,
 	splitRawEntities,
 	splitRawSection,
 } from "../../utils/table";
@@ -17,15 +18,16 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	props: DatabaseTablesProps,
 ) => {
 	const { markdown } = props;
-	const [tableDefines, setTableDefines] = useAtom(TableDefinesAtom);
+	const [workTables, setWorkTables] = useAtom(WorkTablesAtom);
 
 	const tables = useMemo(() => {
 		return splitRawEntities(markdown)
 			.map((a) => splitRawSection(a))
 			.sort((a, b) => a.table.localeCompare(b.table))
-			.map((a) => convertTable(a));
+			.map((a) => convertTable(a))
+			.map(a => convertWorkTable(a))
 	}, [markdown]);
-	setTableDefines(tables);
+	setWorkTables(tables);
 
 	return (
 		<>
@@ -54,7 +56,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 					fontFamily: "monospace",
 				}}
 			>
-				<pre>{JSON.stringify(tableDefines, undefined, 2)}</pre>
+				<pre>{JSON.stringify(workTables, undefined, 2)}</pre>
 			</Box>
 		</>
 	);

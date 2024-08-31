@@ -247,3 +247,57 @@ export function convertTable(section: RawSection): TableDefine {
 		indexes: section.index.length ? convertIndexes(section.index) : [],
 	};
 }
+
+export interface WorkOptions {
+	id: string;
+	tableName: string;
+}
+
+export interface WorkColumn extends TableColumn {
+	id: string;
+}
+
+export interface WorkColumns {
+	id: string;
+	items: WorkColumn[];
+}
+
+export interface WorkIndex extends TableIndex {
+	id: string;
+}
+
+export interface WorkIndexes {
+	id: string;
+	items: WorkIndex[];
+}
+
+export interface WorkTable {
+	id: string;
+	options: WorkOptions;
+	columns: WorkColumns;
+	indexes: WorkIndexes;
+}
+
+export function convertWorkTable(tableDefine: TableDefine): WorkTable {
+	return {
+		id: crypto.randomUUID(),
+		options: {
+			id: crypto.randomUUID(),
+			tableName: tableDefine.name,
+		},
+		columns: {
+			id: crypto.randomUUID(),
+			items: tableDefine.columns.map((a) => ({
+				...a,
+				id: crypto.randomUUID(),
+			})),
+		},
+		indexes: {
+			id: crypto.randomUUID(),
+			items: tableDefine.indexes.map((a) => ({
+				...a,
+				id: crypto.randomUUID(),
+			})),
+		},
+	};
+}
