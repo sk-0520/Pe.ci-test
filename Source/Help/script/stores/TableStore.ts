@@ -3,14 +3,18 @@ import type {
 	TableDefine,
 	WorkColumn,
 	WorkColumns,
+	WorkDefine,
 	WorkIdMapping,
 	WorkIndex,
 	WorkIndexes,
-	WorkOptions,
 	WorkTable,
 } from "../utils/table";
 
 export const WorkTablesAtom = atom<WorkTable[]>([]);
+
+function getNow(): number {
+	return new Date().getTime();
+}
 
 export function useWorkTable(tableId: string) {
 	const [workTables, setWorkTable] = useAtom(WorkTablesAtom);
@@ -21,13 +25,33 @@ export function useWorkTable(tableId: string) {
 
 	return {
 		workTable,
-		updateWorkTable: (newValue: WorkTable) => {
+		updateWorkTable: (newValue: Omit<WorkTable, "lastUpdateTimestamp">) => {
 			const index = workTables.indexOf(workTable);
 			if (index === -1) {
 				throw new Error(JSON.stringify({ tableId }));
 			}
-			workTables[index] = newValue;
+			workTables[index] = {
+				...newValue,
+				lastUpdateTimestamp: getNow(),
+			};
 			setWorkTable([...workTables]);
+		},
+	};
+}
+
+export function useWorkDefine(tableId: string) {
+	const { workTable, updateWorkTable } = useWorkTable(tableId);
+
+	return {
+		define: workTable.define,
+		updateDefine: (newValue: Omit<WorkDefine, "lastUpdateTimestamp">) => {
+			updateWorkTable({
+				...workTable,
+				define: {
+					...newValue,
+					lastUpdateTimestamp: getNow(),
+				},
+			});
 		},
 	};
 }

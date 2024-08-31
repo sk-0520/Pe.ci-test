@@ -1,32 +1,29 @@
 import { TextField } from "@mui/material";
-import { useAtom } from "jotai";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { WorkTableAtom, useWorkTable } from "../../stores/TableStore";
+import {
+	useWorkDefine,
+} from "../../stores/TableStore";
+import type { TableBaseProps } from "../../types/table";
 
 interface InputValues {
 	name: string;
 }
 
-interface DatabaseTableOptionsProps {
-	tableId: string;
-}
+interface DatabaseTableDefineProps extends TableBaseProps {}
 
-export const DatabaseTableOptions: FC<DatabaseTableOptionsProps> = (
-	props: DatabaseTableOptionsProps,
+export const DatabaseTableDefine: FC<DatabaseTableDefineProps> = (
+	props: DatabaseTableDefineProps,
 ) => {
 	const { tableId } = props;
 
-	// const [workTable, setWorkTable] = useAtom(WorkTableAtom(tableId));
-	// const workOptions = workTable.options;
-	const {workTable, updateWorkTable: update} = useWorkTable(tableId);
-	const workOptions = workTable.options;
+	const { define, updateDefine } = useWorkDefine(tableId);
 
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
-			name: workOptions.tableName,
+			name: define.tableName,
 		},
 	});
 
@@ -34,12 +31,9 @@ export const DatabaseTableOptions: FC<DatabaseTableOptionsProps> = (
 		data: InputValues,
 		event?: BaseSyntheticEvent<object>,
 	): void {
-		update({
-			...workTable,
-			options: {
-				id: workTable.options.id,
-				tableName: data.name
-			}
+		updateDefine({
+			...define,
+			tableName: data.name,
 		});
 	}
 

@@ -38,7 +38,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			{tables.map((a, i) => (
 				<>
 					{i !== 0 && <Divider sx={{ marginBlock: "5rem" }} />}
-					<DatabaseTable key={a.id} tableId={a.id} />
+					<DatabaseTable key={a.id} tableId={a.id}  tableLastUpdateTimestamp={a.lastUpdateTimestamp}/>
 				</>
 			))}
 

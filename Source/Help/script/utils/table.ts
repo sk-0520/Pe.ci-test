@@ -248,16 +248,20 @@ export function convertTable(section: RawSection): TableDefine {
 	};
 }
 
-export interface WorkOptions {
+export interface WorkUpdateState {
+	lastUpdateTimestamp: number;
+}
+
+export interface WorkDefine extends WorkUpdateState {
 	id: string;
 	tableName: string;
 }
 
-export interface WorkColumn extends TableColumn {
+export interface WorkColumn extends TableColumn, WorkUpdateState {
 	id: string;
 }
 
-export interface WorkColumns {
+export interface WorkColumns extends WorkUpdateState {
 	id: string;
 	items: WorkColumn[];
 }
@@ -266,14 +270,14 @@ export interface WorkIndex extends TableIndex {
 	id: string;
 }
 
-export interface WorkIndexes {
+export interface WorkIndexes extends WorkUpdateState {
 	id: string;
 	items: WorkIndex[];
 }
 
-export interface WorkTable {
+export interface WorkTable extends WorkUpdateState {
 	id: string;
-	options: WorkOptions;
+	define: WorkDefine;
 	columns: WorkColumns;
 	indexes: WorkIndexes;
 }
@@ -281,22 +285,28 @@ export interface WorkTable {
 export function convertWorkTable(tableDefine: TableDefine): WorkTable {
 	return {
 		id: crypto.randomUUID(),
-		options: {
+		lastUpdateTimestamp: 0,
+		define: {
 			id: crypto.randomUUID(),
+			lastUpdateTimestamp: 0,
 			tableName: tableDefine.name,
 		},
 		columns: {
 			id: crypto.randomUUID(),
+			lastUpdateTimestamp: 0,
 			items: tableDefine.columns.map((a) => ({
 				...a,
 				id: crypto.randomUUID(),
+				lastUpdateTimestamp: 0,
 			})),
 		},
 		indexes: {
 			id: crypto.randomUUID(),
+			lastUpdateTimestamp: 0,
 			items: tableDefine.indexes.map((a) => ({
 				...a,
 				id: crypto.randomUUID(),
+				lastUpdateTimestamp: 0,
 			})),
 		},
 	};
