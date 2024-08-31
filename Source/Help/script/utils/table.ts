@@ -258,7 +258,7 @@ export interface WorkColumn extends TableColumn {
 }
 
 export interface WorkColumns {
-	id: string; 
+	id: string;
 	items: WorkColumn[];
 }
 
@@ -276,14 +276,6 @@ export interface WorkTable {
 	options: WorkOptions;
 	columns: WorkColumns;
 	indexes: WorkIndexes;
-}
-
-export interface WorkIdMapping {
-	optionId: string;
-	columnsId: string;
-	columnItemsId: string[];
-	indexesId: string;
-	indexItemsId: string[];
 }
 
 export function convertWorkTable(tableDefine: TableDefine): WorkTable {
@@ -308,22 +300,4 @@ export function convertWorkTable(tableDefine: TableDefine): WorkTable {
 			})),
 		},
 	};
-}
-
-export function convertIdMap(
-	workTables: ReadonlyArray<WorkTable>,
-): Map<string, WorkIdMapping> {
-	const map = new Map<string, WorkIdMapping>();
-
-	for (const workTable of workTables) {
-		map.set(workTable.id, {
-			optionId: workTable.options.id,
-			columnsId: workTable.columns.id,
-			columnItemsId: workTable.columns.items.map((a) => a.id),
-			indexesId: workTable.indexes.id,
-			indexItemsId: workTable.indexes.items.map((a) => a.id),
-		});
-	}
-
-	return map;
 }

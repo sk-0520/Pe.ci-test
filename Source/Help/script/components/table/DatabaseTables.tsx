@@ -1,9 +1,8 @@
 import { Box, Button, Divider, FormControl } from "@mui/material";
 import { useAtom } from "jotai";
 import { type FC, useMemo } from "react";
-import { TableDefinesAtom, WorkIdMappingAtom, WorkTablesAtom } from "../../stores/TableStore";
+import { WorkTablesAtom } from "../../stores/TableStore";
 import {
-	convertIdMap,
 	convertTable,
 	convertWorkTable,
 	splitRawEntities,
@@ -20,9 +19,8 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 ) => {
 	const { markdown } = props;
 	const [workTables, setWorkTables] = useAtom(WorkTablesAtom);
-	const [_, setWorkIdMapping] = useAtom(WorkIdMappingAtom);
 
-	const data = useMemo(() => {
+	const tables = useMemo(() => {
 		console.debug("memo!");
 
 		const tables = splitRawEntities(markdown)
@@ -31,17 +29,13 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			.map((a) => convertTable(a))
 			.map((a) => convertWorkTable(a));
 
-		return {
-			tables,
-			idMap: Object.fromEntries(convertIdMap(tables)),
-		};
+		return tables;
 	}, [markdown]);
-	setWorkTables(data.tables);
-	setWorkIdMapping(data.idMap);
+	setWorkTables(tables);
 
 	return (
 		<>
-			{data.tables.map((a, i) => (
+			{tables.map((a, i) => (
 				<>
 					{i !== 0 && <Divider sx={{ marginBlock: "5rem" }} />}
 					<DatabaseTable key={a.id} tableId={a.id} />

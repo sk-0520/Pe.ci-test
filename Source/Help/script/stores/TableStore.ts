@@ -12,10 +12,6 @@ import type {
 
 export const WorkTablesAtom = atom<WorkTable[]>([]);
 
-export const WorkIdMappingAtom = atom<{ [tableId in string]: WorkIdMapping }>(
-	{},
-);
-
 export function useWorkTable(tableId: string) {
 	const [workTables, setWorkTable] = useAtom(WorkTablesAtom);
 	const workTable = workTables.find((a) => a.id === tableId);
