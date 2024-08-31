@@ -17,13 +17,13 @@ export const DatabaseTableDefine: FC<DatabaseTableDefineProps> = (
 ) => {
 	const { tableId } = props;
 
-	const { define, updateDefine } = useWorkDefine(tableId);
+	const { workDefine, updateWorkDefine } = useWorkDefine(tableId);
 
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
-			name: define.tableName,
+			name: workDefine.tableName,
 		},
 	});
 
@@ -31,8 +31,8 @@ export const DatabaseTableDefine: FC<DatabaseTableDefineProps> = (
 		data: InputValues,
 		event?: BaseSyntheticEvent<object>,
 	): void {
-		updateDefine({
-			...define,
+		updateWorkDefine({
+			...workDefine,
 			tableName: data.name,
 		});
 	}

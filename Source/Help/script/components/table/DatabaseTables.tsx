@@ -7,6 +7,7 @@ import {
 	convertWorkTable,
 	splitRawEntities,
 	splitRawSection,
+	updateRelations,
 } from "../../utils/table";
 import { DatabaseTable } from "./DatabaseTable";
 
@@ -28,6 +29,8 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			.sort((a, b) => a.table.localeCompare(b.table))
 			.map((a) => convertTable(a))
 			.map((a) => convertWorkTable(a));
+
+		updateRelations(tables);
 
 		return tables;
 	}, [markdown]);

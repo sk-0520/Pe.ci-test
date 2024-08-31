@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import type { FC } from "react";
-import { WorkTablesAtom, useWorkTableAtom } from "../../stores/TableStore";
+import { WorkTablesAtom } from "../../stores/TableStore";
 import type { TableBaseProps, TableDefineProps } from "../../types/table";
 import type { TableDefine } from "../../utils/table";
 import { DatabaseTableColumns } from "./DatabaseTableColumns";
@@ -18,8 +18,8 @@ export const DatabaseTable: FC<DatabaseTableProps> = (
 	return (
 		<>
 			<DatabaseTableDefine tableId={tableId} tableLastUpdateTimestamp={tableLastUpdateTimestamp} />
-			{/* <DatabaseTableColumns tableId={tableId} />
-			<DatabaseTableIndexes tableId={tableId} /> */}
+			<DatabaseTableColumns tableId={tableId} tableLastUpdateTimestamp={tableLastUpdateTimestamp} />
+			{/* <DatabaseTableIndexes tableId={tableId} /> */}
 		</>
 	);
 };

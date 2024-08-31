@@ -6,19 +6,22 @@ import {
 	TableRow,
 } from "@mui/material";
 import type { FC } from "react";
-import type { TableDefineProps } from "../../types/table";
+import { useWorkColumns } from "../../stores/TableStore";
+import type { TableBaseProps, TableDefineProps } from "../../types/table";
 import type { TableColumn } from "../../utils/table";
 import { DatabaseTableColumn } from "./DatabaseTableColumn";
 import { EditorCell, EditorTable } from "./editor";
 
-interface DatabaseTableColumnsProps extends TableDefineProps {
-	columns: TableColumn[];
+interface DatabaseTableColumnsProps extends TableBaseProps {
 }
 
 export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 	props: DatabaseTableColumnsProps,
 ) => {
-	const { columns, tableDefine } = props;
+	const { tableId, tableLastUpdateTimestamp } = props;
+
+	const { workColumns: columns } = useWorkColumns(tableId);
+
 
 	return (
 		<EditorTable>
@@ -38,11 +41,13 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{columns.map((a) => (
+				{columns.items.map((a) => (
 					<DatabaseTableColumn
-						key={a.physicalName}
-						tableDefine={tableDefine}
-						{...a}
+						key={a.id}
+						tableId={tableId}
+						tableLastUpdateTimestamp={tableLastUpdateTimestamp}
+						columnId={a.id}
+						columnsLastUpdateTimestamp={a.lastUpdateTimestamp}
 					/>
 				))}
 				<TableRow>add</TableRow>

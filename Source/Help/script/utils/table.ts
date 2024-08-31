@@ -257,8 +257,14 @@ export interface WorkDefine extends WorkUpdateState {
 	tableName: string;
 }
 
+export interface WorkForeignKey {
+	tableId: string;
+	columnId: string;
+}
+
 export interface WorkColumn extends TableColumn, WorkUpdateState {
 	id: string;
+	foreignKeyId: WorkForeignKey | undefined;
 }
 
 export interface WorkColumns extends WorkUpdateState {
@@ -298,6 +304,7 @@ export function convertWorkTable(tableDefine: TableDefine): WorkTable {
 				...a,
 				id: crypto.randomUUID(),
 				lastUpdateTimestamp: 0,
+				foreignKeyId: undefined,
 			})),
 		},
 		indexes: {
@@ -310,4 +317,30 @@ export function convertWorkTable(tableDefine: TableDefine): WorkTable {
 			})),
 		},
 	};
+}
+
+export function updateRelations(workTables: WorkTable[]): void {
+	for (const workTable of workTables) {
+		for (const workColumn of workTable.columns.items) {
+			const foreignKey = workColumn.foreignKey;
+			if (foreignKey) {
+				const targetTable = workTables.find(
+					(a) => a.define.tableName === foreignKey.table,
+				);
+				if (!targetTable) {
+					continue;
+				}
+				const targetColumn = targetTable.columns.items.find(
+					(a) => a.physicalName === foreignKey.column,
+				);
+				if (!targetColumn) {
+					continue;
+				}
+				workColumn.foreignKeyId = {
+					tableId: targetTable.id,
+					columnId: targetColumn.id,
+				};
+			}
+		}
+	}
 }

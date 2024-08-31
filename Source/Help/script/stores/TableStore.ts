@@ -4,7 +4,6 @@ import type {
 	WorkColumn,
 	WorkColumns,
 	WorkDefine,
-	WorkIdMapping,
 	WorkIndex,
 	WorkIndexes,
 	WorkTable,
@@ -43,8 +42,8 @@ export function useWorkDefine(tableId: string) {
 	const { workTable, updateWorkTable } = useWorkTable(tableId);
 
 	return {
-		define: workTable.define,
-		updateDefine: (newValue: Omit<WorkDefine, "lastUpdateTimestamp">) => {
+		workDefine: workTable.define,
+		updateWorkDefine: (newValue: Omit<WorkDefine, "lastUpdateTimestamp">) => {
 			updateWorkTable({
 				...workTable,
 				define: {
@@ -54,4 +53,49 @@ export function useWorkDefine(tableId: string) {
 			});
 		},
 	};
+}
+
+export function useWorkColumns(tableId: string) {
+	const { workTable, updateWorkTable } = useWorkTable(tableId);
+
+	return {
+		workColumns: workTable.columns,
+		updateWorkColumns: (newValue: Omit<WorkColumns, "lastUpdateTimestamp">) => {
+			updateWorkTable({
+				...workTable,
+				columns: {
+					...newValue,
+					lastUpdateTimestamp: getNow(),
+				},
+			});
+		},
+	};
+}
+
+export function useWorkColumn(tableId: string, columnId: string) {
+	const { workColumns, updateWorkColumns } = useWorkColumns(tableId);
+
+	const workColumn = workColumns.items.find((a) => a.id === columnId);
+	if (!workColumn) {
+		throw new Error(JSON.stringify({ tableId, columnId }));
+	}
+
+	return {
+		workColumn: workColumn,
+		updateWorkColumn: (newValue: Omit<WorkColumn, "lastUpdateTimestamp">) => {
+			const index = workColumns.items.indexOf(workColumn);
+			if(index === -1) {
+				throw new Error(JSON.stringify({ tableId, columnId }));
+			}
+
+			workColumns.items[index] = {
+				...newValue,
+				lastUpdateTimestamp: getNow(),
+			};
+
+			updateWorkColumns({
+				...workColumns,
+			})
+		}
+	}
 }

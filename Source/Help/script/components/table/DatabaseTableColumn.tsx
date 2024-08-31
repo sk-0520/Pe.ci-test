@@ -8,11 +8,11 @@ import {
 	TableRow,
 	TextField,
 } from "@mui/material";
-import { useAtom } from "jotai";
-import type { BaseSyntheticEvent, FC } from "react";
+import { useAtom, useAtomValue } from "jotai";
+import { type BaseSyntheticEvent, type FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { TableDefinesAtom } from "../../stores/TableStore";
-import type { TableDefineProps } from "../../types/table";
+import { WorkTablesAtom, useWorkColumn } from "../../stores/TableStore";
+import type { TableBaseProps, TableDefineProps } from "../../types/table";
 import type { TableColumn } from "../../utils/table";
 import {
 	EditorCell,
@@ -57,31 +57,49 @@ interface InputValues {
 	comment: string;
 }
 
-interface DatabaseTableColumnProps extends TableColumn, TableDefineProps {}
+interface DatabaseTableColumnProps extends TableBaseProps {
+	columnId: string;
+	columnsLastUpdateTimestamp: number;
+}
 
 export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	props: DatabaseTableColumnProps,
 ) => {
+	const { tableId, columnId } = props;
+	const { workColumn, updateWorkColumn } = useWorkColumn(tableId, columnId);
 	const {
-		tableDefine,
+		id,
 		isPrimary,
 		notNull,
 		foreignKey,
+		foreignKeyId,
 		logical,
 		physicalName,
 		cliType,
 		checkConstraints,
 		comment,
-	} = props;
-	const [_, setTableDefines] = useAtom(TableDefinesAtom);
+	} = workColumn;
+
+	const workTables = useAtomValue(WorkTablesAtom);
+
+	const foreignTables = workTables.filter((a) => a.id !== tableId);
+
+	const foreignTable = foreignKeyId
+		? foreignTables.find((a) => a.id === foreignKeyId.tableId)
+		: undefined;
+	const foreignColumn =
+		foreignTable && foreignKeyId
+			? foreignTable.columns.items.find((a) => a.id === foreignKeyId.columnId)
+			: undefined;
+
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
 			isPrimary: isPrimary,
 			notNull: notNull,
-			foreignKeyTable: foreignKey?.table ?? "",
-			foreignKeyColumn: foreignKey?.column ?? "",
+			foreignKeyTable: foreignTable?.id,
+			foreignKeyColumn: foreignColumn?.id,
 			logicalName: logical.name,
 			logicalType: logical.type,
 			physicalName: physicalName,
@@ -95,12 +113,27 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 		data: InputValues,
 		event?: BaseSyntheticEvent<object>,
 	): void {
-		// setTableDefines((state) => {
-		// 	const index = state.indexOf(tableDefine);
-		// 	const current = state[index];
-		// 	return [...state];
-		// });
-		console.debug(data);
+		updateWorkColumn({
+			id: id,
+			isPrimary: data.isPrimary,
+			notNull: data.notNull,
+			foreignKey:
+				data.foreignKeyTable && data.foreignKeyColumn
+					? {
+							table: data.foreignKeyTable,
+							column: data.foreignKeyColumn,
+						}
+					: undefined,
+			foreignKeyId: undefined, // 初回だけでしか使わない？
+			logical: {
+				name: data.logicalName,
+				type: data.logicalType,
+			},
+			physicalName: data.physicalName,
+			cliType: data.cliType,
+			checkConstraints: data.checkConstraints,
+			comment: data.comment,
+		});
 	}
 
 	return (
@@ -133,7 +166,14 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 								{...field}
 								sx={{ fontSize: "80%" }}
 								onBlur={handleSubmit(handleInput)}
-							/>
+							>
+								<MenuItem value="">{""}</MenuItem>
+								{foreignTables.map((a) => (
+									<MenuItem key={a.id} value={a.id}>
+										{a.define.tableName}
+									</MenuItem>
+								))}
+							</EditorSelect>
 						)}
 					/>
 					<Controller
@@ -144,7 +184,13 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 								{...field}
 								sx={{ fontSize: "80%" }}
 								onBlur={handleSubmit(handleInput)}
-							/>
+							>
+								{foreignTable?.columns.items.map((a) => (
+										<MenuItem key={a.id} value={a.id}>
+											{a.logical.name}
+										</MenuItem>
+									))}
+							</EditorSelect>
 						)}
 					/>
 				</Box>
