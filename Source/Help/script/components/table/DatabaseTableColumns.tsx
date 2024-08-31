@@ -12,16 +12,14 @@ import type { TableColumn } from "../../utils/table";
 import { DatabaseTableColumn } from "./DatabaseTableColumn";
 import { EditorCell, EditorTable } from "./editor";
 
-interface DatabaseTableColumnsProps extends TableBaseProps {
-}
+interface DatabaseTableColumnsProps extends TableBaseProps {}
 
 export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 	props: DatabaseTableColumnsProps,
 ) => {
-	const { tableId, tableLastUpdateTimestamp } = props;
+	const { tableId } = props;
 
 	const { workColumns: columns } = useWorkColumns(tableId);
-
 
 	return (
 		<EditorTable>
@@ -45,7 +43,6 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 					<DatabaseTableColumn
 						key={a.id}
 						tableId={tableId}
-						tableLastUpdateTimestamp={tableLastUpdateTimestamp}
 						columnId={a.id}
 						columnsLastUpdateTimestamp={a.lastUpdateTimestamp}
 					/>

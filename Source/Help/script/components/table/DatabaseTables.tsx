@@ -1,6 +1,14 @@
-import { Box, Button, Divider, FormControl } from "@mui/material";
+import {
+	Box,
+	Button,
+	Divider,
+	FormControl,
+	MenuItem,
+	Select,
+	type SelectChangeEvent,
+} from "@mui/material";
 import { useAtom } from "jotai";
-import { type FC, useMemo } from "react";
+import { type FC, type ReactNode, useEffect, useMemo, useState } from "react";
 import { WorkTablesAtom } from "../../stores/TableStore";
 import {
 	convertTable,
@@ -20,6 +28,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 ) => {
 	const { markdown } = props;
 	const [workTables, setWorkTables] = useAtom(WorkTablesAtom);
+	const [selectedTableId, setSelectedTableId] = useState<string>("");
 
 	const tables = useMemo(() => {
 		console.debug("memo!");
@@ -36,14 +45,40 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	}, [markdown]);
 	setWorkTables(tables);
 
+	useEffect(() => {
+		if (tables.length) {
+			setSelectedTableId(tables[0].id);
+		}
+	}, [tables]);
+
+	if (!workTables.length || !selectedTableId) {
+		return <>...loading...</>;
+	}
+
+	function handleChange(
+		event: SelectChangeEvent<string>,
+		child: ReactNode,
+	): void {
+		setSelectedTableId(event.target.value);
+	}
+
 	return (
-		<>
-			{tables.map((a, i) => (
-				<>
-					{i !== 0 && <Divider sx={{ marginBlock: "5rem" }} />}
-					<DatabaseTable key={a.id} tableId={a.id}  tableLastUpdateTimestamp={a.lastUpdateTimestamp}/>
-				</>
-			))}
+		<Box>
+			<Box>
+				<Select fullWidth value={selectedTableId} onChange={handleChange}>
+					{workTables.map((a) => (
+						<MenuItem key={a.id} value={a.id}>
+							{a.define.tableName}
+						</MenuItem>
+					))}
+				</Select>
+			</Box>
+
+			<Divider sx={{ marginBlock: "1rem" }} />
+
+			<Box>
+				<DatabaseTable tableId={selectedTableId} />
+			</Box>
 
 			<Box>
 				<Button>Copy Markdown</Button>
@@ -65,6 +100,6 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			>
 				<pre>{JSON.stringify(workTables, undefined, 2)}</pre>
 			</Box>
-		</>
+		</Box>
 	);
 };

@@ -6,5 +6,4 @@ export interface TableDefineProps {
 
 export interface TableBaseProps {
 	tableId: string;
-	tableLastUpdateTimestamp: number;
 }

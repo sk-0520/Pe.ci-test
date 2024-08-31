@@ -13,12 +13,12 @@ interface DatabaseTableProps extends TableBaseProps {
 export const DatabaseTable: FC<DatabaseTableProps> = (
 	props: DatabaseTableProps,
 ) => {
-	const { tableId, tableLastUpdateTimestamp } = props;
+	const { tableId } = props;
 
 	return (
 		<>
-			<DatabaseTableDefine tableId={tableId} tableLastUpdateTimestamp={tableLastUpdateTimestamp} />
-			<DatabaseTableColumns tableId={tableId} tableLastUpdateTimestamp={tableLastUpdateTimestamp} />
+			<DatabaseTableDefine tableId={tableId} />
+			<DatabaseTableColumns tableId={tableId} />
 			{/* <DatabaseTableIndexes tableId={tableId} /> */}
 		</>
 	);
