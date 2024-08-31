@@ -1,4 +1,6 @@
 import {
+	Button,
+	type ButtonProps,
 	Checkbox,
 	type CheckboxProps,
 	Select,
@@ -29,4 +31,8 @@ export function EditorTextField(props: TextFieldProps) {
 
 export function EditorSelect(props: SelectProps) {
 	return <Select size="small" variant="standard" fullWidth {...props} />;
+}
+
+export function EditorButton(props: ButtonProps) {
+	return <Button variant="outlined" size="small"  {...props} />;
 }

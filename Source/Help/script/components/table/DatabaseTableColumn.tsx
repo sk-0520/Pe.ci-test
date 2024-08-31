@@ -19,6 +19,7 @@ import type {
 	WorkForeignKey,
 } from "../../utils/table";
 import {
+	EditorButton,
 	EditorCell,
 	EditorCheckbox,
 	EditorSelect,
@@ -48,22 +49,21 @@ const ClrMap = new Map([
 	["boolean", ["System.Boolean", "System.Int64"]],
 ]) as ReadonlyMap<string, ReadonlyArray<string>>;
 
-const CommonColumns: ReadonlyArray<string> = [
-	"CreatedTimestamp",
-	"CreatedAccount",
-	"CreatedProgramName",
-	"CreatedProgramVersion",
-	"UpdatedTimestamp",
-	"UpdatedAccount",
-	"UpdatedProgramName",
-	"UpdatedProgramVersion",
-	"UpdatedCount",
-];
+// const CommonColumns: ReadonlyArray<string> = [
+// 	"CreatedTimestamp",
+// 	"CreatedAccount",
+// 	"CreatedProgramName",
+// 	"CreatedProgramVersion",
+// 	"UpdatedTimestamp",
+// 	"UpdatedAccount",
+// 	"UpdatedProgramName",
+// 	"UpdatedProgramVersion",
+// 	"UpdatedCount",
+// ];
 
 interface InputValues {
 	isPrimary: boolean;
 	notNull: boolean;
-	foreignKey: string;
 	logicalName: string;
 	logicalType: string;
 	physicalName: string;
@@ -106,19 +106,12 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			? foreignTable.columns.items.find((a) => a.id === foreignKeyId.columnId)
 			: undefined;
 
-
-			console.debug(foreignTable && foreignColumn ? `ID: ${foreignTable.id}.${foreignColumn.id}`: 'no id')
-
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
 			isPrimary: isPrimary,
 			notNull: notNull,
-			foreignKey:
-				foreignTable && foreignColumn
-					? `${foreignTable.id}.${foreignColumn.id}`
-					: "",
 			logicalName: logical.name,
 			logicalType: logical.type,
 			physicalName: physicalName,
@@ -134,30 +127,15 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	): void {
 		let foreignKey: ForeignKey | undefined = undefined;
 		let foreignKeyId: WorkForeignKey | undefined = undefined;
-		if (data.foreignKey) {
-			const [foreignKeyTableId, foreignKeyColumnId] =
-				data.foreignKey.split(".");
-			foreignKeyId = {
-				tableId: foreignKeyTableId,
-				columnId: foreignKeyColumnId,
+		if (foreignTable && foreignColumn) {
+			foreignKey = {
+				table: foreignTable.define.tableName,
+				column: foreignColumn.physicalName,
 			};
-			const foreignKeyTable = foreignTables.find(
-				(a) => a.id === foreignKeyTableId,
-			);
-			if (foreignKeyTable) {
-				const foreignKeyColumn = foreignKeyTable.columns.items.find(
-					(a) => a.id === foreignKeyColumnId,
-				);
-				if (foreignKeyColumn) {
-					foreignKey = {
-						table: foreignKeyTable.define.tableName,
-						column: foreignKeyColumn.logical.name,
-					};
-				}
-			}
-			if (!foreignKey) {
-				foreignKeyId = undefined;
-			}
+			foreignKeyId = {
+				tableId: foreignTable.id,
+				columnId: foreignColumn.id,
+			};
 		}
 
 		updateWorkColumn({
@@ -198,33 +176,11 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 				/>
 			</EditorCell>
 			<EditorCell>
-				<Box>
-					<Controller
-						name="foreignKey"
-						control={control}
-						render={({ field, formState: { errors } }) => (
-							<EditorSelect
-								{...field}
-								sx={{ fontSize: "80%" }}
-								onBlur={handleSubmit(handleInput)}
-							>
-								<MenuItem value="">{"未設定"}</MenuItem>
-								{foreignTables.map((a) => (
-									<Fragment key={a.id}>
-										<ListSubheader>{a.define.tableName}</ListSubheader>
-										{a.columns.items
-											.filter((a) => !CommonColumns.includes(a.physicalName))
-											.map((b) => (
-												<MenuItem key={b.id} value={`${a.id}.${b.id}`}>
-													{b.logical.name}
-												</MenuItem>
-											))}
-									</Fragment>
-								))}
-							</EditorSelect>
-						)}
-					/>
-				</Box>
+				<EditorButton>
+					{foreignTable && foreignColumn
+						? `${foreignTable.define.tableName}.${foreignColumn.physicalName}`
+						: "未選択"}
+				</EditorButton>
 			</EditorCell>
 			<EditorCell>
 				<Controller

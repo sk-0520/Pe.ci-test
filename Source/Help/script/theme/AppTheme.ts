@@ -11,6 +11,9 @@ export const AppTheme: ThemeOptions = {
 		},
 	},
 	typography: {
+		button: {
+			textTransform: "none",
+		},
 		fontFamily: [
 			"Verdana",
 			"Skia-Regular_Condensed",
