@@ -34,5 +34,5 @@ export function EditorSelect(props: SelectProps) {
 }
 
 export function EditorButton(props: ButtonProps) {
-	return <Button variant="outlined" size="small"  {...props} />;
+	return <Button variant="outlined" size="small" {...props} />;
 }

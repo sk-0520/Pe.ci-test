@@ -84,7 +84,7 @@ export function useWorkColumn(tableId: string, columnId: string) {
 		workColumn: workColumn,
 		updateWorkColumn: (newValue: Omit<WorkColumn, "lastUpdateTimestamp">) => {
 			const index = workColumns.items.indexOf(workColumn);
-			if(index === -1) {
+			if (index === -1) {
 				throw new Error(JSON.stringify({ tableId, columnId }));
 			}
 
@@ -95,7 +95,7 @@ export function useWorkColumn(tableId: string, columnId: string) {
 
 			updateWorkColumns({
 				...workColumns,
-			})
-		}
-	}
+			});
+		},
+	};
 }

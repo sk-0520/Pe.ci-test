@@ -199,7 +199,9 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 									<Fragment key={a.id}>
 										<ListSubheader>{a.define.tableName}</ListSubheader>
 										{a.columns.items
-											.filter((a) => !CommonColumnNames.includes(a.physicalName))
+											.filter(
+												(a) => !CommonColumnNames.includes(a.physicalName),
+											)
 											.map((b) => (
 												<MenuItem key={b.id} value={`${a.id}.${b.id}`}>
 													{b.logical.name}

@@ -7,8 +7,7 @@ import { DatabaseTableColumns } from "./DatabaseTableColumns";
 import { DatabaseTableDefine } from "./DatabaseTableDefine";
 import { DatabaseTableIndexes } from "./DatabaseTableIndexes";
 
-interface DatabaseTableProps extends TableBaseProps {
-}
+interface DatabaseTableProps extends TableBaseProps {}
 
 export const DatabaseTable: FC<DatabaseTableProps> = (
 	props: DatabaseTableProps,

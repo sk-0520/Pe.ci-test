@@ -1,9 +1,7 @@
 import { TextField } from "@mui/material";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import {
-	useWorkDefine,
-} from "../../stores/TableStore";
+import { useWorkDefine } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
 
 interface InputValues {
