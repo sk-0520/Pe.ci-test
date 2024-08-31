@@ -2,8 +2,7 @@ import { TextField } from "@mui/material";
 import { useAtom } from "jotai";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useWorkOptionsAtom, useWorkTableAtom } from "../../stores/TableStore";
-import type { TableDefineProps } from "../../types/table";
+import { WorkTableAtom, useWorkTable } from "../../stores/TableStore";
 
 interface InputValues {
 	name: string;
@@ -17,8 +16,11 @@ export const DatabaseTableOptions: FC<DatabaseTableOptionsProps> = (
 	props: DatabaseTableOptionsProps,
 ) => {
 	const { tableId } = props;
-	const  workOptionsAtom = useWorkOptionsAtom(tableId);
-	const [workOptions, setWorkOptions] = useAtom(workOptionsAtom);
+
+	// const [workTable, setWorkTable] = useAtom(WorkTableAtom(tableId));
+	// const workOptions = workTable.options;
+	const {workTable, updateWorkTable: update} = useWorkTable(tableId);
+	const workOptions = workTable.options;
 
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
@@ -32,10 +34,13 @@ export const DatabaseTableOptions: FC<DatabaseTableOptionsProps> = (
 		data: InputValues,
 		event?: BaseSyntheticEvent<object>,
 	): void {
-		setWorkOptions(state => ({
-			...state,
-			name: data.name
-		}));
+		update({
+			...workTable,
+			options: {
+				id: workTable.options.id,
+				tableName: data.name
+			}
+		});
 	}
 
 	return (

@@ -21,6 +21,8 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	const [workTables, setWorkTables] = useAtom(WorkTablesAtom);
 
 	const tables = useMemo(() => {
+		console.debug("memo!")
+
 		return splitRawEntities(markdown)
 			.map((a) => splitRawSection(a))
 			.sort((a, b) => a.table.localeCompare(b.table))
@@ -28,6 +30,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			.map(a => convertWorkTable(a))
 	}, [markdown]);
 	setWorkTables(tables);
+	console.debug(tables)
 
 	return (
 		<>
