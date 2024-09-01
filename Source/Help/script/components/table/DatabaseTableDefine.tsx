@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import type { BaseSyntheticEvent, FC } from "react";
+import { type BaseSyntheticEvent, type FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useWorkDefine } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
@@ -14,18 +14,19 @@ export const DatabaseTableDefine: FC<DatabaseTableDefineProps> = (
 	props: DatabaseTableDefineProps,
 ) => {
 	const { tableId } = props;
-
 	const { workDefine, updateWorkDefine } = useWorkDefine(tableId);
 
-	console.debug(workDefine.tableName)
-
-	const { control, handleSubmit } = useForm<InputValues>({
+	const defaultValues: InputValues = {
+		name: workDefine.tableName,
+	};
+	const { control, handleSubmit, reset } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
-		defaultValues: {
-			name: workDefine.tableName,
-		},
+		defaultValues: defaultValues,
+		values: defaultValues,
 	});
+
+	console.debug(`title: ${workDefine.tableName}`);
 
 	function handleInput(
 		data: InputValues,
@@ -35,6 +36,7 @@ export const DatabaseTableDefine: FC<DatabaseTableDefineProps> = (
 			...workDefine,
 			tableName: data.name,
 		});
+		//reset();
 	}
 
 	return (
