@@ -1,17 +1,23 @@
 import { splitLines, trim } from "./string";
 
-export const CommonColumnNames: ReadonlyArray<string> = [
-	// create
+export const CommonCreatedColumnNames: ReadonlyArray<string> = [
 	"CreatedTimestamp",
 	"CreatedAccount",
 	"CreatedProgramName",
 	"CreatedProgramVersion",
-	// update
+];
+
+export const CommonUpdatedColumnNames: ReadonlyArray<string> = [
 	"UpdatedTimestamp",
 	"UpdatedAccount",
 	"UpdatedProgramName",
 	"UpdatedProgramVersion",
 	"UpdatedCount",
+];
+
+export const CommonColumnNames: ReadonlyArray<string> = [
+	...CommonCreatedColumnNames,
+	...CommonUpdatedColumnNames,
 ];
 
 const NoneIndex = "*NONE*";

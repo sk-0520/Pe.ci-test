@@ -15,6 +15,8 @@ import { WorkTablesAtom, useWorkColumn } from "../../stores/TableStore";
 import type { TableBaseProps, TableDefineProps } from "../../types/table";
 import {
 	CommonColumnNames,
+	CommonCreatedColumnNames,
+	CommonUpdatedColumnNames,
 	type ForeignKey,
 	type TableColumn,
 	type WorkColumn,
@@ -121,7 +123,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			? foreignTable.columns.items.find((a) => a.id === foreignKeyId.columnId)
 			: undefined;
 
-	const { control, handleSubmit } = useForm<InputValues>({
+	const { control, handleSubmit, watch } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
@@ -139,6 +141,16 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			comment: comment,
 		},
 	});
+
+	const isCommonCreatedColumn = CommonCreatedColumnNames.includes(
+		watch("physicalName"),
+	);
+	const isCommonUpdatedColumn = CommonUpdatedColumnNames.includes(
+		watch("physicalName"),
+	);
+	const isCommonColumn = isCommonCreatedColumn || isCommonUpdatedColumn;
+
+	const physicalType = DatabaseTypeMap.get(watch("logicalType")) ?? "";
 
 	function handleInput(
 		data: InputValues,
@@ -190,13 +202,21 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	}
 
 	return (
-		<TableRow>
+		<TableRow
+			sx={{
+				background: isCommonColumn ? "lightgray" : undefined,
+			}}
+		>
 			<EditorCell>
 				<Controller
 					name="isPrimary"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<EditorCheckbox checked={field.value} {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox
+							checked={field.value}
+							{...field}
+							onBlur={handleSubmit(handleInput)}
+						/>
 					)}
 				/>
 			</EditorCell>
@@ -205,7 +225,11 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					name="notNull"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<EditorCheckbox checked={field.value} {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox
+							checked={field.value}
+							{...field}
+							onBlur={handleSubmit(handleInput)}
+						/>
 					)}
 				/>
 			</EditorCell>
@@ -284,7 +308,11 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 				/>
 			</EditorCell>
 			<EditorCell>
-				<EditorTextField />
+				<EditorTextField
+					value={physicalType}
+					inputProps={{ readonly: true }}
+					sx={{ background: "lightgray" }}
+				/>
 			</EditorCell>
 			<EditorCell>
 				<Controller
