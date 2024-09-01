@@ -41,7 +41,36 @@ const DatabaseTypeMap = new Map([
 	["boolean", "integer"],
 ]) as ReadonlyMap<string, string>;
 
-const ClrMap = new Map([
+const CliFullNames = [
+	"System.String",
+	"System.Int64",
+	"System.Decimal",
+	"System.Byte[]",
+	"System.Boolean",
+	"System.Single",
+	"System.Double",
+	"System.Guid",
+	"System.DateTime",
+	"System.Version",
+	"System.TimeSpan",
+] as const;
+type CliFullName = (typeof CliFullNames)[number];
+
+const CliTypeMap = new Map<CliFullName, string>([
+	["System.String", "string"],
+	["System.Int64", "long"],
+	["System.Decimal", "decimal"],
+	["System.Byte[]", "byte[]"],
+	["System.Boolean", "bool"],
+	["System.Single", "float"],
+	["System.Double", "double"],
+	["System.Guid", "Guid"],
+	["System.DateTime", "DateTime"],
+	["System.Version", "Version"],
+	["System.TimeSpan", "TimeSpan"],
+]);
+
+const ClrMap = new Map<string, Array<CliFullName>>([
 	["integer", ["System.Int64"]],
 	["real", ["System.Decimal", "System.Single", "System.Double"]],
 	[
@@ -320,17 +349,11 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					control={control}
 					render={({ field, formState: { errors } }) => (
 						<EditorSelect {...field} onBlur={handleSubmit(handleInput)}>
-							<MenuItem value="System.String">string</MenuItem>
-							<MenuItem value="System.Int64">long</MenuItem>
-							<MenuItem value="System.Decimal">decimal</MenuItem>
-							<MenuItem value="System.Byte[]">byte[]</MenuItem>
-							<MenuItem value="System.Boolean">bool</MenuItem>
-							<MenuItem value="System.Single">float</MenuItem>
-							<MenuItem value="System.Double">double</MenuItem>
-							<MenuItem value="System.Guid">Guid</MenuItem>
-							<MenuItem value="System.DateTime">DateTime</MenuItem>
-							<MenuItem value="System.Version">Version</MenuItem>
-							<MenuItem value="System.TimeSpan">TimeSpan</MenuItem>
+							{CliFullNames.map((a) => (
+								<MenuItem key={a} value={a}>
+									{CliTypeMap.get(a)}
+								</MenuItem>
+							))}
 						</EditorSelect>
 					)}
 				/>

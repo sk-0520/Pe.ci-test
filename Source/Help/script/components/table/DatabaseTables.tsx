@@ -6,6 +6,7 @@ import {
 	MenuItem,
 	Select,
 	type SelectChangeEvent,
+	useTheme,
 } from "@mui/material";
 import { useAtom } from "jotai";
 import { type FC, type ReactNode, useEffect, useMemo, useState } from "react";
@@ -27,6 +28,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	props: DatabaseTablesProps,
 ) => {
 	const { markdown } = props;
+	const theme = useTheme();
 	const [workTables, setWorkTables] = useAtom(WorkTablesAtom);
 	const [selectedTableId, setSelectedTableId] = useState<string>("");
 
@@ -65,7 +67,19 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	return (
 		<Box>
 			<Box>
-				<Select fullWidth value={selectedTableId} onChange={handleChange}>
+				<Select
+					fullWidth
+					value={selectedTableId}
+					onChange={handleChange}
+					sx={{
+						background: theme.palette.primary.contrastText,
+						color: theme.palette.primary.dark,
+						fontWeight: "bold",
+						"& .MuiOutlinedInput-notchedOutline": {
+							borderRadius: 0
+						}
+					}}
+				>
 					{workTables.map((a) => (
 						<MenuItem key={a.id} value={a.id}>
 							{a.define.tableName}
