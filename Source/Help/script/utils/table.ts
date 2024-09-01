@@ -20,6 +20,69 @@ export const CommonColumnNames: ReadonlyArray<string> = [
 	...CommonUpdatedColumnNames,
 ];
 
+export const Sqlite3BasicTypes = ["integer", "real", "text", "blob"] as const;
+export const Sqlite3AffinityTypes = [
+	"datetime", // sqlite3 的には数値っぽいから違うんやけどね
+	"boolean",
+] as const;
+export type Sqlite3BasicType = (typeof Sqlite3BasicTypes)[number];
+export type Sqlite3AffinityType = (typeof Sqlite3BasicTypes)[number];
+export const Sqlite3Types = [...Sqlite3BasicTypes, ...Sqlite3AffinityTypes] as const;
+export type Sqlite3Type = (typeof Sqlite3Types)[number];
+
+export const SqliteTypeMap = new Map<Sqlite3Type, Sqlite3BasicType>([
+	// 通常
+	["integer", "integer"],
+	["real", "real"],
+	["text", "text"],
+	["blob", "blob"],
+	// 意味だけ
+	["datetime", "text"],
+	["boolean", "integer"],
+]) as ReadonlyMap<Sqlite3Type, Sqlite3BasicType>;
+
+export const CliTypeFullNames = [
+	"System.String",
+	"System.Int64",
+	"System.Decimal",
+	"System.Byte[]",
+	"System.Boolean",
+	"System.Single",
+	"System.Double",
+	"System.Guid",
+	"System.DateTime",
+	"System.Version",
+	"System.TimeSpan",
+] as const;
+export type CliTypeFullName = (typeof CliTypeFullNames)[number];
+
+export const CliTypeMap = new Map<CliTypeFullName, string>([
+	["System.String", "string"],
+	["System.Int64", "long"],
+	["System.Decimal", "decimal"],
+	["System.Byte[]", "byte[]"],
+	["System.Boolean", "bool"],
+	["System.Single", "float"],
+	["System.Double", "double"],
+	["System.Guid", "Guid"],
+	["System.DateTime", "DateTime"],
+	["System.Version", "Version"],
+	["System.TimeSpan", "TimeSpan"],
+]);
+
+export const ClrMap = new Map<Sqlite3Type, Array<CliTypeFullName>>([
+	["integer", ["System.Int64"]],
+	["real", ["System.Decimal", "System.Single", "System.Double"]],
+	[
+		"text",
+		["System.String", "System.Guid", "System.Version", "System.TimeSpan"],
+	],
+	["blob", ["System.Byte[]"]],
+	["datetime", ["System.DateTime", "System.String"]],
+	["boolean", ["System.Boolean", "System.Int64"]],
+]) as ReadonlyMap<Sqlite3Type, ReadonlyArray<string>>;
+
+
 const NoneIndex = "*NONE*";
 
 const LayoutColumnIndex = {
@@ -59,10 +122,10 @@ export interface TableColumn {
 	foreignKey: ForeignKey | undefined;
 	logical: {
 		name: string;
-		type: string;
+		type: Sqlite3Type;
 	};
 	physicalName: string;
-	cliType: string;
+	cliType: CliTypeFullName;
 	checkConstraints: string;
 	comment: string;
 }
@@ -182,8 +245,8 @@ export function convertColumns(lines: string[]): TableColumn[] {
 		const foreignKey = columns[LayoutColumnIndex.foreignKey];
 		const logicalName = columns[LayoutColumnIndex.logicalName];
 		const physicalName = columns[LayoutColumnIndex.physicalName];
-		const logicalType = columns[LayoutColumnIndex.logicalType];
-		const cliType = columns[LayoutColumnIndex.cliType];
+		const logicalType = columns[LayoutColumnIndex.logicalType] as Sqlite3Type; //TODO: 値チェック
+		const cliType = columns[LayoutColumnIndex.cliType]as CliTypeFullName; //TODO: 値チェック
 		const check = columns[LayoutColumnIndex.check];
 		const comment = columns[LayoutColumnIndex.comment];
 

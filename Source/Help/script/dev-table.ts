@@ -44,7 +44,7 @@ enum MarkdownTablePosition {
 	right = 2,
 }
 
-const DatabaseTypeMap = new Map([
+export const DatabaseTypeMap = new Map([
 	// 通常
 	["integer", "integer"],
 	["real", "real"],

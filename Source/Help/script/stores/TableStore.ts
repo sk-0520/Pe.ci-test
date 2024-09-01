@@ -1,12 +1,9 @@
-import { type PrimitiveAtom, atom, useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { useEffect, useState } from "react";
 import type {
-	TableDefine,
 	WorkColumn,
 	WorkColumns,
 	WorkDefine,
-	WorkIndex,
-	WorkIndexes,
 	WorkTable,
 } from "../utils/table";
 

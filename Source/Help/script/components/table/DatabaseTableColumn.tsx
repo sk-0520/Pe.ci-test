@@ -1,24 +1,19 @@
-import {
-	Box,
-	Checkbox,
-	ListItem,
-	ListSubheader,
-	MenuItem,
-	Select,
-	TableRow,
-	TextField,
-} from "@mui/material";
-import { useAtom, useAtomValue } from "jotai";
-import { type BaseSyntheticEvent, type FC, Fragment, useState } from "react";
+import { Box, ListSubheader, MenuItem, TableRow } from "@mui/material";
+import { useAtomValue } from "jotai";
+import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { WorkTablesAtom, useWorkColumn } from "../../stores/TableStore";
-import type { TableBaseProps, TableDefineProps } from "../../types/table";
+import type { TableBaseProps } from "../../types/table";
 import {
+	type CliTypeFullName,
+	CliTypeFullNames,
+	CliTypeMap,
 	CommonColumnNames,
 	CommonCreatedColumnNames,
 	CommonUpdatedColumnNames,
 	type ForeignKey,
-	type TableColumn,
+	type Sqlite3Type,
+	SqliteTypeMap,
 	type WorkColumn,
 	type WorkForeignKey,
 	type WorkTable,
@@ -30,66 +25,14 @@ import {
 	EditorTextField,
 } from "./editor";
 
-const DatabaseTypeMap = new Map([
-	// 通常
-	["integer", "integer"],
-	["real", "real"],
-	["text", "text"],
-	["blob", "blob"],
-	// 意味だけ
-	["datetime", "text"],
-	["boolean", "integer"],
-]) as ReadonlyMap<string, string>;
-
-const CliFullNames = [
-	"System.String",
-	"System.Int64",
-	"System.Decimal",
-	"System.Byte[]",
-	"System.Boolean",
-	"System.Single",
-	"System.Double",
-	"System.Guid",
-	"System.DateTime",
-	"System.Version",
-	"System.TimeSpan",
-] as const;
-type CliFullName = (typeof CliFullNames)[number];
-
-const CliTypeMap = new Map<CliFullName, string>([
-	["System.String", "string"],
-	["System.Int64", "long"],
-	["System.Decimal", "decimal"],
-	["System.Byte[]", "byte[]"],
-	["System.Boolean", "bool"],
-	["System.Single", "float"],
-	["System.Double", "double"],
-	["System.Guid", "Guid"],
-	["System.DateTime", "DateTime"],
-	["System.Version", "Version"],
-	["System.TimeSpan", "TimeSpan"],
-]);
-
-const ClrMap = new Map<string, Array<CliFullName>>([
-	["integer", ["System.Int64"]],
-	["real", ["System.Decimal", "System.Single", "System.Double"]],
-	[
-		"text",
-		["System.String", "System.Guid", "System.Version", "System.TimeSpan"],
-	],
-	["blob", ["System.Byte[]"]],
-	["datetime", ["System.DateTime", "System.String"]],
-	["boolean", ["System.Boolean", "System.Int64"]],
-]) as ReadonlyMap<string, ReadonlyArray<string>>;
-
 interface InputValues {
 	isPrimary: boolean;
 	notNull: boolean;
 	foreignKey: string;
 	logicalName: string;
-	logicalType: string;
+	logicalType: Sqlite3Type;
 	physicalName: string;
-	cliType: string;
+	cliType: CliTypeFullName;
 	checkConstraints: string;
 	comment: string;
 }
@@ -179,7 +122,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	);
 	const isCommonColumn = isCommonCreatedColumn || isCommonUpdatedColumn;
 
-	const physicalType = DatabaseTypeMap.get(watch("logicalType")) ?? "";
+	const physicalType = SqliteTypeMap.get(watch("logicalType"));
 
 	function handleInput(
 		data: InputValues,
@@ -349,7 +292,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					control={control}
 					render={({ field, formState: { errors } }) => (
 						<EditorSelect {...field} onBlur={handleSubmit(handleInput)}>
-							{CliFullNames.map((a) => (
+							{CliTypeFullNames.map((a) => (
 								<MenuItem key={a} value={a}>
 									{CliTypeMap.get(a)}
 								</MenuItem>

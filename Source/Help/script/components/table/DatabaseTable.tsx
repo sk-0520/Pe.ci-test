@@ -1,11 +1,7 @@
-import { useAtom } from "jotai";
 import type { FC } from "react";
-import { WorkTablesAtom } from "../../stores/TableStore";
-import type { TableBaseProps, TableDefineProps } from "../../types/table";
-import type { TableDefine } from "../../utils/table";
+import type { TableBaseProps } from "../../types/table";
 import { DatabaseTableColumns } from "./DatabaseTableColumns";
 import { DatabaseTableDefine } from "./DatabaseTableDefine";
-import { DatabaseTableIndexes } from "./DatabaseTableIndexes";
 
 interface DatabaseTableProps extends TableBaseProps {}
 

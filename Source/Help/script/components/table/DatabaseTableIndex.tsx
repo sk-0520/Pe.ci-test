@@ -1,4 +1,4 @@
-import { Checkbox, TableRow, TextField } from "@mui/material";
+import { TableRow } from "@mui/material";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import type { TableDefineProps } from "../../types/table";
@@ -16,7 +16,7 @@ interface DatabaseTableIndexProps extends TableIndex, TableDefineProps {}
 export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 	props: DatabaseTableIndexProps,
 ) => {
-	const { tableDefine, isUnique, name, columns } = props;
+	const { isUnique, name, columns } = props;
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",

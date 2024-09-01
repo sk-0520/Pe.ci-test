@@ -2,7 +2,6 @@ import {
 	Box,
 	Button,
 	Divider,
-	FormControl,
 	MenuItem,
 	Select,
 	type SelectChangeEvent,
@@ -76,8 +75,8 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 						color: theme.palette.primary.dark,
 						fontWeight: "bold",
 						"& .MuiOutlinedInput-notchedOutline": {
-							borderRadius: 0
-						}
+							borderRadius: 0,
+						},
 					}}
 				>
 					{workTables.map((a) => (

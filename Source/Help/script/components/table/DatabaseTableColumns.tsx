@@ -1,14 +1,11 @@
 import {
-	Table,
 	TableBody,
-	TableCell,
 	TableHead,
 	TableRow,
 } from "@mui/material";
 import type { FC } from "react";
 import { useWorkColumns } from "../../stores/TableStore";
-import type { TableBaseProps, TableDefineProps } from "../../types/table";
-import type { TableColumn } from "../../utils/table";
+import type { TableBaseProps } from "../../types/table";
 import { DatabaseTableColumn } from "./DatabaseTableColumn";
 import { EditorCell, EditorTable } from "./editor";
 
