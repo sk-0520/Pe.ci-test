@@ -17,7 +17,9 @@ import {
 	CommonColumnNames,
 	type ForeignKey,
 	type TableColumn,
+	type WorkColumn,
 	type WorkForeignKey,
+	type WorkTable,
 } from "../../utils/table";
 import {
 	EditorCell,
@@ -61,6 +63,15 @@ interface InputValues {
 	comment: string;
 }
 
+interface ForeignKeyItem<Type extends "Table" | "Column", Data> {
+	type: Type;
+	data: Data;
+}
+type ForeignKeyTableItem = ForeignKeyItem<"Table", WorkTable>;
+type ForeignKeyColumnItem = ForeignKeyItem<"Column", WorkColumn> & {
+	table: WorkTable;
+};
+
 interface DatabaseTableColumnProps extends TableBaseProps {
 	columnId: string;
 	columnsLastUpdateTimestamp: number;
@@ -86,6 +97,22 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	const workTables = useAtomValue(WorkTablesAtom);
 
 	const foreignTables = workTables.filter((a) => a.id !== tableId);
+	const foreignTableColumns = foreignTables.flatMap((a) => [
+		{
+			type: "Table",
+			data: a,
+		} satisfies ForeignKeyTableItem,
+		...a.columns.items
+			.filter((b) => !CommonColumnNames.includes(b.physicalName))
+			.map(
+				(b) =>
+					({
+						type: "Column",
+						data: b,
+						table: a,
+					}) satisfies ForeignKeyColumnItem,
+			),
+	]);
 
 	const foreignTable = foreignKeyId
 		? foreignTables.find((a) => a.id === foreignKeyId.tableId)
@@ -195,20 +222,27 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 								onBlur={handleSubmit(handleInput)}
 							>
 								<MenuItem value="">{"未設定"}</MenuItem>
-								{foreignTables.map((a) => (
-									<Fragment key={a.id}>
-										<ListSubheader>{a.define.tableName}</ListSubheader>
-										{a.columns.items
-											.filter(
-												(a) => !CommonColumnNames.includes(a.physicalName),
-											)
-											.map((b) => (
-												<MenuItem key={b.id} value={`${a.id}.${b.id}`}>
-													{b.logical.name}
+
+								{foreignTableColumns.map((a) => {
+									switch (a.type) {
+										case "Table":
+											return (
+												<ListSubheader key={a.data.id}>
+													{a.data.define.tableName}
+												</ListSubheader>
+											);
+
+										case "Column":
+											return (
+												<MenuItem
+													key={`${a.table.id}.${a.data.id}`}
+													value={`${a.table.id}.${a.data.id}`}
+												>
+													{a.data.physicalName}
 												</MenuItem>
-											))}
-									</Fragment>
-								))}
+											);
+									}
+								})}
 							</EditorSelect>
 						)}
 					/>

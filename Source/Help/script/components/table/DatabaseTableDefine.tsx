@@ -17,6 +17,8 @@ export const DatabaseTableDefine: FC<DatabaseTableDefineProps> = (
 
 	const { workDefine, updateWorkDefine } = useWorkDefine(tableId);
 
+	console.debug(workDefine.tableName)
+
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
