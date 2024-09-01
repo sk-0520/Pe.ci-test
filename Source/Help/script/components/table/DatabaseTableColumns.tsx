@@ -44,7 +44,6 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 						key={a.id}
 						tableId={tableId}
 						columnId={a.id}
-						columnsLastUpdateTimestamp={a.lastUpdateTimestamp}
 					/>
 				))}
 				<TableRow>add</TableRow>

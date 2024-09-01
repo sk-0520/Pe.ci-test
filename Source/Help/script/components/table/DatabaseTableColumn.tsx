@@ -74,7 +74,6 @@ type ForeignKeyColumnItem = ForeignKeyItem<"Column", WorkColumn> & {
 
 interface DatabaseTableColumnProps extends TableBaseProps {
 	columnId: string;
-	columnsLastUpdateTimestamp: number;
 }
 
 export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
@@ -197,7 +196,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					name="isPrimary"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<EditorCheckbox {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox checked={field.value} {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
 			</EditorCell>
@@ -206,7 +205,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					name="notNull"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<EditorCheckbox {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox checked={field.value} {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
 			</EditorCell>

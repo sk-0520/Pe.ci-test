@@ -277,6 +277,7 @@ export interface WorkForeignKey {
 }
 
 export interface WorkColumn extends TableColumn, WorkUpdateState {
+	/** カラム編集ID。 */
 	id: string;
 	foreignKeyId: WorkForeignKey | undefined;
 }
