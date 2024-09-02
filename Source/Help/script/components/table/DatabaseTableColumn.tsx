@@ -1,4 +1,10 @@
-import { Box, ListSubheader, MenuItem, TableRow, Typography } from "@mui/material";
+import {
+	Box,
+	ListSubheader,
+	MenuItem,
+	TableRow,
+	Typography,
+} from "@mui/material";
 import { useAtomValue } from "jotai";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -125,9 +131,8 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	const isCommonColumn = isCommonCreatedColumn || isCommonUpdatedColumn;
 
 	// この辺データ構造全くわからんわ
-	const physicalType = getElement(SqliteTypeMap, watch("logicalType"));
-	const selectableClrTypes = getElement(ClrMap, physicalType);
-	console.debug(clrType);
+	const physicalType = getElement(SqliteTypeMap,  watch("logicalType"));
+	const selectableClrTypes = getElement(ClrMap,  watch("logicalType"));
 	console.debug(selectableClrTypes);
 	if (!selectableClrTypes.includes(clrType)) {
 		const value = selectableClrTypes[0];
