@@ -12,7 +12,7 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 ) => {
 	const { tableId } = props;
 
-	const { workColumns: columns } = useWorkColumns(tableId);
+	const { workColumns } = useWorkColumns(tableId);
 
 	return (
 		<EditorTable>
@@ -32,7 +32,7 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{columns.items.map((a) => (
+				{workColumns.items.map((a) => (
 					<DatabaseTableColumn key={a.id} tableId={tableId} columnId={a.id} />
 				))}
 				<TableRow>add</TableRow>

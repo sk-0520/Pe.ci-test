@@ -4,6 +4,8 @@ import type {
 	WorkColumn,
 	WorkColumns,
 	WorkDefine,
+	WorkIndex,
+	WorkIndexes,
 	WorkTable,
 } from "../utils/table";
 
@@ -104,6 +106,50 @@ export function useWorkColumn(tableId: string, columnId: string) {
 
 			updateWorkColumns({
 				...workColumns,
+			});
+		},
+	};
+}
+
+export function useWorkIndexes(tableId: string) {
+	const { workTable, updateWorkTable } = useWorkTable(tableId);
+
+	return {
+		workIndexes: workTable.indexes,
+		updateWorkIndexes: (newValue: Omit<WorkIndexes, "lastUpdateTimestamp">) => {
+			updateWorkTable({
+				...workTable,
+				indexes: {
+					...newValue,
+					lastUpdateTimestamp: getNow(),
+				},
+			});
+		},
+	};
+}
+
+export function useWorkIndex(tableId: string, indexId: string) {
+	const { workIndexes, updateWorkIndexes } = useWorkIndexes(tableId);
+
+	const workIndex = workIndexes.items.find((a) => a.id === indexId);
+	if (!workIndex) {
+		throw new Error(JSON.stringify({ tableId, indexId }));
+	}
+
+	return {
+		workIndex,
+		updateWorkIndexes: (newValue: Omit<WorkIndex, "lastUpdateTimestamp">) => {
+			const index = workIndexes.items.indexOf(workIndex);
+			if (index === -1) {
+				throw new Error(JSON.stringify({ tableId, indexId }));
+			}
+
+			workIndexes.items[index] = {
+				...newValue,
+			};
+
+			updateWorkIndexes({
+				...workIndexes,
 			});
 		},
 	};

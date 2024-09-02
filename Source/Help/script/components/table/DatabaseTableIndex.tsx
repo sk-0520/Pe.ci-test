@@ -1,8 +1,8 @@
 import { TableRow } from "@mui/material";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
-import type { TableDefineProps } from "../../types/table";
-import type { TableIndex } from "../../utils/table";
+import { useWorkIndex } from "../../stores/TableStore";
+import type { TableBaseProps } from "../../types/table";
 import { EditorCell, EditorCheckbox, EditorTextField } from "./editor";
 
 interface InputValues {
@@ -11,19 +11,23 @@ interface InputValues {
 	columns: string[];
 }
 
-interface DatabaseTableIndexProps extends TableIndex, TableDefineProps {}
+interface DatabaseTableIndexProps extends TableBaseProps {
+	indexId: string;
+}
 
 export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 	props: DatabaseTableIndexProps,
 ) => {
-	const { isUnique, name, columns } = props;
+	const { tableId, indexId } = props;
+	const { workIndex } = useWorkIndex(tableId, indexId);
+
 	const { control, handleSubmit } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
-			isUnique: isUnique,
-			name: name,
-			columns: columns,
+			isUnique: workIndex.isUnique,
+			name: workIndex.name,
+			columns: workIndex.columns,
 		},
 	});
 
