@@ -27,7 +27,10 @@ export const Sqlite3AffinityTypes = [
 ] as const;
 export type Sqlite3BasicType = (typeof Sqlite3BasicTypes)[number];
 export type Sqlite3AffinityType = (typeof Sqlite3BasicTypes)[number];
-export const Sqlite3Types = [...Sqlite3BasicTypes, ...Sqlite3AffinityTypes] as const;
+export const Sqlite3Types = [
+	...Sqlite3BasicTypes,
+	...Sqlite3AffinityTypes,
+] as const;
 export type Sqlite3Type = (typeof Sqlite3Types)[number];
 
 export const SqliteTypeMap = new Map<Sqlite3Type, Sqlite3BasicType>([
@@ -41,7 +44,7 @@ export const SqliteTypeMap = new Map<Sqlite3Type, Sqlite3BasicType>([
 	["boolean", "integer"],
 ]) as ReadonlyMap<Sqlite3Type, Sqlite3BasicType>;
 
-export const CliTypeFullNames = [
+export const ClrTypeFullNames = [
 	"System.String",
 	"System.Int64",
 	"System.Decimal",
@@ -54,9 +57,9 @@ export const CliTypeFullNames = [
 	"System.Version",
 	"System.TimeSpan",
 ] as const;
-export type CliTypeFullName = (typeof CliTypeFullNames)[number];
+export type ClrTypeFullName = (typeof ClrTypeFullNames)[number];
 
-export const CliTypeMap = new Map<CliTypeFullName, string>([
+export const ClrTypeMap = new Map<ClrTypeFullName, string>([
 	["System.String", "string"],
 	["System.Int64", "long"],
 	["System.Decimal", "decimal"],
@@ -70,7 +73,7 @@ export const CliTypeMap = new Map<CliTypeFullName, string>([
 	["System.TimeSpan", "TimeSpan"],
 ]);
 
-export const ClrMap = new Map<Sqlite3Type, Array<CliTypeFullName>>([
+export const ClrMap = new Map<Sqlite3Type, ReadonlyArray<ClrTypeFullName>>([
 	["integer", ["System.Int64"]],
 	["real", ["System.Decimal", "System.Single", "System.Double"]],
 	[
@@ -82,7 +85,6 @@ export const ClrMap = new Map<Sqlite3Type, Array<CliTypeFullName>>([
 	["boolean", ["System.Boolean", "System.Int64"]],
 ]) as ReadonlyMap<Sqlite3Type, ReadonlyArray<string>>;
 
-
 const NoneIndex = "*NONE*";
 
 const LayoutColumnIndex = {
@@ -92,7 +94,7 @@ const LayoutColumnIndex = {
 	logicalName: 3,
 	physicalName: 4,
 	logicalType: 5,
-	cliType: 6,
+	clrType: 6,
 	check: 7,
 	comment: 8,
 } as const;
@@ -125,7 +127,7 @@ export interface TableColumn {
 		type: Sqlite3Type;
 	};
 	physicalName: string;
-	cliType: CliTypeFullName;
+	clrType: ClrTypeFullName;
 	checkConstraints: string;
 	comment: string;
 }
@@ -246,7 +248,7 @@ export function convertColumns(lines: string[]): TableColumn[] {
 		const logicalName = columns[LayoutColumnIndex.logicalName];
 		const physicalName = columns[LayoutColumnIndex.physicalName];
 		const logicalType = columns[LayoutColumnIndex.logicalType] as Sqlite3Type; //TODO: 値チェック
-		const cliType = columns[LayoutColumnIndex.cliType]as CliTypeFullName; //TODO: 値チェック
+		const clrType = columns[LayoutColumnIndex.clrType] as ClrTypeFullName; //TODO: 値チェック
 		const check = columns[LayoutColumnIndex.check];
 		const comment = columns[LayoutColumnIndex.comment];
 
@@ -271,7 +273,7 @@ export function convertColumns(lines: string[]): TableColumn[] {
 				type: logicalType,
 			},
 			physicalName: physicalName,
-			cliType: cliType,
+			clrType: clrType,
 			checkConstraints: check,
 			comment: comment,
 		};

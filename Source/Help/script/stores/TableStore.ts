@@ -15,14 +15,15 @@ function getNow(): number {
 
 export function useWorkTable(tableId: string) {
 	const [workTables, setWorkTable] = useAtom(WorkTablesAtom);
-	const [tempTable, setTempTable] = useState<Omit<WorkTable, "lastUpdateTimestamp">>();
+	const [tempTable, setTempTable] =
+		useState<Omit<WorkTable, "lastUpdateTimestamp">>();
 
 	// 子から親更新であれこれ警告出る対策
 	useEffect(() => {
-		if(!tempTable) {
+		if (!tempTable) {
 			return;
 		}
-		const index = workTables.findIndex(a => a.id === tempTable.id);
+		const index = workTables.findIndex((a) => a.id === tempTable.id);
 		if (index === -1) {
 			throw new Error(JSON.stringify({ tableId }));
 		}
@@ -31,7 +32,6 @@ export function useWorkTable(tableId: string) {
 			lastUpdateTimestamp: getNow(),
 		};
 		setWorkTable([...workTables]);
-
 	}, [tableId, workTables, setWorkTable, tempTable]);
 
 	const workTable = workTables.find((a) => a.id === tableId);
@@ -42,7 +42,7 @@ export function useWorkTable(tableId: string) {
 	return {
 		workTable,
 		updateWorkTable: (newValue: Omit<WorkTable, "lastUpdateTimestamp">) => {
-			setTempTable(newValue)
+			setTempTable(newValue);
 		},
 	};
 }

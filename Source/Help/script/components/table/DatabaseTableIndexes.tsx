@@ -1,8 +1,4 @@
-import {
-	TableBody,
-	TableHead,
-	TableRow,
-} from "@mui/material";
+import { TableBody, TableHead, TableRow } from "@mui/material";
 import type { FC } from "react";
 import type { TableDefineProps } from "../../types/table";
 import type { TableIndex } from "../../utils/table";

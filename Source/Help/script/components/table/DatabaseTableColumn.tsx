@@ -1,13 +1,15 @@
-import { Box, ListSubheader, MenuItem, TableRow } from "@mui/material";
+import { Box, ListSubheader, MenuItem, TableRow, Typography } from "@mui/material";
 import { useAtomValue } from "jotai";
 import type { BaseSyntheticEvent, FC } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { WorkTablesAtom, useWorkColumn } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
+import { getElement } from "../../utils/access";
 import {
-	type CliTypeFullName,
-	CliTypeFullNames,
-	CliTypeMap,
+	ClrMap,
+	type ClrTypeFullName,
+	ClrTypeFullNames,
+	ClrTypeMap,
 	CommonColumnNames,
 	CommonCreatedColumnNames,
 	CommonUpdatedColumnNames,
@@ -32,7 +34,7 @@ interface InputValues {
 	logicalName: string;
 	logicalType: Sqlite3Type;
 	physicalName: string;
-	cliType: CliTypeFullName;
+	clrType: ClrTypeFullName;
 	checkConstraints: string;
 	comment: string;
 }
@@ -62,7 +64,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 		foreignKeyId,
 		logical,
 		physicalName,
-		cliType,
+		clrType,
 		checkConstraints,
 		comment,
 	} = workColumn;
@@ -95,7 +97,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			? foreignTable.columns.items.find((a) => a.id === foreignKeyId.columnId)
 			: undefined;
 
-	const { control, handleSubmit, watch } = useForm<InputValues>({
+	const { control, handleSubmit, watch, setValue } = useForm<InputValues>({
 		mode: "onBlur",
 		reValidateMode: "onChange",
 		defaultValues: {
@@ -108,7 +110,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			logicalName: logical.name,
 			logicalType: logical.type,
 			physicalName: physicalName,
-			cliType: cliType,
+			clrType: clrType,
 			checkConstraints: checkConstraints,
 			comment: comment,
 		},
@@ -122,7 +124,15 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	);
 	const isCommonColumn = isCommonCreatedColumn || isCommonUpdatedColumn;
 
-	const physicalType = SqliteTypeMap.get(watch("logicalType"));
+	// この辺データ構造全くわからんわ
+	const physicalType = getElement(SqliteTypeMap, watch("logicalType"));
+	const selectableClrTypes = getElement(ClrMap, physicalType);
+	console.debug(clrType);
+	console.debug(selectableClrTypes);
+	if (!selectableClrTypes.includes(clrType)) {
+		const value = selectableClrTypes[0];
+		setValue("clrType", value as ClrTypeFullName);
+	}
 
 	function handleInput(
 		data: InputValues,
@@ -167,7 +177,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 				type: data.logicalType,
 			},
 			physicalName: data.physicalName,
-			cliType: data.cliType,
+			clrType: data.clrType,
 			checkConstraints: data.checkConstraints,
 			comment: data.comment,
 		});
@@ -280,23 +290,25 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 				/>
 			</EditorCell>
 			<EditorCell>
-				<EditorTextField
-					value={physicalType}
-					inputProps={{ readonly: true }}
-					sx={{ background: "lightgray" }}
-				/>
+				<Typography>{physicalType}</Typography>
 			</EditorCell>
 			<EditorCell>
 				<Controller
-					name="cliType"
+					name="clrType"
 					control={control}
 					render={({ field, formState: { errors } }) => (
 						<EditorSelect {...field} onBlur={handleSubmit(handleInput)}>
-							{CliTypeFullNames.map((a) => (
-								<MenuItem key={a} value={a}>
-									{CliTypeMap.get(a)}
-								</MenuItem>
-							))}
+							{ClrTypeFullNames.map((a) => {
+								return (
+									<MenuItem
+										key={a}
+										value={a}
+										disabled={!selectableClrTypes.includes(a)}
+									>
+										{ClrTypeMap.get(a)}
+									</MenuItem>
+								);
+							})}
 						</EditorSelect>
 					)}
 				/>

@@ -1,8 +1,4 @@
-import {
-	TableBody,
-	TableHead,
-	TableRow,
-} from "@mui/material";
+import { TableBody, TableHead, TableRow } from "@mui/material";
 import type { FC } from "react";
 import { useWorkColumns } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
@@ -37,11 +33,7 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 			</TableHead>
 			<TableBody>
 				{columns.items.map((a) => (
-					<DatabaseTableColumn
-						key={a.id}
-						tableId={tableId}
-						columnId={a.id}
-					/>
+					<DatabaseTableColumn key={a.id} tableId={tableId} columnId={a.id} />
 				))}
 				<TableRow>add</TableRow>
 			</TableBody>

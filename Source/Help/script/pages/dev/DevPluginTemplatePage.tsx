@@ -1,12 +1,7 @@
 import { default as markdown_1 } from "bundle-text:./DevPluginTemplatePage_1.md";
 import { default as markdown_2 } from "bundle-text:./DevPluginTemplatePage_2.md";
 import ApiIcon from "@mui/icons-material/Api";
-import {
-	IconButton,
-	InputAdornment,
-	Stack,
-	TextField,
-} from "@mui/material";
+import { IconButton, InputAdornment, Stack, TextField } from "@mui/material";
 import { type FC, type MouseEvent, useEffect, useState } from "react";
 import { HelpMarkdown } from "../../components/HelpMarkdown";
 import type { PageProps } from "../../types/page";
