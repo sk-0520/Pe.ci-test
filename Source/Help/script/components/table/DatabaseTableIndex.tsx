@@ -1,5 +1,11 @@
-import { MenuItem, Stack, TableRow } from "@mui/material";
-import { type BaseSyntheticEvent, type FC, useState } from "react";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Box, IconButton, MenuItem, Stack, TableRow } from "@mui/material";
+import React, {
+	type BaseSyntheticEvent,
+	type FC,
+	type MouseEvent,
+	useState,
+} from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
 	useWorkColumns,
@@ -8,6 +14,7 @@ import {
 } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
 import {
+	EditorButton,
 	EditorCell,
 	EditorCheckbox,
 	EditorSelect,
@@ -49,8 +56,22 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 		console.debug(data);
 	}
 
+	function handleRemoveIndex(event: MouseEvent): void {
+		throw new Error("Function not implemented.");
+	}
+
+	function handleRemoveColumn(event: MouseEvent, columnId: string): void {
+		throw new Error("Function not implemented.");
+	}
+
 	return (
 		<TableRow>
+			<EditorCell>
+				<IconButton onClick={handleRemoveIndex}>
+					<DeleteIcon />
+				</IconButton>
+			</EditorCell>
+
 			<EditorCell>
 				<Controller
 					name="isUnique"
@@ -77,13 +98,26 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 				<Stack>
 					{workIndex.columns.map((a) => {
 						return (
-							<EditorSelect key={a}>
-								{workColumns.items.map((b) => {
-									return <MenuItem key={b.id}>{b.physicalName}</MenuItem>;
-								})}
-							</EditorSelect>
+							<Box
+								key={a}
+								sx={{
+									display: "flex",
+								}}
+							>
+								<EditorSelect>
+									{workColumns.items.map((b) => {
+										return <MenuItem key={b.id}>{b.physicalName}</MenuItem>;
+									})}
+								</EditorSelect>
+								<IconButton onClick={(ev) => handleRemoveColumn(ev, b.id)}>
+									<DeleteIcon />
+								</IconButton>
+							</Box>
 						);
 					})}
+					<Box sx={{ textAlign: "center" }}>
+						<EditorButton>カラム追加</EditorButton>
+					</Box>
 				</Stack>
 			</EditorCell>
 		</TableRow>

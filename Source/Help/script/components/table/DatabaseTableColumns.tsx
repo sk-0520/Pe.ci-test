@@ -55,6 +55,7 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 		<EditorTable>
 			<TableHead>
 				<TableRow>
+					<EditorCell>削除</EditorCell>
 					<EditorCell>PK</EditorCell>
 					<EditorCell>NN</EditorCell>
 					<EditorCell>FK</EditorCell>
@@ -65,7 +66,6 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 					<EditorCell>CLR</EditorCell>
 					<EditorCell>チェック制約</EditorCell>
 					<EditorCell>コメント</EditorCell>
-					<EditorCell>削除</EditorCell>
 				</TableRow>
 			</TableHead>
 			<TableBody>

@@ -239,6 +239,11 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			}}
 		>
 			<EditorCell>
+				<IconButton onClick={handleRemove}>
+					<DeleteIcon />
+				</IconButton>
+			</EditorCell>
+			<EditorCell>
 				<Controller
 					name="isPrimary"
 					control={control}
@@ -388,11 +393,6 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 						<EditorTextField {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
-			</EditorCell>
-			<EditorCell>
-				<IconButton onClick={handleRemove}>
-					<DeleteIcon />
-				</IconButton>
 			</EditorCell>
 		</TableRow>
 	);

@@ -23,6 +23,7 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 		<EditorTable>
 			<TableHead>
 				<TableRow>
+					<EditorCell>削除</EditorCell>
 					<EditorCell>UK</EditorCell>
 					<EditorCell>名前</EditorCell>
 					<EditorCell>カラム</EditorCell>
