@@ -20,6 +20,8 @@ import {
 	CommonCreatedColumnNames,
 	CommonUpdatedColumnNames,
 	type ForeignKey,
+	Sqlite3AffinityTypes,
+	Sqlite3BasicTypes,
 	type Sqlite3Type,
 	SqliteTypeMap,
 	type WorkColumn,
@@ -53,6 +55,26 @@ type ForeignKeyTableItem = ForeignKeyItem<"Table", WorkTable>;
 type ForeignKeyColumnItem = ForeignKeyItem<"Column", WorkColumn> & {
 	table: WorkTable;
 };
+
+interface Sqlite3Item<Type extends "Title" | "Type"> {
+	type: Type;
+	display: string;
+}
+type Sqlite3TitleItem = Sqlite3Item<"Title">;
+type Sqlite3TypeItem = Sqlite3Item<"Type"> & {
+	data: Sqlite3Type;
+};
+
+const Sqlite3Items: ReadonlyArray<Sqlite3TitleItem | Sqlite3TypeItem> = [
+	{ type: "Title", display: "SQLite3" } satisfies Sqlite3TitleItem,
+	...Sqlite3BasicTypes.map(
+		(a) => ({ type: "Type", display: a, data: a }) satisfies Sqlite3TypeItem,
+	),
+	{ type: "Title", display: "affinity" } satisfies Sqlite3TitleItem,
+	...Sqlite3AffinityTypes.map(
+		(a) => ({ type: "Type", display: a, data: a }) satisfies Sqlite3TypeItem,
+	),
+] as const;
 
 interface DatabaseTableColumnProps extends TableBaseProps {
 	columnId: string;
@@ -131,8 +153,8 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	const isCommonColumn = isCommonCreatedColumn || isCommonUpdatedColumn;
 
 	// この辺データ構造全くわからんわ
-	const physicalType = getElement(SqliteTypeMap,  watch("logicalType"));
-	const selectableClrTypes = getElement(ClrMap,  watch("logicalType"));
+	const physicalType = getElement(SqliteTypeMap, watch("logicalType"));
+	const selectableClrTypes = getElement(ClrMap, watch("logicalType"));
 	console.debug(selectableClrTypes);
 	if (!selectableClrTypes.includes(clrType)) {
 		const value = selectableClrTypes[0];
@@ -282,14 +304,23 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					control={control}
 					render={({ field, formState: { errors } }) => (
 						<EditorSelect {...field} onBlur={handleSubmit(handleInput)}>
-							<ListSubheader>SQLite3</ListSubheader>
-							<MenuItem value="integer">integer</MenuItem>
-							<MenuItem value="real">real</MenuItem>
-							<MenuItem value="text">text</MenuItem>
-							<MenuItem value="blob">blob</MenuItem>
-							<ListSubheader>affinity</ListSubheader>
-							<MenuItem value="datetime">datetime</MenuItem>
-							<MenuItem value="boolean">boolean</MenuItem>
+							{Sqlite3Items.map((a) => {
+								switch (a.type) {
+									case "Title":
+										return (
+											<ListSubheader key={`${a.type}.${a.display}`}>
+												{a.display}
+											</ListSubheader>
+										);
+
+									case "Type":
+										return (
+											<MenuItem key={a.data} value={a.data}>
+												{a.display}
+											</MenuItem>
+										);
+								}
+							})}
 						</EditorSelect>
 					)}
 				/>

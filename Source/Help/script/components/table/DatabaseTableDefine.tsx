@@ -36,7 +36,6 @@ export const DatabaseTableDefine: FC<DatabaseTableDefineProps> = (
 			...workDefine,
 			tableName: data.name,
 		});
-		//reset();
 	}
 
 	return (
