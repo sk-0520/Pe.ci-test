@@ -6,8 +6,7 @@ import type { TableIndex } from "../../utils/table";
 import { DatabaseTableIndex } from "./DatabaseTableIndex";
 import { EditorCell, EditorTable } from "./editor";
 
-interface DatabaseTableIndexesProps extends TableBaseProps {
-}
+interface DatabaseTableIndexesProps extends TableBaseProps {}
 
 export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 	props: DatabaseTableIndexesProps,

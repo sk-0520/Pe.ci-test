@@ -6,6 +6,7 @@ import {
 	useTheme,
 } from "@mui/material";
 import { type FC, type ReactNode, useMemo, useState } from "react";
+import {ListGroupHeader} from "../../components/ListGroupHeader"
 import type { ChangelogVersion, Changelogs } from "../../types/changelog";
 
 function getChangelogGroup(
@@ -73,7 +74,7 @@ export const ChangelogVersionSelector: FC<ChangelogVersionSelectorProps> = (
 		>
 			{items.map((a) =>
 				typeof a === "string" ? (
-					<ListSubheader key={`group-${a}`}>{a}</ListSubheader>
+					<ListGroupHeader key={`group-${a}`}>{a}</ListGroupHeader>
 				) : (
 					<MenuItem key={`version-${a.version}`} value={a.version}>
 						{a.date}, {a.version}

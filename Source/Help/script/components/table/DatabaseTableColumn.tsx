@@ -10,6 +10,7 @@ import {
 import { useAtomValue } from "jotai";
 import type { BaseSyntheticEvent, FC, MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { ListGroupHeader } from "../../components/ListGroupHeader";
 import {
 	WorkTablesAtom,
 	useWorkColumn,
@@ -219,22 +220,22 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	}
 
 	function handleRemove(event: MouseEvent): void {
-		const index = workColumns.items.findIndex(a => a.id === columnId);
-		if(index === -1) {
+		const index = workColumns.items.findIndex((a) => a.id === columnId);
+		if (index === -1) {
 			throw new Error();
 		}
-		const newItems = [...workColumns.items]
-		newItems.splice(index, 1)
+		const newItems = [...workColumns.items];
+		newItems.splice(index, 1);
 		updateWorkColumns({
 			...workColumns,
-			items: newItems
-		})
+			items: newItems,
+		});
 	}
 
 	return (
 		<TableRow
 			sx={{
-				background: isCommonColumn ? "lightgray" : undefined,
+				opacity: isCommonColumn ? 0.4 : undefined,
 			}}
 		>
 			<EditorCell>
@@ -280,9 +281,9 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 									switch (a.type) {
 										case "Table":
 											return (
-												<ListSubheader key={a.data.id}>
+												<ListGroupHeader key={a.data.id}>
 													{a.data.define.tableName}
-												</ListSubheader>
+												</ListGroupHeader>
 											);
 
 										case "Column":
@@ -329,9 +330,9 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 								switch (a.type) {
 									case "Title":
 										return (
-											<ListSubheader key={`${a.type}.${a.display}`}>
+											<ListGroupHeader key={`${a.type}.${a.display}`}>
 												{a.display}
-											</ListSubheader>
+											</ListGroupHeader>
 										);
 
 									case "Type":
