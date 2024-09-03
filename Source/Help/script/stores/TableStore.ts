@@ -1,19 +1,16 @@
 import { atom, useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import type {
-	WorkColumn,
-	WorkColumns,
-	WorkDefine,
-	WorkIndex,
-	WorkIndexes,
-	WorkTable,
+import {
+	type WorkColumn,
+	type WorkColumns,
+	type WorkDefine,
+	type WorkIndex,
+	type WorkIndexes,
+	type WorkTable,
+	generateTimestamp,
 } from "../utils/table";
 
 export const WorkTablesAtom = atom<WorkTable[]>([]);
-
-function getNow(): number {
-	return new Date().getTime();
-}
 
 export function useWorkTable(tableId: string) {
 	const [workTables, setWorkTable] = useAtom(WorkTablesAtom);
@@ -31,7 +28,7 @@ export function useWorkTable(tableId: string) {
 		}
 		workTables[index] = {
 			...tempTable,
-			lastUpdateTimestamp: getNow(),
+			lastUpdateTimestamp: generateTimestamp(),
 		};
 		setWorkTable([...workTables]);
 	}, [tableId, workTables, setWorkTable, tempTable]);
@@ -59,7 +56,7 @@ export function useWorkDefine(tableId: string) {
 				...workTable,
 				define: {
 					...newValue,
-					lastUpdateTimestamp: getNow(),
+					lastUpdateTimestamp: generateTimestamp(),
 				},
 			});
 		},
@@ -76,7 +73,7 @@ export function useWorkColumns(tableId: string) {
 				...workTable,
 				columns: {
 					...newValue,
-					lastUpdateTimestamp: getNow(),
+					lastUpdateTimestamp: generateTimestamp(),
 				},
 			});
 		},
@@ -101,7 +98,7 @@ export function useWorkColumn(tableId: string, columnId: string) {
 
 			workColumns.items[index] = {
 				...newValue,
-				lastUpdateTimestamp: getNow(),
+				lastUpdateTimestamp: generateTimestamp(),
 			};
 
 			updateWorkColumns({
@@ -121,7 +118,7 @@ export function useWorkIndexes(tableId: string) {
 				...workTable,
 				indexes: {
 					...newValue,
-					lastUpdateTimestamp: getNow(),
+					lastUpdateTimestamp: generateTimestamp(),
 				},
 			});
 		},

@@ -374,31 +374,63 @@ export interface WorkTable extends WorkUpdateState {
 	indexes: WorkIndexes;
 }
 
+export function generateTimestamp(): number {
+	return new Date().getTime();
+}
+
+function generateId() {
+	return crypto.randomUUID();
+}
+
+export function generateDefineId() {
+	return generateId();
+}
+
+export function generateTableId() {
+	return generateId();
+}
+
+export function generateColumnsId() {
+	return generateId();
+}
+
+export function generateColumnId() {
+	return generateId();
+}
+
+export function generateIndexesId() {
+	return generateId();
+}
+
+export function generateIndexId() {
+	return generateId();
+}
+
 export function convertWorkTable(tableDefine: TableDefine): WorkTable {
 	return {
-		id: crypto.randomUUID(),
+		id: generateDefineId(),
 		lastUpdateTimestamp: 0,
 		define: {
-			id: crypto.randomUUID(),
+			id: generateTableId(),
 			lastUpdateTimestamp: 0,
 			tableName: tableDefine.name,
 		},
 		columns: {
-			id: crypto.randomUUID(),
+			id: generateColumnsId(),
 			lastUpdateTimestamp: 0,
 			items: tableDefine.columns.map((a) => ({
 				...a,
-				id: crypto.randomUUID(),
+				id: generateColumnId(),
 				lastUpdateTimestamp: 0,
 				foreignKeyId: undefined,
 			})),
 		},
 		indexes: {
-			id: crypto.randomUUID(),
+			id: generateIndexesId(),
 			lastUpdateTimestamp: 0,
 			items: tableDefine.indexes.map((a) => ({
 				...a,
-				id: crypto.randomUUID(),
+				id: generateIndexId(),
 				lastUpdateTimestamp: 0,
 			})),
 		},
