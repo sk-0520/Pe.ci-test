@@ -1,9 +1,18 @@
-import { TableRow } from "@mui/material";
-import type { BaseSyntheticEvent, FC } from "react";
+import { MenuItem, Stack, TableRow } from "@mui/material";
+import { type BaseSyntheticEvent, type FC, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useWorkIndex } from "../../stores/TableStore";
+import {
+	useWorkColumns,
+	useWorkIndex,
+	useWorkIndexes,
+} from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
-import { EditorCell, EditorCheckbox, EditorTextField } from "./editor";
+import {
+	EditorCell,
+	EditorCheckbox,
+	EditorSelect,
+	EditorTextField,
+} from "./editor";
 
 interface InputValues {
 	isUnique: boolean;
@@ -19,6 +28,8 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 	props: DatabaseTableIndexProps,
 ) => {
 	const { tableId, indexId } = props;
+	const { workColumns } = useWorkColumns(tableId);
+	const { workIndexes } = useWorkIndexes(tableId);
 	const { workIndex } = useWorkIndex(tableId, indexId);
 
 	const { control, handleSubmit } = useForm<InputValues>({
@@ -62,7 +73,19 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 					)}
 				/>
 			</EditorCell>
-			<EditorCell>list</EditorCell>
+			<EditorCell>
+				<Stack>
+					{workIndex.columns.map((a) => {
+						return (
+							<EditorSelect key={a}>
+								{workColumns.items.map((b) => {
+									return <MenuItem key={b.id}>{b.physicalName}</MenuItem>;
+								})}
+							</EditorSelect>
+						);
+					})}
+				</Stack>
+			</EditorCell>
 		</TableRow>
 	);
 	//return <pre>{JSON.stringify(props)}</pre>;

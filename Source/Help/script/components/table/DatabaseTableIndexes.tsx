@@ -1,10 +1,10 @@
-import { TableBody, TableHead, TableRow } from "@mui/material";
-import type { FC } from "react";
+import { Box, TableBody, TableHead, TableRow } from "@mui/material";
+import type { FC, MouseEvent } from "react";
 import { useWorkColumns, useWorkIndexes } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
 import type { TableIndex } from "../../utils/table";
 import { DatabaseTableIndex } from "./DatabaseTableIndex";
-import { EditorCell, EditorTable } from "./editor";
+import { EditorButton, EditorCell, EditorTable } from "./editor";
 
 interface DatabaseTableIndexesProps extends TableBaseProps {}
 
@@ -14,6 +14,10 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 	const { tableId } = props;
 
 	const { workIndexes } = useWorkIndexes(tableId);
+
+	function handleAddIndex(event: MouseEvent): void {
+		throw new Error("Function not implemented.");
+	}
 
 	return (
 		<EditorTable>
@@ -28,7 +32,15 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 				{workIndexes.items.map((a) => (
 					<DatabaseTableIndex key={a.id} tableId={tableId} indexId={a.id} />
 				))}
-				<TableRow>add</TableRow>
+				<TableRow>
+					<EditorCell colSpan={11}>
+						<Box sx={{ textAlign: "center" }}>
+							<EditorButton onClick={handleAddIndex}>
+								インデックス追加
+							</EditorButton>
+						</Box>
+					</EditorCell>
+				</TableRow>
 			</TableBody>
 		</EditorTable>
 	);
