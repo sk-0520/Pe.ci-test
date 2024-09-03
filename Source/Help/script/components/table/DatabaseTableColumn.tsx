@@ -1,14 +1,20 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
 	Box,
+	IconButton,
 	ListSubheader,
 	MenuItem,
 	TableRow,
 	Typography,
 } from "@mui/material";
 import { useAtomValue } from "jotai";
-import type { BaseSyntheticEvent, FC } from "react";
+import type { BaseSyntheticEvent, FC, MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { WorkTablesAtom, useWorkColumn } from "../../stores/TableStore";
+import {
+	WorkTablesAtom,
+	useWorkColumn,
+	useWorkColumns,
+} from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
 import { getElement } from "../../utils/access";
 import {
@@ -29,6 +35,7 @@ import {
 	type WorkTable,
 } from "../../utils/table";
 import {
+	EditorButton,
 	EditorCell,
 	EditorCheckbox,
 	EditorSelect,
@@ -84,6 +91,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	props: DatabaseTableColumnProps,
 ) => {
 	const { tableId, columnId } = props;
+	const { workColumns, updateWorkColumns } = useWorkColumns(tableId);
 	const { workColumn, updateWorkColumn } = useWorkColumn(tableId, columnId);
 	const {
 		id,
@@ -208,6 +216,19 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			checkConstraints: data.checkConstraints,
 			comment: data.comment,
 		});
+	}
+
+	function handleRemove(event: MouseEvent): void {
+		const index = workColumns.items.findIndex(a => a.id === columnId);
+		if(index === -1) {
+			throw new Error();
+		}
+		const newItems = [...workColumns.items]
+		newItems.splice(index, 1)
+		updateWorkColumns({
+			...workColumns,
+			items: newItems
+		})
 	}
 
 	return (
@@ -367,7 +388,11 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 					)}
 				/>
 			</EditorCell>
-			<EditorCell>delete</EditorCell>
+			<EditorCell>
+				<IconButton onClick={handleRemove}>
+					<DeleteIcon />
+				</IconButton>
+			</EditorCell>
 		</TableRow>
 	);
 };
