@@ -144,6 +144,10 @@ export interface TableDefine {
 	indexes: TableIndex[];
 }
 
+export function isCommonColumnName(physicalColumnName: string) {
+	return CommonColumnNames.includes(physicalColumnName);
+}
+
 export function splitRawEntities(markdown: string): string[] {
 	if (!markdown) {
 		return [];
@@ -360,6 +364,7 @@ export interface WorkColumns extends WorkUpdateState {
 
 export interface WorkIndex extends TableIndex {
 	id: string;
+	columnIds: string[];
 }
 
 export interface WorkIndexes extends WorkUpdateState {
@@ -407,33 +412,40 @@ export function generateIndexId() {
 }
 
 export function convertWorkTable(tableDefine: TableDefine): WorkTable {
+	const workDefine: WorkDefine = {
+		id: generateTableId(),
+		lastUpdateTimestamp: 0,
+		tableName: tableDefine.name,
+	};
+	const workColumns: WorkColumns = {
+		id: generateColumnsId(),
+		lastUpdateTimestamp: 0,
+		items: tableDefine.columns.map((a) => ({
+			...a,
+			id: generateColumnId(),
+			lastUpdateTimestamp: 0,
+			foreignKeyId: undefined,
+		})),
+	};
+	const workIndexes: WorkIndexes = {
+		id: generateIndexesId(),
+		lastUpdateTimestamp: 0,
+		items: tableDefine.indexes.map((a) => ({
+			...a,
+			id: generateIndexId(),
+			lastUpdateTimestamp: 0,
+			columnIds: workColumns.items
+				.filter((b) => a.columns.includes(b.physicalName))
+				.map((b) => b.id),
+		})),
+	};
+
 	return {
 		id: generateDefineId(),
 		lastUpdateTimestamp: 0,
-		define: {
-			id: generateTableId(),
-			lastUpdateTimestamp: 0,
-			tableName: tableDefine.name,
-		},
-		columns: {
-			id: generateColumnsId(),
-			lastUpdateTimestamp: 0,
-			items: tableDefine.columns.map((a) => ({
-				...a,
-				id: generateColumnId(),
-				lastUpdateTimestamp: 0,
-				foreignKeyId: undefined,
-			})),
-		},
-		indexes: {
-			id: generateIndexesId(),
-			lastUpdateTimestamp: 0,
-			items: tableDefine.indexes.map((a) => ({
-				...a,
-				id: generateIndexId(),
-				lastUpdateTimestamp: 0,
-			})),
-		},
+		define: workDefine,
+		columns: workColumns,
+		indexes: workIndexes,
 	};
 }
 

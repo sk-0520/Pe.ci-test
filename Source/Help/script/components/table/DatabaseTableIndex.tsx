@@ -1,5 +1,12 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, IconButton, MenuItem, Stack, TableRow } from "@mui/material";
+import {
+	Box,
+	IconButton,
+	MenuItem,
+	Stack,
+	TableRow,
+	Typography,
+} from "@mui/material";
 import React, {
 	type BaseSyntheticEvent,
 	type FC,
@@ -13,6 +20,7 @@ import {
 	useWorkIndexes,
 } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
+import { isCommonColumnName } from "../../utils/table";
 import {
 	EditorButton,
 	EditorCell,
@@ -24,7 +32,7 @@ import {
 interface InputValues {
 	isUnique: boolean;
 	name: string;
-	columns: string[];
+	columnIds: string[];
 }
 
 interface DatabaseTableIndexProps extends TableBaseProps {
@@ -39,15 +47,16 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 	const { workIndexes } = useWorkIndexes(tableId);
 	const { workIndex } = useWorkIndex(tableId, indexId);
 
-	const { control, handleSubmit } = useForm<InputValues>({
-		mode: "onBlur",
-		reValidateMode: "onChange",
-		defaultValues: {
-			isUnique: workIndex.isUnique,
-			name: workIndex.name,
-			columns: workIndex.columns,
-		},
-	});
+	const { control, watch, setValue, getValues, handleSubmit } =
+		useForm<InputValues>({
+			mode: "onBlur",
+			reValidateMode: "onChange",
+			defaultValues: {
+				isUnique: workIndex.isUnique,
+				name: workIndex.name,
+				columnIds: workIndex.columnIds,
+			},
+		});
 
 	function handleInput(
 		data: InputValues,
@@ -56,12 +65,23 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 		console.debug(data);
 	}
 
+	function handleAddColum(event: MouseEvent): void {
+		throw new Error("Function not implemented.");
+	}
+
 	function handleRemoveIndex(event: MouseEvent): void {
 		throw new Error("Function not implemented.");
 	}
 
 	function handleRemoveColumn(event: MouseEvent, columnId: string): void {
 		throw new Error("Function not implemented.");
+	}
+
+	function handleChangeColumn(index: number, columnId: string): void {
+		console.debug({ index, columnId });
+		const columnIds = getValues("columnIds");
+		columnIds[index] = columnId;
+		setValue("columnIds", [...columnIds]);
 	}
 
 	return (
@@ -95,8 +115,9 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 				/>
 			</EditorCell>
 			<EditorCell>
+				{JSON.stringify(workIndex.columnIds)}
 				<Stack>
-					{workIndex.columns.map((a) => {
+					{workIndex.columnIds.map((a, i) => {
 						return (
 							<Box
 								key={a}
@@ -104,19 +125,33 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 									display: "flex",
 								}}
 							>
-								<EditorSelect>
-									{workColumns.items.map((b) => {
-										return <MenuItem key={b.id}>{b.physicalName}</MenuItem>;
-									})}
-								</EditorSelect>
-								<IconButton onClick={(ev) => handleRemoveColumn(ev, b.id)}>
+								<div>{watch(`columnIds.${i}`)}</div>
+								<Controller
+									name={`columnIds.${i}`}
+									control={control}
+									render={({ field, formState: { errors } }) => (
+										<EditorSelect
+											{...field}
+											onBlur={(ev) => handleChangeColumn(i, ev.target.value)}
+										>
+											{workColumns.items
+												.filter((a) => !isCommonColumnName(a.physicalName))
+												.map((b) => {
+													return (
+														<MenuItem key={b.id}>{b.physicalName}</MenuItem>
+													);
+												})}
+										</EditorSelect>
+									)}
+								/>
+								<IconButton onClick={(ev) => handleRemoveColumn(ev, a)}>
 									<DeleteIcon />
 								</IconButton>
 							</Box>
 						);
 					})}
 					<Box sx={{ textAlign: "center" }}>
-						<EditorButton>カラム追加</EditorButton>
+						<EditorButton onClick={handleAddColum}>カラム追加</EditorButton>
 					</Box>
 				</Stack>
 			</EditorCell>

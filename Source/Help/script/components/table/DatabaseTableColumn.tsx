@@ -34,6 +34,7 @@ import {
 	type WorkColumn,
 	type WorkForeignKey,
 	type WorkTable,
+	isCommonColumnName,
 } from "../../utils/table";
 import {
 	EditorButton,
@@ -115,7 +116,7 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			data: a,
 		} satisfies ForeignKeyTableItem,
 		...a.columns.items
-			.filter((b) => !CommonColumnNames.includes(b.physicalName))
+			.filter((b) => !isCommonColumnName(b.physicalName))
 			.map(
 				(b) =>
 					({
