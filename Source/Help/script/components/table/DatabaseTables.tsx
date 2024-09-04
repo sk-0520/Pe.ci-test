@@ -1,6 +1,5 @@
 import {
 	Box,
-	Button,
 	Divider,
 	MenuItem,
 	Select,
@@ -18,6 +17,7 @@ import {
 	updateRelations,
 } from "../../utils/table";
 import { DatabaseTable } from "./DatabaseTable";
+import { EditorButton } from "./editor";
 
 interface DatabaseTablesProps {
 	markdown: string;
@@ -94,8 +94,8 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			</Box>
 
 			<Box>
-				<Button>Copy Markdown</Button>
-				<Button>Copy SQL</Button>
+				<EditorButton size="medium">Copy Markdown</EditorButton>
+				<EditorButton size="medium">Copy SQL</EditorButton>
 			</Box>
 			<Box
 				sx={{
