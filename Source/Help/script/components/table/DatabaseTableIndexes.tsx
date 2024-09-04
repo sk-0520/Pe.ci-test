@@ -1,8 +1,12 @@
 import { Box, TableBody, TableHead, TableRow } from "@mui/material";
 import type { FC, MouseEvent } from "react";
-import { useWorkColumns, useWorkIndexes } from "../../stores/TableStore";
+import {
+	useWorkColumns,
+	useWorkIndexes,
+	useWorkTable,
+} from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
-import type { TableIndex } from "../../utils/table";
+import { type TableIndex, generateIndexesId } from "../../utils/table";
 import { DatabaseTableIndex } from "./DatabaseTableIndex";
 import { EditorButton, EditorCell, EditorTable } from "./editor";
 
@@ -13,10 +17,20 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 ) => {
 	const { tableId } = props;
 
-	const { workIndexes } = useWorkIndexes(tableId);
+	const { workTable } = useWorkTable(tableId);
+	const { workIndexes, updateWorkIndexes } = useWorkIndexes(tableId);
 
 	function handleAddIndex(event: MouseEvent): void {
-		throw new Error("Function not implemented.");
+		workIndexes.items.push({
+			id: generateIndexesId(),
+			isUnique: false,
+			name: `idx_${workTable.define.tableName}_${workIndexes.items.length + 1}`,
+			columns: [],
+			columnIds: [],
+		});
+		updateWorkIndexes({
+			...workIndexes,
+		});
 	}
 
 	return (
