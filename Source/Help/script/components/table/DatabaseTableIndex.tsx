@@ -18,9 +18,10 @@ import {
 	useWorkColumns,
 	useWorkIndex,
 	useWorkIndexes,
+	useWorkTable,
 } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
-import { isCommonColumnName } from "../../utils/table";
+import { generateColumnsId, isCommonColumnName } from "../../utils/table";
 import {
 	EditorButton,
 	EditorCell,
@@ -42,7 +43,9 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 	props: DatabaseTableIndexProps,
 ) => {
 	const { tableId, indexId } = props;
+	const { workTable } = useWorkTable(tableId);
 	const { workColumns } = useWorkColumns(tableId);
+	const { workIndexes, updateWorkIndexes } = useWorkIndexes(tableId);
 	const { workIndex, updateWorkIndex } = useWorkIndex(tableId, indexId);
 	const [columnIds, setColumnIds] = useState(workIndex.columnIds);
 
@@ -55,42 +58,70 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 		},
 	});
 
+	const getRawColumns = (columnIds: string[]): string[] => {
+		return columnIds
+			.map((a) => workColumns.items.find((b) => b.id === a))
+			.filter((a) => a !== undefined)
+			.map((a) => a.physicalName);
+	};
+
 	function handleInput(
 		data: InputValues,
 		event?: BaseSyntheticEvent<object, unknown, unknown> | undefined,
 	): void {
 		console.debug(data);
 
-		const columns = columnIds
-			.map((a) => workColumns.items.find((b) => b.id === a))
-			.filter((a) => a !== undefined)
-			.map((a) => a.physicalName);
-
 		updateWorkIndex({
 			id: workIndex.id,
 			isUnique: data.isUnique,
 			name: data.name,
-			columns: columns,
+			columns: getRawColumns(columnIds),
 			columnIds: columnIds,
 		});
 	}
 
 	function handleAddColum(event: MouseEvent): void {
-		throw new Error("Function not implemented.");
+		columnIds.push(workIndex.columnIds[0]);
+		setColumnIds([...columnIds]);
+		updateWorkIndex({
+			...workIndex,
+			columns: getRawColumns(columnIds),
+			columnIds: columnIds,
+		});
 	}
 
 	function handleRemoveIndex(event: MouseEvent): void {
-		throw new Error("Function not implemented.");
+		const newItems = workIndexes.items.filter((a) => a.id !== indexId);
+		updateWorkIndexes({
+			...workIndexes,
+			items: newItems,
+		});
 	}
 
 	function handleRemoveColumn(event: MouseEvent, columnId: string): void {
-		throw new Error("Function not implemented.");
+		const index = columnIds.findIndex((a) => a === columnId);
+		if (index === -1) {
+			throw new Error(JSON.stringify({ columnId }));
+		}
+		columnIds.splice(index, 1);
+		setColumnIds([...columnIds]);
+		updateWorkIndex({
+			...workIndex,
+			columns: getRawColumns(columnIds),
+			columnIds: columnIds,
+		});
 	}
 
 	function handleChangeColumn(index: number, columnId: string): void {
 		console.debug({ index, columnId });
 		columnIds[index] = columnId;
 		setColumnIds([...columnIds]);
+
+		updateWorkIndex({
+			...workIndex,
+			columns: getRawColumns(columnIds),
+			columnIds: columnIds,
+		});
 	}
 
 	return (
@@ -161,7 +192,16 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 						);
 					})}
 					<Box sx={{ textAlign: "center" }}>
-						<EditorButton onClick={handleAddColum}>カラム追加</EditorButton>
+						<EditorButton
+							disabled={
+								workColumns.items.filter(
+									(a) => !isCommonColumnName(a.physicalName),
+								).length <= columnIds.length
+							}
+							onClick={handleAddColum}
+						>
+							カラム追加
+						</EditorButton>
 					</Box>
 				</Stack>
 			</EditorCell>
