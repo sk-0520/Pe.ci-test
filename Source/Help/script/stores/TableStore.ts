@@ -135,7 +135,7 @@ export function useWorkIndex(tableId: string, indexId: string) {
 
 	return {
 		workIndex,
-		updateWorkIndexes: (newValue: Omit<WorkIndex, "lastUpdateTimestamp">) => {
+		updateWorkIndex: (newValue: Omit<WorkIndex, "lastUpdateTimestamp">) => {
 			const index = workIndexes.items.indexOf(workIndex);
 			if (index === -1) {
 				throw new Error(JSON.stringify({ tableId, indexId }));

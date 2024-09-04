@@ -32,7 +32,6 @@ import {
 interface InputValues {
 	isUnique: boolean;
 	name: string;
-	columnIds: string[];
 }
 
 interface DatabaseTableIndexProps extends TableBaseProps {
@@ -44,25 +43,36 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 ) => {
 	const { tableId, indexId } = props;
 	const { workColumns } = useWorkColumns(tableId);
-	const { workIndexes } = useWorkIndexes(tableId);
-	const { workIndex } = useWorkIndex(tableId, indexId);
+	const { workIndex, updateWorkIndex } = useWorkIndex(tableId, indexId);
+	const [columnIds, setColumnIds] = useState(workIndex.columnIds);
 
-	const { control, watch, setValue, getValues, handleSubmit } =
-		useForm<InputValues>({
-			mode: "onBlur",
-			reValidateMode: "onChange",
-			defaultValues: {
-				isUnique: workIndex.isUnique,
-				name: workIndex.name,
-				columnIds: workIndex.columnIds,
-			},
-		});
+	const { control, handleSubmit } = useForm<InputValues>({
+		mode: "onBlur",
+		reValidateMode: "onChange",
+		defaultValues: {
+			isUnique: workIndex.isUnique,
+			name: workIndex.name,
+		},
+	});
 
 	function handleInput(
 		data: InputValues,
 		event?: BaseSyntheticEvent<object, unknown, unknown> | undefined,
 	): void {
 		console.debug(data);
+
+		const columns = columnIds
+			.map((a) => workColumns.items.find((b) => b.id === a))
+			.filter((a) => a !== undefined)
+			.map((a) => a.physicalName);
+
+		updateWorkIndex({
+			id: workIndex.id,
+			isUnique: data.isUnique,
+			name: data.name,
+			columns: columns,
+			columnIds: columnIds,
+		});
 	}
 
 	function handleAddColum(event: MouseEvent): void {
@@ -79,9 +89,8 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 
 	function handleChangeColumn(index: number, columnId: string): void {
 		console.debug({ index, columnId });
-		const columnIds = getValues("columnIds");
 		columnIds[index] = columnId;
-		setValue("columnIds", [...columnIds]);
+		setColumnIds([...columnIds]);
 	}
 
 	return (
@@ -97,7 +106,11 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 					name="isUnique"
 					control={control}
 					render={({ field, formState: { errors } }) => (
-						<EditorCheckbox {...field} onBlur={handleSubmit(handleInput)} />
+						<EditorCheckbox
+							checked={field.value}
+							{...field}
+							onBlur={handleSubmit(handleInput)}
+						/>
 					)}
 				/>
 			</EditorCell>
@@ -115,7 +128,6 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 				/>
 			</EditorCell>
 			<EditorCell>
-				{JSON.stringify(workIndex.columnIds)}
 				<Stack>
 					{workIndex.columnIds.map((a, i) => {
 						return (
@@ -125,25 +137,23 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 									display: "flex",
 								}}
 							>
-								<div>{watch(`columnIds.${i}`)}</div>
-								<Controller
-									name={`columnIds.${i}`}
-									control={control}
-									render={({ field, formState: { errors } }) => (
-										<EditorSelect
-											{...field}
-											onBlur={(ev) => handleChangeColumn(i, ev.target.value)}
-										>
-											{workColumns.items
-												.filter((a) => !isCommonColumnName(a.physicalName))
-												.map((b) => {
-													return (
-														<MenuItem key={b.id}>{b.physicalName}</MenuItem>
-													);
-												})}
-										</EditorSelect>
-									)}
-								/>
+								<EditorSelect
+									value={columnIds[i]}
+									onChange={(ev) =>
+										handleChangeColumn(i, ev.target.value as string)
+									}
+									onBlur={handleSubmit(handleInput)}
+								>
+									{workColumns.items
+										.filter((a) => !isCommonColumnName(a.physicalName))
+										.map((b) => {
+											return (
+												<MenuItem key={b.id} value={b.id}>
+													{b.physicalName}
+												</MenuItem>
+											);
+										})}
+								</EditorSelect>
 								<IconButton onClick={(ev) => handleRemoveColumn(ev, a)}>
 									<DeleteIcon />
 								</IconButton>
