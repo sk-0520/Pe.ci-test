@@ -1,12 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-	Box,
-	IconButton,
-	ListSubheader,
-	MenuItem,
-	TableRow,
-	Typography,
-} from "@mui/material";
+import { Box, IconButton, MenuItem, TableRow, Typography } from "@mui/material";
 import { useAtomValue } from "jotai";
 import type { BaseSyntheticEvent, FC, MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -23,7 +16,6 @@ import {
 	type ClrTypeFullName,
 	ClrTypeFullNames,
 	ClrTypeMap,
-	CommonColumnNames,
 	CommonCreatedColumnNames,
 	CommonUpdatedColumnNames,
 	type ForeignKey,
@@ -37,7 +29,6 @@ import {
 	isCommonColumnName,
 } from "../../utils/table";
 import {
-	EditorButton,
 	EditorCell,
 	EditorCheckbox,
 	EditorSelect,

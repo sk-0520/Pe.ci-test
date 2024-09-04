@@ -11,6 +11,7 @@ import {
 	generateTimestamp,
 } from "../../utils/table";
 import { DatabaseTableColumn } from "./DatabaseTableColumn";
+import { TableSection } from "./TableSection";
 import { EditorButton, EditorCell, EditorTable } from "./editor";
 
 interface DatabaseTableColumnsProps extends TableBaseProps {}
@@ -52,34 +53,38 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 	}
 
 	return (
-		<EditorTable>
-			<TableHead>
-				<TableRow>
-					<EditorCell>削除</EditorCell>
-					<EditorCell>PK</EditorCell>
-					<EditorCell>NN</EditorCell>
-					<EditorCell>FK</EditorCell>
-					<EditorCell>論理名</EditorCell>
-					<EditorCell>物理名</EditorCell>
-					<EditorCell>論理型</EditorCell>
-					<EditorCell>物理型</EditorCell>
-					<EditorCell>CLR</EditorCell>
-					<EditorCell>チェック制約</EditorCell>
-					<EditorCell>コメント</EditorCell>
-				</TableRow>
-			</TableHead>
-			<TableBody>
-				{workColumns.items.map((a) => (
-					<DatabaseTableColumn key={a.id} tableId={tableId} columnId={a.id} />
-				))}
-				<TableRow>
-					<EditorCell colSpan={11}>
-						<Box sx={{ textAlign: "center" }}>
-							<EditorButton onClick={handleAddColumn}>カラム追加</EditorButton>
-						</Box>
-					</EditorCell>
-				</TableRow>
-			</TableBody>
-		</EditorTable>
+		<TableSection title="レイアウト">
+			<EditorTable>
+				<TableHead>
+					<TableRow>
+						<EditorCell>削除</EditorCell>
+						<EditorCell>PK</EditorCell>
+						<EditorCell>NN</EditorCell>
+						<EditorCell>FK</EditorCell>
+						<EditorCell>論理名</EditorCell>
+						<EditorCell>物理名</EditorCell>
+						<EditorCell>論理型</EditorCell>
+						<EditorCell>物理型</EditorCell>
+						<EditorCell>CLR</EditorCell>
+						<EditorCell>チェック制約</EditorCell>
+						<EditorCell>コメント</EditorCell>
+					</TableRow>
+				</TableHead>
+				<TableBody>
+					{workColumns.items.map((a) => (
+						<DatabaseTableColumn key={a.id} tableId={tableId} columnId={a.id} />
+					))}
+					<TableRow>
+						<EditorCell colSpan={11}>
+							<Box sx={{ textAlign: "center" }}>
+								<EditorButton onClick={handleAddColumn}>
+									カラム追加
+								</EditorButton>
+							</Box>
+						</EditorCell>
+					</TableRow>
+				</TableBody>
+			</EditorTable>
+		</TableSection>
 	);
 };

@@ -1,12 +1,5 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import {
-	Box,
-	IconButton,
-	MenuItem,
-	Stack,
-	TableRow,
-	Typography,
-} from "@mui/material";
+import { Box, IconButton, MenuItem, Stack, TableRow } from "@mui/material";
 import React, {
 	type BaseSyntheticEvent,
 	type FC,
@@ -18,10 +11,9 @@ import {
 	useWorkColumns,
 	useWorkIndex,
 	useWorkIndexes,
-	useWorkTable,
 } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
-import { generateColumnsId, isCommonColumnName } from "../../utils/table";
+import { isCommonColumnName } from "../../utils/table";
 import {
 	EditorButton,
 	EditorCell,
@@ -43,7 +35,6 @@ export const DatabaseTableIndex: FC<DatabaseTableIndexProps> = (
 	props: DatabaseTableIndexProps,
 ) => {
 	const { tableId, indexId } = props;
-	const { workTable } = useWorkTable(tableId);
 	const { workColumns } = useWorkColumns(tableId);
 	const { workIndexes, updateWorkIndexes } = useWorkIndexes(tableId);
 	const { workIndex, updateWorkIndex } = useWorkIndex(tableId, indexId);
