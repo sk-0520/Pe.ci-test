@@ -1,3 +1,5 @@
+export const NewLine = "\r\n";
+
 /**
  * トリムの未指定時の対象文字。
  */
@@ -90,8 +92,32 @@ export function trim(s: string, characters?: ReadonlySet<string>): string {
 	return trimEnd(trimStart(s, workCharacters), workCharacters);
 }
 
-const NewLine = /\r\n|\n|\r/;
+const NewLineRegex = /\r\n|\n|\r/;
 
 export function splitLines(s: string): string[] {
-	return s.split(NewLine);
+	return s.split(NewLineRegex);
+}
+
+const CharactersRegex = /[\uD800-\uDBFF][\uDC00-\uDFFF]|[^\uD800-\uDFFF]/g;
+
+export function countSingleChar(s: string): number {
+	if (!s || !s.length) {
+		return 0;
+	}
+	const chars = s.match(CharactersRegex) || [];
+	let length = 0;
+	for (const c of chars) {
+		if (c.length === 1) {
+			// biome-ignore lint/suspicious/noControlCharactersInRegex: <explanation>
+			if (!c.match(/[^\x01-\x7E]/) || !c.match(/[^\uFF65-\uFF9F]/)) {
+				length += 1;
+			} else {
+				length += 2;
+			}
+		} else {
+			// もういいでしょ
+			length += 2;
+		}
+	}
+	return length;
 }

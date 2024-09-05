@@ -76,6 +76,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	function handleCopyMarkdownClick(event: MouseEvent): void {
 		const defineTables = workTables.map((a) => convertDefineTable(a));
 		const markdown = toMarkdown(defineTables);
+		alert(markdown);
 		console.debug(markdown);
 	}
 

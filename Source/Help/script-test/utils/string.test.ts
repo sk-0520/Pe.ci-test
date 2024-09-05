@@ -1,4 +1,5 @@
 import {
+	countSingleChar,
 	splitLines,
 	trim,
 	trimEnd,
@@ -79,5 +80,19 @@ describe("splitLines", () => {
 		[["A", "B", ""], "A\r\nB\n"],
 	])("each 期待値: [%s], 入力: [%s]", (expected: string[], input: string) => {
 		expect(splitLines(input)).toStrictEqual(expected);
+	});
+});
+
+describe("countSingleChar", () => {
+	test.each([
+		[0, ""],
+		[1, "a"],
+		[2, "あ"],
+		[3, "あa"],
+		[4, "あ𩸽"],
+		[2, "🐎"],
+		[2, "👪"],
+	])("each 期待値: [%d], 入力: [%s]", (expected: number, input: string) => {
+		expect(countSingleChar(input)).toBe(expected);
 	});
 });

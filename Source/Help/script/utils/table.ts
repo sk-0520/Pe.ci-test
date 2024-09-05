@@ -1,3 +1,4 @@
+import { buildTable } from "./markdown";
 import { splitLines, trim } from "./string";
 
 export const CommonCreatedColumnNames: ReadonlyArray<string> = [
@@ -99,7 +100,7 @@ const LayoutColumnIndex = {
 	comment: 8,
 } as const;
 const LayoutColumnLength = Object.keys(LayoutColumnIndex).length;
-const LayoutColumnNames = [
+export const LayoutColumnNames = [
 	"PK",
 	"NN",
 	"FK",
@@ -510,8 +511,27 @@ export function convertDefineTable(workTable: WorkTable): TableDefine {
 	};
 }
 
+function toTrue(b: boolean): string {
+	return b ? "[x]" : "";
+}
+
 function toMarkdownCore(defineTable: TableDefine): string {
-	throw new Error();
+	const result = new Array<string>();
+
+	result.push(`# ${defineTable.name}`);
+
+	const columnsTable = buildTable(
+		[
+			{
+				title: LayoutColumnNames[LayoutColumnIndex.primaryKey],
+				align: "",
+			},
+		],
+		defineTable.columns.map((a) => [toTrue(a.isPrimary), a.logical.name]),
+	);
+	result.push(columnsTable);
+
+	return result.join("\r\n");
 }
 
 export function toMarkdown(defineTables: TableDefine[]): string {
