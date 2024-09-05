@@ -99,6 +99,17 @@ const LayoutColumnIndex = {
 	comment: 8,
 } as const;
 const LayoutColumnLength = Object.keys(LayoutColumnIndex).length;
+const LayoutColumnNames = [
+	"PK",
+	"NN",
+	"FK",
+	"論理カラム名",
+	"物理カラム名",
+	"論理データ型",
+	"マッピング型",
+	"チェック制約",
+	"コメント",
+];
 
 const IndexDefinedIndex = {
 	uniqueKey: 0,
@@ -473,4 +484,37 @@ export function updateRelations(workTables: WorkTable[]): void {
 			}
 		}
 	}
+}
+
+export function convertDefineTable(workTable: WorkTable): TableDefine {
+	return {
+		name: workTable.define.tableName,
+		columns: workTable.columns.items.map((a) => ({
+			isPrimary: a.isPrimary,
+			notNull: a.notNull,
+			foreignKey: a.foreignKey,
+			logical: {
+				name: a.logical.name,
+				type: a.logical.type,
+			},
+			physicalName: a.physicalName,
+			clrType: a.clrType,
+			checkConstraints: a.checkConstraints,
+			comment: a.comment,
+		})),
+		indexes: workTable.indexes.items.map((a) => ({
+			isUnique: a.isUnique,
+			name: a.name,
+			columns: a.columns,
+		})),
+	};
+}
+
+function toMarkdownCore(defineTable: TableDefine): string {
+	throw new Error();
+}
+
+export function toMarkdown(defineTables: TableDefine[]): string {
+	const markdowns = defineTables.map((a) => toMarkdownCore(a));
+	return markdowns.join(`\r\n${NoneIndex}\r\n`);
 }

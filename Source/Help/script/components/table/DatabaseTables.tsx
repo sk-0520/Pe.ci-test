@@ -4,16 +4,26 @@ import {
 	MenuItem,
 	Select,
 	type SelectChangeEvent,
+	Stack,
 	useTheme,
 } from "@mui/material";
 import { useAtom } from "jotai";
-import { type FC, type ReactNode, useEffect, useMemo, useState } from "react";
+import {
+	type FC,
+	type MouseEvent,
+	type ReactNode,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import { WorkTablesAtom } from "../../stores/TableStore";
 import {
+	convertDefineTable,
 	convertTable,
 	convertWorkTable,
 	splitRawEntities,
 	splitRawSection,
+	toMarkdown,
 	updateRelations,
 } from "../../utils/table";
 import { DatabaseTable } from "./DatabaseTable";
@@ -63,6 +73,16 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 		setSelectedTableId(event.target.value);
 	}
 
+	function handleCopyMarkdownClick(event: MouseEvent): void {
+		const defineTables = workTables.map((a) => convertDefineTable(a));
+		const markdown = toMarkdown(defineTables);
+		console.debug(markdown);
+	}
+
+	function handleCopySqlClick(event: MouseEvent): void {
+		throw new Error("Function not implemented.");
+	}
+
 	return (
 		<Box>
 			<Box>
@@ -87,15 +107,23 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 				</Select>
 			</Box>
 
-			<Divider sx={{ marginBlock: "1rem" }} />
+			<Divider sx={{ marginBlock: "1em" }} />
 
 			<Box>
 				<DatabaseTable tableId={selectedTableId} />
 			</Box>
 
-			<Box>
-				<EditorButton size="medium">Copy Markdown</EditorButton>
-				<EditorButton size="medium">Copy SQL</EditorButton>
+			<Divider sx={{ marginBlock: "1em" }} />
+
+			<Box sx={{ marginTop: "1em" }}>
+				<Stack direction="row" spacing={1}>
+					<EditorButton size="medium" onClick={handleCopyMarkdownClick}>
+						コピー: Markdown
+					</EditorButton>
+					<EditorButton size="medium" onClick={handleCopySqlClick}>
+						コピー: SQL
+					</EditorButton>
+				</Stack>
 			</Box>
 			<Box
 				sx={{
