@@ -1,6 +1,8 @@
 import { buildTable } from "./markdown";
 import { NewLine, splitLines, trim } from "./string";
 
+export const TableSeparator = "___";
+
 export const CommonCreatedColumnNames: ReadonlyArray<string> = [
 	"CreatedTimestamp",
 	"CreatedAccount",
@@ -512,17 +514,17 @@ export function convertDefineTable(workTable: WorkTable): TableDefine {
 }
 
 function toTrue(b: boolean): string {
-	return b ? "[x]" : "";
+	return b ? "x" : "";
 }
 
 function toMarkdownCore(defineTable: TableDefine): string {
 	const result = new Array<string>();
 
 	result.push(`# ${defineTable.name}`);
-	result.push();
+	result.push("");
 
 	result.push("## layout");
-	result.push();
+	result.push("");
 	result.push(
 		buildTable(
 			[
@@ -576,8 +578,10 @@ function toMarkdownCore(defineTable: TableDefine): string {
 			]),
 		),
 	);
+	result.push("");
 
 	result.push("## index");
+	result.push("");
 	result.push(
 		defineTable.indexes.length
 			? buildTable(
@@ -606,5 +610,9 @@ function toMarkdownCore(defineTable: TableDefine): string {
 
 export function toMarkdown(defineTables: TableDefine[]): string {
 	const markdowns = defineTables.map((a) => toMarkdownCore(a));
-	return markdowns.join(`${NewLine}${NoneIndex}${NewLine}`);
+	return (
+		markdowns.join(
+			`${NewLine}${NewLine}${TableSeparator}${NewLine}${NewLine}`,
+		) + NewLine
+	);
 }
