@@ -17,6 +17,7 @@ import {
 	useState,
 } from "react";
 import { WorkTablesAtom } from "../../stores/TableStore";
+import { copy } from "../../utils/clipboard";
 import {
 	convertDefineTable,
 	convertTable,
@@ -76,7 +77,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 	function handleCopyMarkdownClick(event: MouseEvent): void {
 		const defineTables = workTables.map((a) => convertDefineTable(a));
 		const markdown = toMarkdown(defineTables);
-		alert(markdown);
+		copy(markdown);
 		console.debug(markdown);
 	}
 
