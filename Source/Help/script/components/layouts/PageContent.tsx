@@ -35,7 +35,12 @@ import type { PageProps } from "../../types/page";
 
 interface PageContentProps extends PageProps {}
 
-class NotImplError extends Error {}
+export class NotImplError extends Error {
+	constructor(message: string) {
+		super(message);
+		this.name = this.constructor.name;
+	}
+}
 
 const pageFactory: { [key in PageKey]: (props: PageProps) => ReactNode } = {
 	"help.index": (props: PageProps) => <HelpIndexPage {...props} />,

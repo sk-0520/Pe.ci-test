@@ -1,39 +1,120 @@
 import { NewLine, countSingleChar } from "./string";
 
-export type TableColumnAlign = "" | "left" | "center" | "right";
-const MarkdownTableCellMinWidth = "---".length;
+export class MarkdownError extends Error {
+	constructor(message: string) {
+		super(message);
+		this.name = this.constructor.name;
+	}
+}
+export class MarkdownTableError extends MarkdownError {}
 
+export type TableColumnAlign = "left" | "center" | "right";
+const CellMinWidth = "---".length;
+const CellPadding = 2;
 export interface TableColumn {
-	align: TableColumnAlign;
+	align?: TableColumnAlign;
 	title: string;
+}
+
+function escapeCell(raw: string): string {
+	return raw.replaceAll("|", "\\|");
+}
+
+export function buildCell(
+	maxWidth: number,
+	value: string,
+	align: TableColumnAlign | undefined,
+): string {
+	const valueWidth = countSingleChar(value);
+	const cellWidth = maxWidth;
+	if (valueWidth === maxWidth) {
+		return value;
+	}
+	if (cellWidth - valueWidth <= 0) {
+		throw new MarkdownTableError("cell width");
+	}
+
+	switch (align) {
+		case undefined:
+		case "left":
+			return `${value}${" ".repeat(cellWidth - valueWidth)}`;
+
+		case "right":
+			return `${" ".repeat(cellWidth - valueWidth)}${value}`;
+
+		case "center":
+			return `${" ".repeat((cellWidth - valueWidth) / 2)}${value}${" ".repeat((cellWidth - valueWidth) / 2 + ((cellWidth - valueWidth) % 2))}`;
+	}
 }
 
 export function buildTable(
 	columns: ReadonlyArray<TableColumn>,
 	rows: ReadonlyArray<ReadonlyArray<string>>,
 ): string {
-	//TODO: 幅調整はあとでやる
-	const cellLengths = columns.map((a) =>
-		Math.max(MarkdownTableCellMinWidth, countSingleChar(a.title)),
+	if (!columns.length) {
+		throw new MarkdownTableError("empty columns");
+	}
+	if (!rows.length) {
+		throw new MarkdownTableError("empty rows");
+	}
+
+	const cellMaxLengths = columns.map((a) =>
+		Math.max(CellMinWidth, countSingleChar(escapeCell(a.title)) + CellPadding),
 	);
+	const workRows: string[][] = [];
 	for (const row of rows) {
-		for (let i = 0; i < row.length; i++) {
-			const col = row[i];
-			cellLengths[i] = Math.max(cellLengths[i], countSingleChar(col));
+		if (columns.length !== row.length) {
+			throw new MarkdownError("size not equal columns rows.cells");
 		}
+		const workRow: string[] = [];
+		for (let i = 0; i < row.length; i++) {
+			const cell = escapeCell(row[i]);
+			workRow.push(cell);
+			cellMaxLengths[i] = Math.max(
+				cellMaxLengths[i],
+				countSingleChar(cell) + CellPadding,
+			);
+		}
+		workRows.push(workRow);
 	}
 
 	const tableRows: Array<Array<string>> = [];
 
-	tableRows.push(columns.map((a) => a.title));
+	tableRows.push(
+		columns.map(
+			(a, i) =>
+				` ${buildCell(cellMaxLengths[i] - CellPadding, escapeCell(a.title), "center")} `,
+		),
+	);
 	//TODO: 幅調整はあとでやる
-	tableRows.push(columns.map((a) => "---"));
+	tableRows.push(
+		columns.map((a, i) => {
+			switch (a.align) {
+				case "left":
+					return `:${"-".repeat(cellMaxLengths[i] - 1)}`;
 
-	for (const row of rows) {
+				case "right":
+					return `${"-".repeat(cellMaxLengths[i] - 1)}:`;
+
+				case "center":
+					return `:${"-".repeat(cellMaxLengths[i] - 2)}:`;
+
+				case undefined:
+					return `${"-".repeat(cellMaxLengths[i])}`;
+			}
+		}),
+	);
+
+	for (const row of workRows) {
 		//TODO: 幅調整はあとでやる
-		tableRows.push(row.map((a) => a));
+		tableRows.push(
+			row.map(
+				(a, i) =>
+					` ${buildCell(cellMaxLengths[i] - CellPadding, a, columns[i].align)} `,
+			),
+		);
 	}
 
-	const result = tableRows.map((a) => ["|", a.join("|"), "|"]).join(NewLine);
+	const result = tableRows.map((a) => `|${a.join("|")}|`).join(NewLine);
 	return result;
 }

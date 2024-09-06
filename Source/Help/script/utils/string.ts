@@ -1,4 +1,4 @@
-export const NewLine = "\r\n";
+export const NewLine = "\n";
 
 /**
  * トリムの未指定時の対象文字。

@@ -1,5 +1,5 @@
 import { buildTable } from "./markdown";
-import { splitLines, trim } from "./string";
+import { NewLine, splitLines, trim } from "./string";
 
 export const CommonCreatedColumnNames: ReadonlyArray<string> = [
 	"CreatedTimestamp",
@@ -519,22 +519,92 @@ function toMarkdownCore(defineTable: TableDefine): string {
 	const result = new Array<string>();
 
 	result.push(`# ${defineTable.name}`);
+	result.push();
 
-	const columnsTable = buildTable(
-		[
-			{
-				title: LayoutColumnNames[LayoutColumnIndex.primaryKey],
-				align: "",
-			},
-		],
-		defineTable.columns.map((a) => [toTrue(a.isPrimary), a.logical.name]),
+	result.push("## layout");
+	result.push();
+	result.push(
+		buildTable(
+			[
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.primaryKey],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.notNull],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.foreignKey],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.logicalName],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.physicalName],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.logicalType],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.clrType],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.check],
+					align: "center",
+				},
+				{
+					title: LayoutColumnNames[LayoutColumnIndex.comment],
+					align: "center",
+				},
+			],
+			defineTable.columns.map((a) => [
+				toTrue(a.isPrimary),
+				toTrue(a.notNull),
+				a.foreignKey ? `${a.foreignKey.table}.${a.foreignKey.column}` : "",
+				a.logical.name,
+				a.physicalName,
+				a.logical.type,
+				a.clrType,
+				a.checkConstraints,
+				a.comment,
+			]),
+		),
 	);
-	result.push(columnsTable);
 
-	return result.join("\r\n");
+	result.push("## index");
+	result.push(
+		defineTable.indexes.length
+			? buildTable(
+					[
+						{
+							title: "UK",
+						},
+						{
+							title: "名前",
+						},
+						{
+							title: "カラム",
+						},
+					],
+					defineTable.indexes.map((a) => [
+						toTrue(a.isUnique),
+						a.name,
+						a.columns.join(", "),
+					]),
+				)
+			: NoneIndex,
+	);
+
+	return result.join(NewLine);
 }
 
 export function toMarkdown(defineTables: TableDefine[]): string {
 	const markdowns = defineTables.map((a) => toMarkdownCore(a));
-	return markdowns.join(`\r\n${NoneIndex}\r\n`);
+	return markdowns.join(`${NewLine}${NoneIndex}${NewLine}`);
 }
