@@ -541,31 +541,31 @@ function toMarkdownCore(defineTable: TableDefine): string {
 				},
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.foreignKey],
-					align: "center",
+					align: "left",
 				},
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.logicalName],
-					align: "center",
+					align: "left",
 				},
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.physicalName],
-					align: "center",
+					align: "left",
 				},
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.logicalType],
-					align: "center",
+					align: "left",
 				},
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.clrType],
-					align: "center",
+					align: "left",
 				},
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.check],
-					align: "center",
+					align: "left",
 				},
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.comment],
-					align: "center",
+					align: "left",
 				},
 			],
 			defineTable.columns.map((a) => [
