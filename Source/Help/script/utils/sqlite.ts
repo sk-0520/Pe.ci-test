@@ -61,7 +61,9 @@ export function buildTable(table: TableDefine): string {
 			columnStatement += ",";
 		}
 		if (column.comment) {
-			columnStatement += ` // ${column.comment}`;
+			columnStatement += ` -- ${column.logical.name} ${column.comment}`;
+		} else {
+			columnStatement += ` -- ${column.logical.name}`;
 		}
 
 		workLines.push(Indent + columnStatement);
