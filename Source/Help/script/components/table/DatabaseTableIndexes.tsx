@@ -4,7 +4,7 @@ import { useWorkIndexes, useWorkTable } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
 import { generateIndexesId } from "../../utils/table";
 import { DatabaseTableIndex } from "./DatabaseTableIndex";
-import { TableSection } from "./TableSection";
+import { DatabaseTableSection } from "./DatabaseTableSection";
 import { EditorButton, EditorCell, EditorTable } from "./editor";
 
 interface DatabaseTableIndexesProps extends TableBaseProps {}
@@ -31,7 +31,7 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 	}
 
 	return (
-		<TableSection title="インデックス">
+		<DatabaseTableSection title="インデックス">
 			{
 				<EditorTable>
 					<TableHead>
@@ -58,6 +58,6 @@ export const DatabaseTableIndexes: FC<DatabaseTableIndexesProps> = (
 					</TableBody>
 				</EditorTable>
 			}
-		</TableSection>
+		</DatabaseTableSection>
 	);
 };

@@ -129,6 +129,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 					</EditorButton>
 				</Stack>
 			</Box>
+			{/*
 			<Box
 				sx={{
 					position: "fixed",
@@ -146,6 +147,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 			>
 				<pre>{JSON.stringify(workTables, undefined, 2)}</pre>
 			</Box>
+			*/}
 		</Box>
 	);
 };

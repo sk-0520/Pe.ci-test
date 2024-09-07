@@ -12,7 +12,7 @@ import {
 } from "../../utils/table";
 
 import { DatabaseTableColumn } from "./DatabaseTableColumn";
-import { TableSection } from "./TableSection";
+import { DatabaseTableSection } from "./DatabaseTableSection";
 import { EditorButton, EditorCell, EditorTable } from "./editor";
 
 interface DatabaseTableColumnsProps extends TableBaseProps {}
@@ -53,20 +53,20 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 	}
 
 	return (
-		<TableSection title="レイアウト">
+		<DatabaseTableSection title="レイアウト">
 			<EditorTable>
 				<TableHead>
 					<TableRow>
-						<EditorCell>削除</EditorCell>
-						<EditorCell>PK</EditorCell>
-						<EditorCell>NN</EditorCell>
-						<EditorCell>FK</EditorCell>
-						<EditorCell>論理名</EditorCell>
-						<EditorCell>物理名</EditorCell>
-						<EditorCell>論理型</EditorCell>
-						<EditorCell>物理型</EditorCell>
-						<EditorCell>CLR</EditorCell>
-						<EditorCell>コメント</EditorCell>
+						<EditorCell align="center">削除</EditorCell>
+						<EditorCell align="center">PK</EditorCell>
+						<EditorCell align="center">NN</EditorCell>
+						<EditorCell align="center">FK</EditorCell>
+						<EditorCell align="center">論理名</EditorCell>
+						<EditorCell align="center">物理名</EditorCell>
+						<EditorCell align="center">論理型</EditorCell>
+						<EditorCell align="center">物理型</EditorCell>
+						<EditorCell align="center">CLR</EditorCell>
+						<EditorCell align="center">コメント</EditorCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -84,6 +84,6 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 					</TableRow>
 				</TableBody>
 			</EditorTable>
-		</TableSection>
+		</DatabaseTableSection>
 	);
 };

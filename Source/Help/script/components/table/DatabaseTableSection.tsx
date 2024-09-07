@@ -6,7 +6,7 @@ interface TableSectionProps {
 	children: ReactNode;
 }
 
-export const TableSection: FC<TableSectionProps> = (props) => {
+export const DatabaseTableSection: FC<TableSectionProps> = (props) => {
 	const { title, children } = props;
 
 	return (

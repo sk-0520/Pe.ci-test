@@ -6,3 +6,5 @@ export * from "./DevPluginPage";
 export * from "./DevPluginReferencePage";
 export * from "./DevPluginTemplatePage";
 export * from "./DevTableMainPage";
+export * from "./DevTableLargePage";
+export * from "./DevTableTemporaryPage";
