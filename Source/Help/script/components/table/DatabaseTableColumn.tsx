@@ -45,7 +45,6 @@ interface InputValues {
 	logicalType: Sqlite3Type;
 	physicalName: string;
 	clrType: ClrTypeFullName;
-	checkConstraints: string;
 	comment: string;
 }
 
@@ -96,7 +95,6 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 		logical,
 		physicalName,
 		clrType,
-		checkConstraints,
 		comment,
 	} = workColumn;
 
@@ -142,7 +140,6 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			logicalType: logical.type,
 			physicalName: physicalName,
 			clrType: clrType,
-			checkConstraints: checkConstraints,
 			comment: comment,
 		},
 	});
@@ -208,7 +205,6 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			},
 			physicalName: data.physicalName,
 			clrType: data.clrType,
-			checkConstraints: data.checkConstraints,
 			comment: data.comment,
 		});
 	}
@@ -367,15 +363,6 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 								);
 							})}
 						</EditorSelect>
-					)}
-				/>
-			</EditorCell>
-			<EditorCell>
-				<Controller
-					name="checkConstraints"
-					control={control}
-					render={({ field, formState: { errors } }) => (
-						<EditorTextField {...field} onBlur={handleSubmit(handleInput)} />
 					)}
 				/>
 			</EditorCell>

@@ -78,8 +78,7 @@ const LayoutColumnIndex = {
 	physicalName: 4,
 	logicalType: 5,
 	clrType: 6,
-	check: 7,
-	comment: 8,
+	comment: 7,
 } as const;
 const LayoutColumnLength = Object.keys(LayoutColumnIndex).length;
 export const LayoutColumnNames = [
@@ -90,7 +89,6 @@ export const LayoutColumnNames = [
 	"物理カラム名",
 	"論理データ型",
 	"マッピング型",
-	"チェック制約",
 	"コメント",
 ];
 
@@ -122,7 +120,6 @@ export interface TableColumn {
 	};
 	physicalName: string;
 	clrType: ClrTypeFullName;
-	checkConstraints: string;
 	comment: string;
 }
 
@@ -252,7 +249,6 @@ export function convertColumns(lines: string[]): TableColumn[] {
 			LayoutColumnIndex.logicalType
 		] as sqlite3.Sqlite3Type; //TODO: 値チェック
 		const clrType = columns[LayoutColumnIndex.clrType] as ClrTypeFullName; //TODO: 値チェック
-		const check = columns[LayoutColumnIndex.check];
 		const comment = columns[LayoutColumnIndex.comment];
 
 		const foreignKeys = foreignKey
@@ -277,7 +273,6 @@ export function convertColumns(lines: string[]): TableColumn[] {
 			},
 			physicalName: physicalName,
 			clrType: clrType,
-			checkConstraints: check,
 			comment: comment,
 		};
 
@@ -487,7 +482,6 @@ export function convertDefineTable(workTable: WorkTable): TableDefine {
 			},
 			physicalName: a.physicalName,
 			clrType: a.clrType,
-			checkConstraints: a.checkConstraints,
 			comment: a.comment,
 		})),
 		indexes: workTable.indexes.items.map((a) => ({
@@ -542,10 +536,6 @@ function toMarkdownCore(defineTable: TableDefine): string {
 					align: "left",
 				},
 				{
-					title: LayoutColumnNames[LayoutColumnIndex.check],
-					align: "left",
-				},
-				{
 					title: LayoutColumnNames[LayoutColumnIndex.comment],
 					align: "left",
 				},
@@ -558,7 +548,6 @@ function toMarkdownCore(defineTable: TableDefine): string {
 				a.physicalName,
 				a.logical.type,
 				a.clrType,
-				a.checkConstraints,
 				a.comment,
 			]),
 		),

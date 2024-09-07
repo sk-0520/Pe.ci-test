@@ -98,26 +98,26 @@ describe("convertColumns", () => {
 	});
 
 	test("header short", () => {
-		expect(() => convertColumns(["0|1|2|3|4|5|6|7", "", ""])).toThrow(
+		expect(() => convertColumns(["0|1|2|3|4|5|6", "", ""])).toThrow(
 			"column length",
 		);
 	});
 
 	test("header long", () => {
-		expect(() => convertColumns(["0|1|2|3|4|5|6|7|*|9", "", ""])).toThrow(
+		expect(() => convertColumns(["0|1|2|3|4|5|6|*|8", "", ""])).toThrow(
 			"column length",
 		);
 	});
 
 	test("header short", () => {
 		expect(() =>
-			convertColumns(["0|1|2|3|4|5|6|7|8", "", "0|1|2|3|4|5|6|7"]),
+			convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6"]),
 		).toThrow("data length");
 	});
 
 	test("header long", () => {
 		expect(() =>
-			convertColumns(["0|1|2|3|4|5|6|7|8", "", "0|1|2|3|4|5|6|7|*|9"]),
+			convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6|*|7"]),
 		).toThrow("data length");
 	});
 
@@ -127,9 +127,9 @@ describe("convertColumns", () => {
 		[false, " "],
 	])("PK: 期待値 [%s], 入力値 [%s]", (expected: boolean, input: string) => {
 		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
+			"0|1|2|3|4|5|6|7",
 			"",
-			`${input}|1|2|3|4|5|6|7|8`,
+			`${input}|1|2|3|4|5|6|7`,
 		]);
 		expect(columns[0].isPrimary).toBe(expected);
 	});
@@ -140,18 +140,18 @@ describe("convertColumns", () => {
 		[false, " "],
 	])("NN: 期待値 [%s], 入力値 [%s]", (expected: boolean, input: string) => {
 		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
+			"0|1|2|3|4|5|6|7",
 			"",
-			`0|${input}|2|3|4|5|6|7|8`,
+			`0|${input}|2|3|4|5|6|7`,
 		]);
 		expect(columns[0].notNull).toBe(expected);
 	});
 
 	test("FK", () => {
 		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
+			"0|1|2|3|4|5|6|7",
 			"",
-			"0|1|T.C|3|4|5|6|7|8",
+			"0|1|T.C|3|4|5|6|7",
 		]);
 		expect(columns[0].foreignKey).toStrictEqual({
 			table: "T",
@@ -161,19 +161,15 @@ describe("convertColumns", () => {
 
 	test.each([[""], ["T"], [".C"]])("FK: undefined", (input) => {
 		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
+			"0|1|2|3|4|5|6|7",
 			"",
-			`0|1|${input}|3|4|5|6|7|8`,
+			`0|1|${input}|3|4|5|6|7`,
 		]);
 		expect(columns[0].foreignKey).toBeUndefined();
 	});
 
 	test("logical", () => {
-		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
-			"",
-			"0|1|2|3|4|5|6|7|8",
-		]);
+		const columns = convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6|7"]);
 		expect(columns[0].logical).toStrictEqual({
 			name: "3",
 			type: "5",
@@ -181,31 +177,14 @@ describe("convertColumns", () => {
 	});
 
 	test("physical", () => {
-		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
-			"",
-			"0|1|2|3|4|5|6|7|8",
-		]);
+		const columns = convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6|7"]);
 		expect(columns[0].physicalName).toBe("4");
 		expect(columns[0].clrType).toBe("6");
 	});
 
 	test("check", () => {
-		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
-			"",
-			"0|1|2|3|4|5|6|7|8",
-		]);
-		expect(columns[0].checkConstraints).toBe("7");
-	});
-
-	test("check", () => {
-		const columns = convertColumns([
-			"0|1|2|3|4|5|6|7|8",
-			"",
-			"0|1|2|3|4|5|6|7|8",
-		]);
-		expect(columns[0].comment).toBe("8");
+		const columns = convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6|7"]);
+		expect(columns[0].comment).toBe("7");
 	});
 });
 

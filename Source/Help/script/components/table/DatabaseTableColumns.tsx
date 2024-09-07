@@ -43,7 +43,6 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 			clrType: selectableClrTypes[0] as ClrTypeFullName,
 			foreignKey: undefined,
 			foreignKeyId: undefined,
-			checkConstraints: "",
 			comment: "",
 			lastUpdateTimestamp: generateTimestamp(),
 		});
@@ -67,7 +66,6 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 						<EditorCell>論理型</EditorCell>
 						<EditorCell>物理型</EditorCell>
 						<EditorCell>CLR</EditorCell>
-						<EditorCell>チェック制約</EditorCell>
 						<EditorCell>コメント</EditorCell>
 					</TableRow>
 				</TableHead>
