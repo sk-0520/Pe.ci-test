@@ -3,13 +3,14 @@ import type { FC, MouseEvent } from "react";
 import { useWorkColumns } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
 import { getElement } from "../../utils/access";
+import type { Sqlite3Type } from "../../utils/sqlite";
 import {
 	ClrMap,
 	type ClrTypeFullName,
-	type Sqlite3Type,
 	generateColumnId,
 	generateTimestamp,
 } from "../../utils/table";
+
 import { DatabaseTableColumn } from "./DatabaseTableColumn";
 import { TableSection } from "./TableSection";
 import { EditorButton, EditorCell, EditorTable } from "./editor";

@@ -12,6 +12,12 @@ import {
 import type { TableBaseProps } from "../../types/table";
 import { getElement } from "../../utils/access";
 import {
+	Sqlite3AffinityTypes,
+	Sqlite3BasicTypes,
+	type Sqlite3Type,
+	SqliteTypeMap,
+} from "../../utils/sqlite";
+import {
 	ClrMap,
 	type ClrTypeFullName,
 	ClrTypeFullNames,
@@ -19,10 +25,6 @@ import {
 	CommonCreatedColumnNames,
 	CommonUpdatedColumnNames,
 	type ForeignKey,
-	Sqlite3AffinityTypes,
-	Sqlite3BasicTypes,
-	type Sqlite3Type,
-	SqliteTypeMap,
 	type WorkColumn,
 	type WorkForeignKey,
 	type WorkTable,
