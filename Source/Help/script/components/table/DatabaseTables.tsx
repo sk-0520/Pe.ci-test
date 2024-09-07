@@ -25,6 +25,7 @@ import {
 	splitRawEntities,
 	splitRawSection,
 	toMarkdown,
+	toSql,
 	updateRelations,
 } from "../../utils/table";
 import { DatabaseTable } from "./DatabaseTable";
@@ -80,8 +81,10 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 		await copy(markdown);
 	}
 
-	function handleCopySqlClick(event: MouseEvent): void {
-		throw new Error("Function not implemented.");
+	async function handleCopySqlClick(event: MouseEvent): Promise<void> {
+		const defineTables = workTables.map((a) => convertDefineTable(a));
+		const sql = toSql(defineTables);
+		await copy(sql);
 	}
 
 	return (

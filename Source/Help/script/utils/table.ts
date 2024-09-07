@@ -1,5 +1,5 @@
-import { buildTable } from "./markdown";
-import type { Sqlite3Type } from "./sqlite";
+import * as markdown from "./markdown";
+import * as sqlite3 from "./sqlite";
 import { NewLine, splitLines, trim } from "./string";
 
 export const TableSeparator = "___";
@@ -53,7 +53,10 @@ export const ClrTypeMap = new Map<ClrTypeFullName, string>([
 	["System.TimeSpan", "TimeSpan"],
 ]);
 
-export const ClrMap = new Map<Sqlite3Type, ReadonlyArray<ClrTypeFullName>>([
+export const ClrMap = new Map<
+	sqlite3.Sqlite3Type,
+	ReadonlyArray<ClrTypeFullName>
+>([
 	["integer", ["System.Int64"]],
 	["real", ["System.Decimal", "System.Single", "System.Double"]],
 	[
@@ -63,7 +66,7 @@ export const ClrMap = new Map<Sqlite3Type, ReadonlyArray<ClrTypeFullName>>([
 	["blob", ["System.Byte[]"]],
 	["datetime", ["System.DateTime", "System.String"]],
 	["boolean", ["System.Boolean", "System.Int64"]],
-]) as ReadonlyMap<Sqlite3Type, ReadonlyArray<string>>;
+]) as ReadonlyMap<sqlite3.Sqlite3Type, ReadonlyArray<string>>;
 
 const NoneIndex = "*NONE*";
 
@@ -115,7 +118,7 @@ export interface TableColumn {
 	foreignKey: ForeignKey | undefined;
 	logical: {
 		name: string;
-		type: Sqlite3Type;
+		type: sqlite3.Sqlite3Type;
 	};
 	physicalName: string;
 	clrType: ClrTypeFullName;
@@ -245,7 +248,9 @@ export function convertColumns(lines: string[]): TableColumn[] {
 		const foreignKey = columns[LayoutColumnIndex.foreignKey];
 		const logicalName = columns[LayoutColumnIndex.logicalName];
 		const physicalName = columns[LayoutColumnIndex.physicalName];
-		const logicalType = columns[LayoutColumnIndex.logicalType] as Sqlite3Type; //TODO: 値チェック
+		const logicalType = columns[
+			LayoutColumnIndex.logicalType
+		] as sqlite3.Sqlite3Type; //TODO: 値チェック
 		const clrType = columns[LayoutColumnIndex.clrType] as ClrTypeFullName; //TODO: 値チェック
 		const check = columns[LayoutColumnIndex.check];
 		const comment = columns[LayoutColumnIndex.comment];
@@ -506,7 +511,7 @@ function toMarkdownCore(defineTable: TableDefine): string {
 	result.push("## layout");
 	result.push("");
 	result.push(
-		buildTable(
+		markdown.buildTable(
 			[
 				{
 					title: LayoutColumnNames[LayoutColumnIndex.primaryKey],
@@ -564,7 +569,7 @@ function toMarkdownCore(defineTable: TableDefine): string {
 	result.push("");
 	result.push(
 		defineTable.indexes.length
-			? buildTable(
+			? markdown.buildTable(
 					[
 						{
 							title: "UK",
@@ -595,4 +600,13 @@ export function toMarkdown(defineTables: TableDefine[]): string {
 			`${NewLine}${NewLine}${TableSeparator}${NewLine}${NewLine}`,
 		) + NewLine
 	);
+}
+
+export function toSql(defineTables: TableDefine[]): string {
+	const tables = defineTables.map((a) => sqlite3.buildTable(a) + NewLine);
+	const indexes = defineTables
+		.filter((a) => a.indexes.length)
+		.map((a) => sqlite3.buildIndex(a) + NewLine);
+
+	return [...tables, "", ...indexes, ""].join(NewLine);
 }
