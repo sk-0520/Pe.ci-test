@@ -167,7 +167,10 @@ export function splitRawEntities(markdown: string): string[] {
 		return [];
 	}
 
-	return markdown.split(/^___$/gm).map((a) => a.trim());
+	const tableSeparator = TableSeparator.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	const regex = new RegExp(`^${tableSeparator}$`, "gm");
+
+	return markdown.split(regex).map((a) => a.trim());
 }
 
 const RawSectionHeaderRegex = {

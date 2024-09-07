@@ -47,7 +47,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 
 		const tables = splitRawEntities(markdown)
 			.map((a) => splitRawSection(a))
-			.sort((a, b) => a.table.localeCompare(b.table))
+			//.sort((a, b) => a.table.localeCompare(b.table))
 			.map((a) => convertTable(a))
 			.map((a) => convertWorkTable(a));
 
@@ -74,11 +74,10 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 		setSelectedTableId(event.target.value);
 	}
 
-	function handleCopyMarkdownClick(event: MouseEvent): void {
+	async function handleCopyMarkdownClick(event: MouseEvent): Promise<void> {
 		const defineTables = workTables.map((a) => convertDefineTable(a));
 		const markdown = toMarkdown(defineTables);
-		copy(markdown);
-		console.debug(markdown);
+		await copy(markdown);
 	}
 
 	function handleCopySqlClick(event: MouseEvent): void {
