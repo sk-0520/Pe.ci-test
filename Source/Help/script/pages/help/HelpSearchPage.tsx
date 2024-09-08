@@ -40,8 +40,16 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 				<Controller
 					control={control}
 					name="query"
+					rules={{
+						required: true,
+					}}
 					render={({ field, formState: { errors } }) => (
-						<TextField {...field} label="検索文言" />
+						<TextField
+							{...field}
+							label="検索文言"
+							fullWidth
+							error={!!errors.query}
+						/>
 					)}
 				/>
 				<Stack direction="row">
@@ -50,7 +58,7 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 						name="case"
 						render={({ field, formState: { errors } }) => (
 							<FormControlLabel
-								control={<Checkbox defaultChecked={field.value} {...field} />}
+								control={<Checkbox {...field} checked={field.value} />}
 								label="大文字と小文字を区別する"
 							/>
 						)}
@@ -60,7 +68,7 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 						name="regex"
 						render={({ field, formState: { errors } }) => (
 							<FormControlLabel
-								control={<Checkbox defaultChecked={field.value} {...field} />}
+								control={<Checkbox {...field} checked={field.value} />}
 								label="正規表現を使用する"
 							/>
 						)}
@@ -70,14 +78,16 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 						name="dev"
 						render={({ field, formState: { errors } }) => (
 							<FormControlLabel
-								control={<Checkbox defaultChecked={field.value} {...field} />}
+								control={<Checkbox {...field} checked={field.value} />}
 								label="開発ドキュメントを含める"
 							/>
 						)}
 					/>
 				</Stack>
 				<Box>
-					<Button type="submit">submit</Button>
+					<Button variant="contained" type="submit">
+						検索
+					</Button>
 				</Box>
 			</Box>
 		</form>
