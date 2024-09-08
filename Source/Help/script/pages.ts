@@ -1,4 +1,4 @@
-export const PageKeys = [
+export const HelpPageKeys = [
 	"help.index",
 	"help.install_uninstall_data",
 	"help.cpu",
@@ -16,6 +16,9 @@ export const PageKeys = [
 	"help.others_plugin",
 	"help.search",
 	"help.changelog",
+] as const;
+
+export const DevPageKeys = [
 	"dev.index",
 	"dev.build",
 	"dev.branch",
@@ -27,6 +30,8 @@ export const PageKeys = [
 	"dev.plugin_reference",
 	"dev.plugin_template",
 ] as const;
+
+export const PageKeys = [...HelpPageKeys, ...DevPageKeys] as const;
 export type PageKey = (typeof PageKeys)[number];
 
 export interface PageElement {

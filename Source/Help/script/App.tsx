@@ -105,7 +105,7 @@ export const App: FC = () => {
 				<Toolbar />
 				<PageContent
 					selectedPageKey={selectedPageKey}
-					handleSelectPageKey={handleSelectPageKey}
+					callbackSelectPageKey={handleSelectPageKey}
 					currentPage={currentPage}
 				/>
 			</Box>

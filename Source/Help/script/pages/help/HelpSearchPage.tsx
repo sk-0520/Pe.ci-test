@@ -6,9 +6,25 @@ import {
 	Stack,
 	TextField,
 } from "@mui/material";
-import type { FC } from "react";
+import { type FC, useId } from "react";
+import ReactDOMServer from "react-dom/server";
 import { Controller, useForm } from "react-hook-form";
+import { PageContent } from "../../components/layouts/PageContent";
+import { DevPageKeys, HelpPageKeys, type PageKey, Pages } from "../../pages";
 import type { PageProps } from "../../types/page";
+import { getPage } from "../../utils/page";
+
+const TargetHelpPageKeys: PageKey[] = HelpPageKeys.filter(
+	(a) => !["help.search"].includes(a),
+);
+const TargetDevPageKeys: PageKey[] = DevPageKeys.filter(
+	(a) =>
+		!["dev.table_main", "dev.table_large", "dev.table_temporary"].includes(a),
+);
+
+function handleSelectPageKey(pageKey: PageKey): void {
+	//nop
+}
 
 interface SearchInput {
 	query: string;
@@ -21,6 +37,7 @@ interface SearchInput {
 }
 
 export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
+	const id = useId();
 	const { control, handleSubmit } = useForm<SearchInput>({
 		defaultValues: {
 			query: "",
@@ -31,7 +48,28 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 	});
 
 	function onSubmit(data: SearchInput) {
-		console.debug(data);
+		let targetKeys = [...TargetHelpPageKeys];
+		if (data.dev) {
+			targetKeys = [...targetKeys, ...TargetDevPageKeys];
+		}
+
+		console.debug({ data, targetKeys });
+
+		targetKeys.map((a, i) => {
+			console.debug(a);
+			const currentPage = getPage(a, Pages);
+			const html = ReactDOMServer.renderToStaticMarkup(
+				<PageContent
+					selectedPageKey={a}
+					currentPage={currentPage}
+					callbackSelectPageKey={handleSelectPageKey}
+				/>,
+				{
+					identifierPrefix: id,
+				},
+			);
+			console.debug(html);
+		});
 	}
 
 	return (
