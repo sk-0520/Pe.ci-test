@@ -85,13 +85,14 @@ function indexOf(
 const PageCacheMap = new Map<PageKey, PageCache>();
 
 interface SearchInput {
+	/** 検索文言 */
 	query: string;
-	/** 大文字と小文字を区別する */
+	/** 大文字と小文字を区別するか */
 	caseSensitive: boolean;
-	/** 正規表現 */
-	regex: boolean;
-	/** 開発ドキュメントを含める */
-	dev: boolean;
+	/** 検索文言を正規表現として扱うか */
+	isRegex: boolean;
+	/** 開発ドキュメントを含めるか */
+	includeDevelopment: boolean;
 }
 
 export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
@@ -99,19 +100,19 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 		defaultValues: {
 			query: "",
 			caseSensitive: false,
-			regex: false,
-			dev: false,
+			isRegex: false,
+			includeDevelopment: false,
 		},
 	});
 	const [searchItems, setSearchItems] = useState<SearchResult[]>();
 
 	function onSubmit(data: SearchInput) {
 		let targetKeys = [...TargetHelpPageKeys];
-		if (data.dev) {
+		if (data.includeDevelopment) {
 			targetKeys = [...targetKeys, ...TargetDevPageKeys];
 		}
 
-		const { regex, caseSensitive, dev, query } = data;
+		const { isRegex, caseSensitive, includeDevelopment, query } = data;
 
 		const defaultError = console.error;
 		try {
@@ -158,7 +159,7 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 		const result: Array<SearchResult> = [];
 
 		for (const [key, value] of PageCacheMap) {
-			if (!dev) {
+			if (!includeDevelopment) {
 				if (TargetDevPageKeys.includes(key)) {
 					continue;
 				}
@@ -176,7 +177,7 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 					positions: [],
 				};
 
-				const index = indexOf(line, query, startIndex, regex, caseSensitive);
+				const index = indexOf(line, query, startIndex, isRegex, caseSensitive);
 				if (index === -1) {
 					continue;
 				}
@@ -231,7 +232,7 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 						/>
 						<Controller
 							control={control}
-							name="regex"
+							name="isRegex"
 							render={({ field, formState: { errors } }) => (
 								<FormControlLabel
 									control={<Checkbox {...field} checked={field.value} />}
@@ -241,7 +242,7 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 						/>
 						<Controller
 							control={control}
-							name="dev"
+							name="includeDevelopment"
 							render={({ field, formState: { errors } }) => (
 								<FormControlLabel
 									control={<Checkbox {...field} checked={field.value} />}
