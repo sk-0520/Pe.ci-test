@@ -1,10 +1,10 @@
-import { List, ListItemButton, Typography } from "@mui/material";
+import { List, ListItemButton, Typography, useTheme } from "@mui/material";
 import type { FC, MouseEvent } from "react";
 import type { PageElement, PageKey } from "../../pages";
 
 interface SideMenuItemProps {
 	selectedPageKey: PageKey;
-	handleSelectPageKey: (pageKey: PageKey) => void;
+	callbackSelectPageKey: (pageKey: PageKey) => void;
 	page: PageElement;
 	nestLevel: number;
 }
@@ -12,16 +12,34 @@ interface SideMenuItemProps {
 export const SideMenuItem: FC<SideMenuItemProps> = (
 	props: SideMenuItemProps,
 ) => {
-	const { handleSelectPageKey, page, nestLevel } = props;
+	const { callbackSelectPageKey, page, nestLevel, selectedPageKey } = props;
+	const theme = useTheme();
+
+	const isSelected = selectedPageKey === page.key;
 
 	function handleSelectMenu(event: MouseEvent): void {
-		handleSelectPageKey(page.key);
+		callbackSelectPageKey(page.key);
 	}
 
 	return (
 		<>
-			<ListItemButton onClick={handleSelectMenu}>
-				<Typography paddingLeft={nestLevel * 1.5}>{page.title}</Typography>
+			<ListItemButton
+				onClick={handleSelectMenu}
+				sx={{
+					background: isSelected ? theme.palette.secondary.light : undefined,
+					"&:hover": {
+						background: isSelected ? theme.palette.secondary.main : undefined,
+					},
+				}}
+			>
+				<Typography
+					sx={{
+						fontWeight: isSelected ? "bold" : undefined,
+						paddingLeft: nestLevel * 1.5,
+					}}
+				>
+					{page.title}
+				</Typography>
 			</ListItemButton>
 			{page.nodes && 0 < page.nodes.length && (
 				<List disablePadding>
@@ -29,7 +47,7 @@ export const SideMenuItem: FC<SideMenuItemProps> = (
 						<SideMenuItem
 							key={a.key}
 							selectedPageKey={props.selectedPageKey}
-							handleSelectPageKey={props.handleSelectPageKey}
+							callbackSelectPageKey={props.callbackSelectPageKey}
 							page={a}
 							nestLevel={nestLevel + 1}
 						/>

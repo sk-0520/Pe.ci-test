@@ -7,7 +7,7 @@ export const AppTheme: ThemeOptions = {
 			main: "#795548",
 		},
 		secondary: {
-			main: "#f50057",
+			main: "#86aab7",
 		},
 	},
 	typography: {

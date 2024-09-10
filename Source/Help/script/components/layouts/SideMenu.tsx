@@ -18,7 +18,7 @@ export const SideMenu: FC<SideMenuProps> = (props: SideMenuProps) => {
 				<SideMenuItem
 					key={a.key}
 					selectedPageKey={selectedPageKey}
-					handleSelectPageKey={handleSelectPageKey}
+					callbackSelectPageKey={handleSelectPageKey}
 					page={a}
 					nestLevel={0}
 				/>
