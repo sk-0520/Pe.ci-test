@@ -1,6 +1,6 @@
 import * as markdown from "./markdown";
 import * as sqlite3 from "./sqlite";
-import { NewLine, splitLines, trim } from "./string";
+import { NewLine, escapeRegexPattern, splitLines, trim } from "./string";
 
 export const TableSeparator = "___";
 
@@ -144,7 +144,7 @@ export function splitRawEntities(markdown: string): string[] {
 		return [];
 	}
 
-	const tableSeparator = TableSeparator.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	const tableSeparator = escapeRegexPattern(TableSeparator);
 	const regex = new RegExp(`^${tableSeparator}$`, "gm");
 
 	return markdown.split(regex).map((a) => a.trim());

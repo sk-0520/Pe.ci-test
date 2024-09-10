@@ -25,6 +25,7 @@ import {
 } from "../../pages";
 import type { PageProps } from "../../types/page";
 import { getPage } from "../../utils/page";
+import { escapeRegexPattern } from "../../utils/string";
 
 type SearchPosition = {
 	index: number;
@@ -69,7 +70,8 @@ function indexOf(
 	caseSensitive: boolean,
 ): number {
 	if (regex) {
-		const regex = new RegExp(needle, caseSensitive ? "i" : "");
+		const pattern = escapeRegexPattern(needle);
+		const regex = new RegExp(pattern, caseSensitive ? "i" : "");
 		return haystack.search(regex);
 	}
 

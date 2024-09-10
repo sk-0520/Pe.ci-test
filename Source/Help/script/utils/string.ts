@@ -121,3 +121,8 @@ export function countSingleChar(s: string): number {
 	}
 	return length;
 }
+
+const EscapeRegex = /[.*+?^${}()|[\]\\]/g;
+export function escapeRegexPattern(s: string): string {
+	return s.replace(EscapeRegex, "\\$&");
+}
