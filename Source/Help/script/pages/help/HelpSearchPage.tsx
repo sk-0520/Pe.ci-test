@@ -276,12 +276,19 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 							return (
 								<ListItem key={a.element.key} sx={{ display: "block" }}>
 									<PageLink page={a.element.key} />
-									<List sx={{ margin: 0, marginLeft: "2ch", padding: 0 }}>
+									<List
+										sx={{
+											margin: 0,
+											marginLeft: "4ch",
+											padding: 0,
+											listStyleType: "circle",
+										}}
+									>
 										{a.lines.map((b, i) => (
 											<ListItem
 												// biome-ignore lint/suspicious/noArrayIndexKey: いやまぁ他にないし
 												key={i}
-												sx={{ padding: 0 }}
+												sx={{ padding: 0, display: "list-item" }}
 											>
 												{b.content}
 											</ListItem>
