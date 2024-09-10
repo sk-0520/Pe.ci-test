@@ -1,9 +1,6 @@
-import { Link, Typography } from "@mui/material";
-import { useAtom } from "jotai";
-import type { FC, MouseEvent } from "react";
-import { type PageKey, Pages } from "../../pages";
-import { SelectedPageKeyAtom } from "../../stores/SideMenuStore";
-import { getPage, makeUrl } from "../../utils/page";
+import type { FC } from "react";
+import type { PageKey } from "../../pages";
+import { PageLink } from "../PageLink";
 
 interface MdLinkProps {
 	page: PageKey;
@@ -12,24 +9,5 @@ interface MdLinkProps {
 export const MdLink: FC<MdLinkProps> = (props: MdLinkProps) => {
 	const { page } = props;
 
-	const [_, setSelectedPageKey] = useAtom(SelectedPageKeyAtom);
-
-	function handleLinkClick(ev: MouseEvent, pageKey: PageKey, url: URL): void {
-		ev.preventDefault();
-		setSelectedPageKey(pageKey);
-		history.pushState({}, "", url);
-	}
-
-	try {
-		const url = makeUrl(page);
-		const pageElement = getPage(page, Pages);
-
-		return (
-			<Link href={url.href} onClick={(ev) => handleLinkClick(ev, page, url)}>
-				{pageElement.title}
-			</Link>
-		);
-	} catch (ex: unknown) {
-		return <Typography color="error">{page}</Typography>;
-	}
+	return <PageLink page={page} />;
 };
