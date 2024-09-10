@@ -114,46 +114,49 @@ export const HelpSearchPage: FC<PageProps> = (props: PageProps) => {
 
 		const { isRegex, caseSensitive, includeDevelopment, query } = data;
 
-		const defaultError = console.error;
-		try {
-			const ignoreMessages = [
-				"Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format.",
-				"Warning: Detected multiple renderers concurrently rendering the same context provider. This is currently unsupported.",
-			];
-			console.error = (message?: unknown, ...optionalParams: unknown[]) => {
-				if (typeof message === "string") {
-					if (ignoreMessages.some((a) => message.startsWith(a))) {
-						return;
+		for (const targetKey of targetKeys) {
+			if (PageCacheMap.has(targetKey)) {
+				continue;
+			}
+
+			const currentPage = getPage(targetKey, Pages);
+			let html: string;
+
+			const defaultError = console.error;
+			try {
+				const ignoreMessages = [
+					"Warning: useLayoutEffect does nothing on the server, because its effect cannot be encoded into the server renderer's output format.",
+					"Warning: Detected multiple renderers concurrently rendering the same context provider. This is currently unsupported.",
+				];
+				console.error = (message?: unknown, ...optionalParams: unknown[]) => {
+					if (typeof message === "string") {
+						if (ignoreMessages.some((a) => message.startsWith(a))) {
+							return;
+						}
 					}
-				}
-				defaultError(message, ...optionalParams);
-			};
+					defaultError(message, ...optionalParams);
+				};
 
-			for (const targetKey of targetKeys) {
-				if (PageCacheMap.has(targetKey)) {
-					continue;
-				}
-
-				const currentPage = getPage(targetKey, Pages);
-				const html = ReactDOMServer.renderToStaticMarkup(
+				html = ReactDOMServer.renderToStaticMarkup(
 					<PageContent
 						selectedPageKey={targetKey}
 						currentPage={currentPage}
 						callbackSelectPageKey={handleSelectPageKey}
 					/>,
 				);
-				const text = convert(html, {
-					wordwrap: false,
-				});
-
-				const cache: PageCache = {
-					element: currentPage,
-					lines: text.split(HtmlNewLine).filter((a) => a),
-				};
-				PageCacheMap.set(targetKey, cache);
+			} finally {
+				console.error = defaultError;
 			}
-		} finally {
-			console.error = defaultError;
+
+			const text = convert(html, {
+				wordwrap: false,
+			});
+
+			const cache: PageCache = {
+				element: currentPage,
+				lines: text.split(HtmlNewLine).filter((a) => a),
+			};
+			PageCacheMap.set(targetKey, cache);
 		}
 
 		const result: Array<SearchResult> = [];
