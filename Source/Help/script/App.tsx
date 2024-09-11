@@ -53,10 +53,14 @@ export const App: FC = () => {
 		setIsLoading(false);
 	}, []);
 
-	// タイトル変更
+	// タイトル変更 + スクロール位置変更
 	useEffect(() => {
 		const page = getPage(selectedPageKey, Pages);
 		document.title = `${page.title} - Pe Help`;
+
+		window.scroll({
+			top: 0,
+		});
 	}, [selectedPageKey]);
 
 	const handleSelectPageKey = (pageKey: PageKey) => {
