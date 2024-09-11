@@ -7,10 +7,10 @@
   <dt>develop</dt>
   <dd>開発主軸ブランチ。</dd>
 
-  <dt>next</dt>
+  <dt>**next**</dt>
   <dd>次期バージョン開発ブランチ。 こいつが主要ブランチ。 基本的にここから課題ブランチブランチを生やす。</dd>
 
-  <dt>\#xxx</dt>
+  <dt>**\#**_xxx_</dt>
   <dd>課題ブランチ</dd>
 
   <dt>ci-test</dt>

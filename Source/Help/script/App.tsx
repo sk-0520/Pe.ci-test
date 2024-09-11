@@ -106,7 +106,11 @@ export const App: FC = () => {
 
 			<Box
 				component="main"
-				sx={{ flexGrow: 1, bgcolor: "background.default", p: 1 }}
+				sx={{
+					flexGrow: 1,
+					bgcolor: "background.default",
+					margin: "1em 3ch 10em 2ch",
+				}}
 			>
 				<Toolbar />
 				<PageContent
