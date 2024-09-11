@@ -9,16 +9,16 @@
 # 各種ファイル群
 
 <dl>
-  <dt>`Build\build-project.ps1`</dt>
+  <dt><MdPath>Build\build-project.ps1</MdPath></dt>
   <dd>プロジェクトのビルド処理</dd>
   
-  <dt>`Build\archive-plugin.ps1`</dt>
+  <dt><MdPath>Build\archive-plugin.ps1</MdPath></dt>
   <dd>ビルドされたプラグインを圧縮</dd>
   
-  <dt>`Build\create-info.ps1`</dt>
+  <dt><MdPath>Build\create-info.ps1</MdPath></dt>
   <dd>アーカイブをもとにプラグイン情報を生成</dd>
   
-  <dt>`FullBuild.ps1`</dt>
+  <dt><MdPath>FullBuild.ps1</MdPath></dt>
   <dd>Buildディレクトリ内スクリプトを使用したビルド一括処理</dd>
 </dl>
 

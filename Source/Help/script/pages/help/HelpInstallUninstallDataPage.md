@@ -55,9 +55,9 @@ Peの配置されているディレクトリをそのまま削除すればアン
 
 | データ種別 | パス |
 |---|---|
-| ユーザーデータ | `%APPDATA%\Pe\settings` |
-| 端末データ | `%APPDATA%\Pe\settings` |
-| 一時データ | `%TEMP%\Pe` |
+| ユーザーデータ | <MdPath>%APPDATA%\Pe\settings</MdPath> |
+| 端末データ | <MdPath>%APPDATA%\Pe\settings</MdPath> |
+| 一時データ | <MdPath>%TEMP%\Pe</MdPath> |
 
 > [!IMPORTANT]
 > Pe 格納ディレクトリを移動する場合、スタートアップに登録している場合はディレクトリ移動前に登録を解除してください。

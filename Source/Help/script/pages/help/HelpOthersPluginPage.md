@@ -28,13 +28,13 @@
 
 プラグインを指定ディレクトリに配置することにより(多分)活性化します。
 
-基本の配置先は `%LOCALAPPDATA%\Pe\plugin\modules` で、<br />
+基本の配置先は <MdPath>%LOCALAPPDATA%\Pe\plugin\modules</MdPath> で、<br />
 **プラグインID or プラグインディレクトリ名** として配置します。
 
 PLUGIN.dll というプラグインがあれば、
 
-1. `%LOCALAPPDATA%\Pe\plugin\modules\プラグインID\PLUGIN.dll`
-2. `%LOCALAPPDATA%\Pe\plugin\modules\PLUGIN\PLUGIN.dll`
+1. <MdPath>%LOCALAPPDATA%\Pe\plugin\modules\プラグインID\PLUGIN.dll</MdPath>
+2. <MdPath>%LOCALAPPDATA%\Pe\plugin\modules\PLUGIN\PLUGIN.dll</MdPath>
 
 として配置します。
 
