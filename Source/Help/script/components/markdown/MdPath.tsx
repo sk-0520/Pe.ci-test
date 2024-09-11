@@ -39,7 +39,7 @@ export const MdPath: FC<MdPathProps> = (props: MdPathProps) => {
 			if (child.endsWith(".dll")) {
 				usingType = "plugin";
 			} else {
-				if (/\w\.\w+$/.test(child)) {
+				if (/.+\.[\w]+$/.test(child)) {
 					usingType = "file";
 				}
 			}
