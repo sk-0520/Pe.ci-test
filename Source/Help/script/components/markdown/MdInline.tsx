@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import type { FC } from "react";
 
 interface MdInlineProps {
-	kind: "key";
+	kind: "key" | "ui";
 	children: string;
 }
 
@@ -27,6 +27,23 @@ export const MdInline: FC<MdInlineProps> = (props: MdInlineProps) => {
 						color: "#555",
 						textShadow: "0 1px 0 #f5f5f5",
 						textAlign: "center",
+						display: "inline-block",
+					}}
+				>
+					{children}
+				</Typography>
+			);
+
+		case "ui":
+			return (
+				<Typography
+					component="dfn"
+					sx={{
+						border: "1px solid #707030",
+						background: "#fffbcd",
+						margin: "2px 4px",
+						padding: "2px 4px",
+						fontFamily: "Consolas,monospace",
 						display: "inline-block",
 					}}
 				>
