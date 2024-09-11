@@ -35,13 +35,13 @@ UAC による権限昇格の通知が行われます。
 
 環境変数を設定・追加します。
 
-`KEY=VALUE↲` 形式で指定します。
+<MdInline kind="sample">KEY=VALUE↲</MdInline> 形式で指定します。
 
 ## 削除
 
 環境変数を削除します。
 
-`KEY↲` 形式で指定します。
+<MdInline kind="sample">KEY↲</MdInline> 形式で指定します。
 
 # 再実施
 
@@ -75,13 +75,13 @@ UAC による権限昇格の通知が行われます。
 
 ファイル実行が成功した際の終了コードを指定します。 この終了コード以外は再実施が行われます。
 
-*,* と *-* を使用して複数値を指定できます。
+`,` と `-` を使用して複数値を指定できます。
 
-* `0`  
+* <MdInline kind="sample">0</MdInline>  
   終了コード 0 は正常終了
-* `0,2,4`  
+* <MdInline kind="sample">0,2,4</MdInline>  
   終了コード 0, 2, 4 は正常終了
-* `0-3`  
+* <MdInline kind="sample">0-3</MdInline>  
   終了コード 0, 1, 2, 3 は正常終了
-* `1, 3-5`  
+* <MdInline kind="sample">1, 3-5</MdInline>  
   終了コード 1, 3, 4, 5 は正常終了

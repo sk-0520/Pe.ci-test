@@ -36,7 +36,7 @@
 | temp-dir | 必要 | 一時ディレクトリパス |
 | app-log-limit | 必要 | o	Pe 内部で保持するログ数を設定<br />1 未満を指定するか数値として不正な値を指定した場合は自動設定される。 |
 | log | 必要 | ログ出力先。 拡張子が存在すればファイルと判断してログ出力を行い、拡張子がなければ指定パスを親ディレクトリとしてYYYY-MM-DD_hhmmss.logディレクトリが存在しない場合、出力は行われない<br />拡張子ありの場合、その拡張子に合わせて出力形式が変動する<br /> <dl><dt>**log**</dt><dd>テキストファイルとしてログ出力</dd><dt>**xml**</dt><dd>XMLとしてログ出力</dd> | <!-- </dl> 付けるとおっかしなことになる -->
-| with-log | 必要 | `log` で出力するログ形式に合わせて出力する形式<br />`--log X:\logs\output.log --with-log xml` と指定した場合、<br />`X:\logs\output.log` にログを出しつつ、<br />XML形式ログ `X:\logs\output.xml` も出力する |
+| with-log | 必要 | `log` で出力するログ形式に合わせて出力する形式<br /><MdInline kind="sample">--log X:\logs\output.log --with-log xml</MdInline> と指定した場合、<br />`X:\logs\output.log` にログを出しつつ、<br />XML形式ログ `X:\logs\output.xml` も出力する |
 | full-trace-log | 不要 | めっちゃくちゃログを取得するか。SQL文からキー押下までありとあらゆる何かを出力する<br />開発中に使用する想定 |
 | force-log | 不要 | 通常では指定ログディレクトリが存在しない場合にログを出力しないが、本スイッチによりログディレクトリを生成する |
 | skip-accept | 不要 | 使用許諾をスキップする<br />指定した場合、使用許諾は承諾されたものとする<br />開発中(or β版実行)に使用する想定 |
