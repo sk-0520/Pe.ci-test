@@ -63,6 +63,20 @@ export const HelpMarkdown: FC<HelpMarkdownProps> = (
 							},
 						} satisfies TypographyProps,
 					},
+					code: {
+						component: Typography,
+						props: {
+							variant: "body1",
+							sx: {
+								display: "inline-block",
+								background: "#efefef",
+								padding: "1px 1ch",
+								margin: "1px",
+								fontFamily: "Consolas, monospace",
+								borderRadius: "4px",
+							},
+						} satisfies TypographyProps,
+					},
 					MdLink,
 					MdInline,
 				},
