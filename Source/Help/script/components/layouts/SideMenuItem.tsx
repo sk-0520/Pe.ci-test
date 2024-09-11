@@ -26,9 +26,10 @@ export const SideMenuItem: FC<SideMenuItemProps> = (
 			<ListItemButton
 				onClick={handleSelectMenu}
 				sx={{
-					background: isSelected ? theme.palette.secondary.light : undefined,
+					background: isSelected ? theme.palette.primary.light : undefined,
+					color: isSelected ? theme.palette.primary.contrastText : undefined,
 					"&:hover": {
-						background: isSelected ? theme.palette.secondary.main : undefined,
+						background: isSelected ? theme.palette.primary.main : undefined,
 					},
 				}}
 			>

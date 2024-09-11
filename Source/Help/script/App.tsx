@@ -53,6 +53,12 @@ export const App: FC = () => {
 		setIsLoading(false);
 	}, []);
 
+	// タイトル変更
+	useEffect(() => {
+		const page = getPage(selectedPageKey, Pages);
+		document.title = `${page.title} - Pe Help`;
+	}, [selectedPageKey]);
+
 	const handleSelectPageKey = (pageKey: PageKey) => {
 		setSelectedPageKey(pageKey);
 		const url = makeUrl(pageKey);
