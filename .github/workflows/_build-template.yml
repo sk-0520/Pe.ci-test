@@ -83,6 +83,10 @@ jobs:
         shell: bash
         run: npm ci
 
+      - name: <Code> Type
+        shell: bash
+        run: npm run typescript
+
       - name: <Test> Script
         shell: bash
         run: npm test
