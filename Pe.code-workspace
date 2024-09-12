@@ -68,15 +68,25 @@
             "editor.defaultFormatter": "vscode.json-language-features"
         },
         "[javascript]": {
+            "editor.formatOnSave": true,
             "editor.codeActionsOnSave": {
-                "source.fixAll": "explicit",
-                "source.organizeImports.biome": "explicit"
+                "quickfix.biome": "explicit",
+                "source.organizeImports.biome": "explicit",
             },
-            "editor.defaultFormatter": "biomejs.biome"
+            "editor.defaultFormatter": "biomejs.biome",
         },
         "[typescript]": {
+            "editor.formatOnSave": true,
             "editor.codeActionsOnSave": {
-                "source.fixAll": "explicit",
+                "quickfix.biome": "explicit",
+                "source.organizeImports.biome": "explicit"
+            },
+            "editor.defaultFormatter": "biomejs.biome",
+        },
+        "[typescriptreact]": {
+            "editor.formatOnSave": true,
+            "editor.codeActionsOnSave": {
+                "quickfix.biome": "explicit",
                 "source.organizeImports.biome": "explicit"
             },
             "editor.defaultFormatter": "biomejs.biome",
@@ -84,7 +94,8 @@
     },
     "extensions": {
         "recommendations": [
-            "biomejs.biome"
+            "biomejs.biome",
+            "bierner.comment-tagged-templates"
         ]
     }
 }

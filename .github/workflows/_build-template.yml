@@ -67,7 +67,7 @@ jobs:
 
   help:
     name: Help
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
@@ -83,13 +83,17 @@ jobs:
         shell: bash
         run: npm ci
 
+      - name: <Code> Type
+        shell: bash
+        run: npm run typescript
+
       - name: <Test> Script
         shell: bash
         run: npm test
 
       - name: <Build> Help
         shell: bash
-        run: npm run help-ci
+        run: npm run help-build
 
       - name: <Artifact> Help
         uses: actions/upload-artifact@v4
