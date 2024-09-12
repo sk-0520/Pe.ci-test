@@ -93,7 +93,7 @@ jobs:
 
       - name: <Build> Help
         shell: bash
-        run: npm run help-ci
+        run: npm run help-build
 
       - name: <Artifact> Help
         uses: actions/upload-artifact@v4
