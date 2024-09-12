@@ -1,27 +1,13 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.241+1",
+		"date": "2024/09/12",
+		"version": "0.99.242",
 		"contents": [
 			{
 				"type": "note",
 				"logs": [
 					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
+						"subject": "しょうもないのだけ"
 					}
 				]
 			},
@@ -29,45 +15,12 @@
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "104fbf94f53de9a38b9950e002c5a5ed0876bfda",
 						"subject": "#937: ヘルプファイルの再々作成",
 						"comments": [
 							"細々したのを全部まとめ保守性を高められた気がする",
 							"アップデート時のリリースノートにも適用したかったけど力尽きた"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
-			{
-				"type": "fixes",
-				"logs": [
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -75,23 +28,19 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
-						"class":  "nuget",
+						"revision": "fe31fcd6c23da62ba19d30c5b186b0069f9f23df",
+						"class": "nuget",
 						"subject": "Microsoft.NET.Test.Sdk 17.11.0 -> 17.11.1"
 					},
 					{
-						"revision": "",
+						"revision": "b1912b2e19cfb57095f8414bc4a5d98c052d98a8",
 						"class": "nuget",
 						"subject": "Moq 4.20.70 -> 4.20.72"
 					},
 					{
-						"revision": "",
+						"revision": "5c93865beae80284ffc9844ba839baa9ffe0cdc1",
 						"class": "nuget",
 						"subject": "Microsoft.Web.WebView2 1.0.2651.64 -> 1.0.2739.15"
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			}
