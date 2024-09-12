@@ -81,7 +81,8 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"class": "nuget",
+						"subject": "Moq 4.20.70 -> 4.20.72"
 					},
 					{
 						"revision": "",
