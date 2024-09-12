@@ -1,7 +1,14 @@
 import { default as markdown_1 } from "bundle-text:./DevPluginTemplatePage_1.md";
 import { default as markdown_2 } from "bundle-text:./DevPluginTemplatePage_2.md";
 import ApiIcon from "@mui/icons-material/Api";
-import { IconButton, InputAdornment, Stack, TextField } from "@mui/material";
+import {
+	Box,
+	IconButton,
+	InputAdornment,
+	Stack,
+	TextField,
+	Typography,
+} from "@mui/material";
 import { type FC, type MouseEvent, useEffect, useState } from "react";
 import { HelpMarkdown } from "../../components/HelpMarkdown";
 import type { PageProps } from "../../types/page";
@@ -39,13 +46,13 @@ export const DevPluginTemplatePage: FC<PageProps> = (props: PageProps) => {
 
 			<Stack spacing={2} sx={{ m: 2, width: "25ch" }}>
 				<TextField
-					label="projectDirectory"
+					label="プロジェクトディレクトリ"
 					value={projectDirectory}
 					onChange={(ev) => setProjectDirectory(ev.target.value)}
 				/>
 
 				<TextField
-					label="pluginId"
+					label="プラグインID"
 					value={pluginId}
 					onChange={(ev) => setPluginId(ev.target.value)}
 					InputProps={{
@@ -64,19 +71,30 @@ export const DevPluginTemplatePage: FC<PageProps> = (props: PageProps) => {
 					}}
 				/>
 				<TextField
-					label="pluginName"
+					label="プラグイン名"
 					value={pluginName}
 					onChange={(ev) => setPluginName(ev.target.value)}
 				/>
 
 				<TextField
-					label="projectNamespace"
+					label="名前空間"
 					value={projectNamespace}
 					onChange={(ev) => setProjectNamespace(ev.target.value)}
 				/>
 			</Stack>
 
-			<code>{parameter}</code>
+			{parameter && (
+				<Box
+					sx={{
+						margin: "1em",
+						padding: "0.5em",
+						background: "#eee",
+						borderRadius: "0.5em",
+					}}
+				>
+					<Typography component="code">{parameter}</Typography>
+				</Box>
+			)}
 
 			<HelpMarkdown>{markdown_2}</HelpMarkdown>
 		</>

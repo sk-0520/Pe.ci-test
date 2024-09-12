@@ -29,12 +29,12 @@
 以下は最低限書き換えが必要な個所。
 
 <dl>
-  <dt>`$minimumVersion`</dt>
+  <dt><MdInline kind="variable">$minimumVersion</MdInline></dt>
   <dd>実行可能 Pe 最低バージョン</dd>
   
-  <dt>`$archiveBaseUrl`</dt>
+  <dt><MdInline kind="variable">$archiveBaseUrl</MdInline></dt>
   <dd>配布アーカイブURL<br />`@ARCHIVENAME@` がアーカイブ名に置き換えられる</dd>
   
-  <dt>`$releaseNoteUrl`</dt>
+  <dt><MdInline  kind="variable">$releaseNoteUrl</MdInline></dt>
   <dd>いらんねんこれ<br />`@VERSION@` がバージョン値に置き換えられる</dd>
 </dl>

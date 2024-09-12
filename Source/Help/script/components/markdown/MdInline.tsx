@@ -2,7 +2,7 @@ import { Typography } from "@mui/material";
 import type { FC } from "react";
 
 interface MdInlineProps {
-	kind: "key" | "ui" | "sample";
+	kind: "key" | "ui" | "sample" | "variable";
 	children: string;
 }
 
@@ -67,5 +67,24 @@ export const MdInline: FC<MdInlineProps> = (props: MdInlineProps) => {
 					{children}
 				</Typography>
 			);
+
+		case "variable":
+			return (
+				<Typography
+					component="var"
+					sx={{
+						fontFamily: "Consolas, monospace",
+						padding: "2px 4px",
+						margin: "2px 4px",
+						display: "inline-block",
+						border: "1px solid #81b58b",
+						background: "#c4c8f7",
+					}}
+				>
+					{children}
+				</Typography>
+			);
 	}
+
+	throw new Error();
 };

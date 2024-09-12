@@ -10,7 +10,7 @@
 
 # 実行方法
 
-Powershell で `create-project.ps1` を実行することでプラグインプロジェクトが生成される。
+Powershell で <MdPath>create-project.ps1</MdPath> を実行することでプラグインプロジェクトが生成される。
 
 以下コマンドでスクリプトドキュメントを表示。
 
