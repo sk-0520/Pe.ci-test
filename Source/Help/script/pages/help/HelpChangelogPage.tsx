@@ -3,7 +3,7 @@ import type { FC } from "react";
 import { ChangelogVersion } from "../../components/changelog/ChangelogVersion";
 import { ChangelogVersionSelector } from "../../components/changelog/ChangelogVersionSelector";
 import type { PageProps } from "../../types/page";
-import { getChangelogs } from "../../utils/changelog";
+import { getChangelogs } from "../../utils/changelog-loader";
 
 const changelogs = getChangelogs();
 

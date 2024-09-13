@@ -1,7 +1,9 @@
 import { Box, List, type SxProps, type Theme, Typography } from "@mui/material";
 import type { FC } from "react";
-import type * as changelog from "../../types/changelog";
-import type { ChangelogContentKind } from "../../types/changelog";
+import type {
+	ChangelogContentKind,
+	ChangelogContent as ChangelogContentType,
+} from "../../types/changelog";
 import { ChangelogContentItem } from "./ChangelogContentItem";
 const KindMap: {
 	[key in ChangelogContentKind]: {
@@ -43,7 +45,7 @@ const KindMap: {
 	},
 } as const;
 
-interface ChangelogContentProps extends changelog.ChangelogContent {}
+interface ChangelogContentProps extends ChangelogContentType {}
 
 export const ChangelogContent: FC<ChangelogContentProps> = (
 	props: ChangelogContentProps,
