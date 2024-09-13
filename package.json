@@ -8,8 +8,7 @@
 		"lint-fix": "biome check --write Source/Help/script",
 		"lint-fix-unsafe": "biome check --write --unsafe Source/Help/script",
 		"typescript": "tsc --noEmit",
-		"test:help": "jest",
-		"test": "npm-run-all test:*",
+		"test": "jest",
 		"archive:plugin-template": "npm-build-zip --source=Source/Plugin.Template --destination=Source/Help/archives --name=../../plugin-template",
 		"archive": "npm-run-all --sequential archive:plugin-template",
 		"asset:archives": "cpx Source/Help/archives/**/* Output/help/archives",
@@ -19,6 +18,8 @@
 		"help-build:output": "parcel build --no-autoinstall --no-source-maps --dist-dir Output/help/ --no-content-hash --public-url . Source/Help/index.html",
 		"help-build:module": "ts-node Build/scripts/tune-module-entry.ts",
 		"help-build": "npm-run-all --sequential asset help-build:output help-build:module",
+		"generate-release-note:check": "ts-node Build/scripts/check-release-note-entry.ts",
+		"generate-release-note": "",
 		"npm-check": "ncu",
 		"npm-update": "ncu -u & npm install"
 	},
