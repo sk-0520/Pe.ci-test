@@ -51,7 +51,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "色選択UIで色一覧自体にフォーカスできる不備の修正"
 					},
 					{
 						"revision": "",
