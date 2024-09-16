@@ -27,10 +27,10 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
             NotifyLogTheme = notifyLogTheme;
             PlatformTheme = platformTheme;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(Model.Position), nameof(Position));
-            PropertyChangedHooker.AddHook(nameof(Model.CursorHorizontalAlignment), nameof(CursorHorizontalAlignment));
-            PropertyChangedHooker.AddHook(nameof(Model.CursorVerticalAlignment), nameof(CursorVerticalAlignment));
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(Model.Position), nameof(Position));
+            PropertyChangedObserver.AddObserver(nameof(Model.CursorHorizontalAlignment), nameof(CursorHorizontalAlignment));
+            PropertyChangedObserver.AddObserver(nameof(Model.CursorVerticalAlignment), nameof(CursorVerticalAlignment));
 
             ThemeProperties = new ThemeProperties(this);
 
@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         private IDpiScaleOutpour? DpiScaleOutpour { get; set; }
 
         private ThemeProperties ThemeProperties { get; }
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         private ModelViewModelObservableCollectionManager<NotifyLogItemElement, NotifyLogItemViewModel> TopmostNotifyLogCollection { get; }
         public ICollectionView TopmostNotifyLogItems { get; }
@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
     }
 }

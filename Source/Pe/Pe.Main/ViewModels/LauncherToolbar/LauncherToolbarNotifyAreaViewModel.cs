@@ -24,8 +24,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
             DispatcherWrapper = dispatcherWrapper;
             WindowManager = windowManager;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsVisible), new[] { nameof(MenuIsChecked), nameof(MenuIcon) });
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.IsVisible), new[] { nameof(MenuIsChecked), nameof(MenuIcon) });
         }
 
         #region property
@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         private ILauncherToolbarTheme LauncherToolbarTheme { get; }
         private IWindowManager WindowManager { get; }
         private IDispatcherWrapper DispatcherWrapper { get; }
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         #endregion
 
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
     }
 }

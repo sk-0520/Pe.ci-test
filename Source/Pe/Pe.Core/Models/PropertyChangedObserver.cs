@@ -12,7 +12,7 @@ using Prism.Commands;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
-    public interface IReadOnlyHookItem
+    public interface IReadOnlyObserveItem
     {
         #region property
 
@@ -36,9 +36,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public class HookItem: IReadOnlyHookItem
+    public class ObserveItem: IReadOnlyObserveItem
     {
-        public HookItem(string notifyPropertyName, IEnumerable<string>? raisePropertyNames, IEnumerable<ICommand>? raiseCommands, Action? callback)
+        public ObserveItem(string notifyPropertyName, IEnumerable<string>? raisePropertyNames, IEnumerable<ICommand>? raiseCommands, Action? callback)
         {
             NotifyPropertyName = notifyPropertyName;
 
@@ -53,26 +53,26 @@ namespace ContentTypeTextNet.Pe.Core.Models
             Callback = callback;
         }
 
-        #region IReadOnlyHookItem
+        #region IReadOnlyObserveItem
 
-        /// <inheritdoc cref="IReadOnlyHookItem.NotifyPropertyName"/>
+        /// <inheritdoc cref="IReadOnlyObserveItem.NotifyPropertyName"/>
         public string NotifyPropertyName { get; }
-        /// <inheritdoc cref="IReadOnlyHookItem.RaisePropertyNames"/>
+        /// <inheritdoc cref="IReadOnlyObserveItem.RaisePropertyNames"/>
         public List<string>? RaisePropertyNames { get; }
-        IReadOnlyCollection<string>? IReadOnlyHookItem.RaisePropertyNames => RaisePropertyNames;
-        /// <inheritdoc cref="IReadOnlyHookItem.RaiseCommands"/>
+        IReadOnlyCollection<string>? IReadOnlyObserveItem.RaisePropertyNames => RaisePropertyNames;
+        /// <inheritdoc cref="IReadOnlyObserveItem.RaiseCommands"/>
         public List<ICommand>? RaiseCommands { get; }
-        IReadOnlyCollection<ICommand>? IReadOnlyHookItem.RaiseCommands => RaiseCommands;
+        IReadOnlyCollection<ICommand>? IReadOnlyObserveItem.RaiseCommands => RaiseCommands;
 
-        /// <inheritdoc cref="IReadOnlyHookItem.Callback"/>
+        /// <inheritdoc cref="IReadOnlyObserveItem.Callback"/>
         public Action? Callback { get; }
 
         #endregion
     }
 
-    internal class CachedHookItem
+    internal class CachedObserveItem
     {
-        public CachedHookItem(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
+        public CachedObserveItem(IEnumerable<string> raisePropertyNames, IEnumerable<ICommand> raiseCommands, IEnumerable<DelegateCommandBase> raiseDelegateCommands, IEnumerable<Action> callbacks)
         {
             RaisePropertyNames = raisePropertyNames.ToList();
             RaiseCommands = raiseCommands.ToList();
@@ -96,15 +96,15 @@ namespace ContentTypeTextNet.Pe.Core.Models
     /// <remarks>
     /// <para>基点となる <see cref="PropertyChangedEventArgs.PropertyName"/>の重複は実行時にマージ・キャッシュまで面倒を見る。</para>
     /// </remarks>
-    public class PropertyChangedHooker: DisposerBase
+    public class PropertyChangedObserver: DisposerBase
     {
         HashSet<string> RaisePropertyNames { get; } = new HashSet<string>();
-        public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILogger logger)
+        public PropertyChangedObserver(IDispatcherWrapper dispatcherWrapper, ILogger logger)
         {
             DispatcherWrapper = dispatcherWrapper;
             Logger = logger;
         }
-        public PropertyChangedHooker(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
+        public PropertyChangedObserver(IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;
             Logger = loggerFactory.CreateLogger(GetType());
@@ -115,14 +115,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
         protected IDispatcherWrapper DispatcherWrapper { get; }
         protected ILogger Logger { get; }
 
-        protected IDictionary<string, List<HookItem>> Hookers { get; } = new Dictionary<string, List<HookItem>>();
-        private IDictionary<string, CachedHookItem> Cache { get; } = new Dictionary<string, CachedHookItem>();
+        protected IDictionary<string, List<ObserveItem>> Items { get; } = new Dictionary<string, List<ObserveItem>>();
+        private IDictionary<string, CachedObserveItem> Cache { get; } = new Dictionary<string, CachedObserveItem>();
 
         #endregion
 
         #region function
 
-        private IReadOnlyHookItem AddHookCore(HookItem hookItem)
+        private IReadOnlyObserveItem AddObserverCore(ObserveItem hookItem)
         {
             ThrowIfDisposed();
 
@@ -151,118 +151,118 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
             }
 
-            if(Hookers.TryGetValue(hookItem.NotifyPropertyName, out var items)) {
+            if(Items.TryGetValue(hookItem.NotifyPropertyName, out var items)) {
                 items.Add(hookItem);
             } else {
-                var newItems = new List<HookItem>() {
+                var newItems = new List<ObserveItem>() {
                     hookItem
                 };
-                Hookers.Add(hookItem.NotifyPropertyName, newItems);
+                Items.Add(hookItem.NotifyPropertyName, newItems);
             }
             Cache.Remove(hookItem.NotifyPropertyName);
 
             return hookItem;
         }
 
-        public IReadOnlyHookItem AddHook(HookItem hookItem)
+        public IReadOnlyObserveItem AddObserver(ObserveItem hookItem)
         {
             ArgumentNullException.ThrowIfNull(hookItem);
 
             ThrowIfDisposed();
 
-            return AddHookCore(hookItem);
+            return AddObserverCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyAndRaisePropertyName)
+        public IReadOnlyObserveItem AddObserver(string notifyAndRaisePropertyName)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(notifyAndRaisePropertyName);
 
             ThrowIfDisposed();
 
-            var hookItem = new HookItem(
+            var hookItem = new ObserveItem(
                 notifyAndRaisePropertyName,
                 new[] { notifyAndRaisePropertyName },
                 null,
                 null
             );
-            return AddHookCore(hookItem);
+            return AddObserverCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, string raisePropertyName)
+        public IReadOnlyObserveItem AddObserver(string notifyPropertyName, string raisePropertyName)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
             ArgumentException.ThrowIfNullOrWhiteSpace(raisePropertyName);
 
             ThrowIfDisposed();
 
-            var hookItem = new HookItem(
+            var hookItem = new ObserveItem(
                 notifyPropertyName,
                 new[] { raisePropertyName },
                 null,
                 null
             );
-            return AddHookCore(hookItem);
+            return AddObserverCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<string> raisePropertyNames)
+        public IReadOnlyObserveItem AddObserver(string notifyPropertyName, IEnumerable<string> raisePropertyNames)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
             ArgumentEmptyCollectionException.ThrowIfEmpty(raisePropertyNames, nameof(raisePropertyNames));
 
             ThrowIfDisposed();
 
-            var hookItem = new HookItem(
+            var hookItem = new ObserveItem(
                 notifyPropertyName,
                 raisePropertyNames,
                 null,
                 null
             );
-            return AddHookCore(hookItem);
+            return AddObserverCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, ICommand raiseCommand)
+        public IReadOnlyObserveItem AddObserver(string notifyPropertyName, ICommand raiseCommand)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
             ArgumentNullException.ThrowIfNull(raiseCommand);
 
             ThrowIfDisposed();
 
-            var hookItem = new HookItem(
+            var hookItem = new ObserveItem(
                 notifyPropertyName,
                 null,
                 new[] { raiseCommand },
                 null
             );
-            return AddHookCore(hookItem);
+            return AddObserverCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, IEnumerable<ICommand> raiseCommands)
+        public IReadOnlyObserveItem AddObserver(string notifyPropertyName, IEnumerable<ICommand> raiseCommands)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
             ArgumentEmptyCollectionException.ThrowIfEmpty(raiseCommands, nameof(raiseCommands));
 
             ThrowIfDisposed();
 
-            var hookItem = new HookItem(
+            var hookItem = new ObserveItem(
                 notifyPropertyName,
                 null,
                 raiseCommands,
                 null
             );
-            return AddHookCore(hookItem);
+            return AddObserverCore(hookItem);
         }
-        public IReadOnlyHookItem AddHook(string notifyPropertyName, Action callback)
+        public IReadOnlyObserveItem AddObserver(string notifyPropertyName, Action callback)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(notifyPropertyName);
             ArgumentNullException.ThrowIfNull(callback);
 
             ThrowIfDisposed();
 
-            var hookItem = new HookItem(
+            var hookItem = new ObserveItem(
                 notifyPropertyName,
                 null,
                 null,
                 callback
             );
-            return AddHookCore(hookItem);
+            return AddObserverCore(hookItem);
         }
 
-        private CachedHookItem MakeCache(IEnumerable<IReadOnlyHookItem> hookItems)
+        private CachedObserveItem MakeCache(IEnumerable<IReadOnlyObserveItem> hookItems)
         {
             ThrowIfDisposed();
 
@@ -272,7 +272,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 .ToList()
             ;
 
-            var result = new CachedHookItem(
+            var result = new CachedObserveItem(
                 hookItems.Where(i => i.RaisePropertyNames != null).SelectMany(i => i.RaisePropertyNames!),
                 commands.Where(i => !(i is DelegateCommandBase)),
                 commands.OfType<DelegateCommandBase>(),
@@ -282,7 +282,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return result;
         }
 
-        private bool ExecuteProperties(IReadOnlyList<string> raisePropertyNames, Action<string> raiser)
+        private bool ExecuteProperties(IReadOnlyList<string> raisePropertyNames, Action<string> propertyCallback)
         {
             ThrowIfDisposed();
 
@@ -296,9 +296,9 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 }
 
                 foreach(var raisePropertyName in arg.raisePropertyNames) {
-                    arg.raiser(raisePropertyName);
+                    arg.propertyCallback(raisePropertyName);
                 }
-            }, (@this: this, raisePropertyNames, raiser));
+            }, (@this: this, raisePropertyNames, propertyCallback));
 
             return true;
         }
@@ -350,18 +350,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
             return true;
         }
 
-        private bool ExecuteCache(CachedHookItem hookItemCache, Action<string> raiser)
+        private bool ExecuteCache(CachedObserveItem hookItemCache, Action<string> propertyCallback)
         {
             ThrowIfDisposed();
 
-            var property = ExecuteProperties(hookItemCache.RaisePropertyNames, raiser);
+            var property = ExecuteProperties(hookItemCache.RaisePropertyNames, propertyCallback);
             var command = ExecuteCommands(hookItemCache.RaiseCommands, hookItemCache.RaiseDelegateCommands);
             var callback = ExecuteCallback(hookItemCache.Callbacks);
 
             return property || command || callback;
         }
 
-        public bool Execute(string? notifyPropertyName, Action<string> raiser)
+        public bool Execute(string? notifyPropertyName, Action<string> propertyCallback)
         {
             ThrowIfDisposed();
 
@@ -369,12 +369,12 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 return false;
             }
 
-            if(!Hookers.TryGetValue(notifyPropertyName, out var hookItems)) {
+            if(!Items.TryGetValue(notifyPropertyName, out var hookItems)) {
                 return false;
             }
 
-            if(raiser == null) {
-                throw new ArgumentNullException(nameof(raiser));
+            if(propertyCallback == null) {
+                throw new ArgumentNullException(nameof(propertyCallback));
             }
 
             if(!Cache.TryGetValue(notifyPropertyName, out var hookItemCache)) {
@@ -382,10 +382,10 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 Cache.Add(notifyPropertyName, hookItemCache);
             }
 
-            return ExecuteCache(hookItemCache, raiser);
+            return ExecuteCache(hookItemCache, propertyCallback);
         }
 
-        public bool Execute(PropertyChangedEventArgs e, Action<string> raiser) => Execute(e.PropertyName, raiser);
+        public bool Execute(PropertyChangedEventArgs e, Action<string> propertyCallback) => Execute(e.PropertyName, propertyCallback);
 
         #endregion
 
@@ -395,7 +395,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
         {
             if(!IsDisposed) {
                 Cache.Clear();
-                Hookers.Clear();
+                Items.Clear();
             }
             base.Dispose(disposing);
         }
@@ -403,18 +403,18 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #endregion
     }
 
-    public static class PropertyChangedHookerExtensions
+    public static class PropertyChangedObserverExtensions
     {
         #region function
 
-        public static void AddProperties(this PropertyChangedHooker propertyChangedHooker, Type type)
+        public static void AddProperties(this PropertyChangedObserver propertyChangedObserver, Type type)
         {
             var properties = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             foreach(var property in properties) {
-                propertyChangedHooker.AddHook(property.Name);
+                propertyChangedObserver.AddObserver(property.Name);
             }
         }
-        public static void AddProperties<T>(this PropertyChangedHooker propertyChangedHooker) => AddProperties(propertyChangedHooker, typeof(T));
+        public static void AddProperties<T>(this PropertyChangedObserver propertyChangedHooker) => AddProperties(propertyChangedHooker, typeof(T));
 
 
         #endregion

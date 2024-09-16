@@ -14,13 +14,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
         public NotifyLogItemViewModel(NotifyLogItemElement model, IUserTracker userTracker, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
             : base(model, userTracker, dispatcherWrapper, loggerFactory)
         {
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(Model.Content), nameof(Content));
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(Model.Content), nameof(Content));
         }
 
         #region property
 
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         public NotifyLogKind Kind => Model.Kind;
         public string Header => Model.Header;
@@ -62,7 +62,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.NotifyLog
 
         private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
     }
 }

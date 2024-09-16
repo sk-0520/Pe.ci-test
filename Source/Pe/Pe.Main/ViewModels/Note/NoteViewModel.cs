@@ -104,22 +104,22 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             });
             FileItems = FileCollection.GetDefaultView();
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
-            PropertyChangedHooker.AddHook(nameof(Model.IsTopmost), nameof(IsTopmost));
-            PropertyChangedHooker.AddHook(nameof(Model.IsCompact), nameof(IsCompact));
-            PropertyChangedHooker.AddHook(nameof(Model.IsLocked), nameof(IsLocked));
-            PropertyChangedHooker.AddHook(nameof(Model.TextWrap), nameof(TextWrap));
-            PropertyChangedHooker.AddHook(nameof(Model.Title), nameof(Title));
-            PropertyChangedHooker.AddHook(new HookItem(nameof(Model.CaptionPosition), new[] { nameof(CaptionPosition) }, null, () => ApplyTheme()));
-            PropertyChangedHooker.AddHook(nameof(Model.ForegroundColor), () => ApplyTheme());
-            PropertyChangedHooker.AddHook(nameof(Model.BackgroundColor), () => ApplyTheme());
-            PropertyChangedHooker.AddHook(nameof(Model.LayoutKind), nameof(LayoutKind));
-            PropertyChangedHooker.AddHook(nameof(Model.ContentKind), nameof(ContentKind));
-            PropertyChangedHooker.AddHook(nameof(Model.ContentElement), nameof(Content));
-            PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), nameof(IsVisibleBlind));
-            PropertyChangedHooker.AddHook(nameof(Model.IsVisibleBlind), () => ApplyTheme());
-            PropertyChangedHooker.AddHook(nameof(Model.HiddenCompact), () => HideCompact());
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(Model.IsVisible), nameof(IsVisible));
+            PropertyChangedObserver.AddObserver(nameof(Model.IsTopmost), nameof(IsTopmost));
+            PropertyChangedObserver.AddObserver(nameof(Model.IsCompact), nameof(IsCompact));
+            PropertyChangedObserver.AddObserver(nameof(Model.IsLocked), nameof(IsLocked));
+            PropertyChangedObserver.AddObserver(nameof(Model.TextWrap), nameof(TextWrap));
+            PropertyChangedObserver.AddObserver(nameof(Model.Title), nameof(Title));
+            PropertyChangedObserver.AddObserver(new ObserveItem(nameof(Model.CaptionPosition), new[] { nameof(CaptionPosition) }, null, () => ApplyTheme()));
+            PropertyChangedObserver.AddObserver(nameof(Model.ForegroundColor), () => ApplyTheme());
+            PropertyChangedObserver.AddObserver(nameof(Model.BackgroundColor), () => ApplyTheme());
+            PropertyChangedObserver.AddObserver(nameof(Model.LayoutKind), nameof(LayoutKind));
+            PropertyChangedObserver.AddObserver(nameof(Model.ContentKind), nameof(ContentKind));
+            PropertyChangedObserver.AddObserver(nameof(Model.ContentElement), nameof(Content));
+            PropertyChangedObserver.AddObserver(nameof(Model.IsVisibleBlind), nameof(IsVisibleBlind));
+            PropertyChangedObserver.AddObserver(nameof(Model.IsVisibleBlind), () => ApplyTheme());
+            PropertyChangedObserver.AddObserver(nameof(Model.HiddenCompact), () => HideCompact());
         }
 
 
@@ -141,7 +141,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private IOrderManager OrderManager { get; }
         private ICultureService CultureService { get; }
         private IClipboardManager ClipboardManager { get; }
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         private IDpiScaleOutpour DpiScaleOutpour { get; set; } = new EmptyDpiScaleOutpour();
         private FrameworkElement? CaptionElement { get; set; }
@@ -1434,7 +1434,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
                 PlatformTheme.Changed -= PlatformTheme_Changed;
                 if(disposing) {
                     WindowHandleSource?.Dispose();
-                    PropertyChangedHooker.Dispose();
+                    PropertyChangedObserver.Dispose();
                 }
             }
 
@@ -1454,7 +1454,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
 
         private void PlatformTheme_Changed(object? sender, EventArgs e)

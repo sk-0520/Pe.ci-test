@@ -67,7 +67,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
             PlatformTheme.Changed += PlatformTheme_Changed;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
             //PropertyChangedHooker.AddHook(nameof(Model.CommandItems), BuildCommandItems);
         }
 
@@ -107,7 +107,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
         }
 
         private ThemeProperties ThemeProperties { get; }
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         private IDpiScaleOutpour DpiScaleOutpour { get; set; } = new EmptyDpiScaleOutpour();
 
@@ -508,7 +508,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
                 PlatformTheme.Changed -= PlatformTheme_Changed;
 
                 if(disposing) {
-                    PropertyChangedHooker.Dispose();
+                    PropertyChangedObserver.Dispose();
                     //CommandItems.Dispose();
                     Font.Dispose();
                 }
@@ -534,7 +534,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Command
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
 
         private void HideWaitTimer_Tick(object? sender, EventArgs e)

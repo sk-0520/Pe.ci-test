@@ -89,18 +89,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
             Font = new FontViewModel(Model.Font!, DispatcherWrapper, LoggerFactory);
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
-            PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), nameof(IsVerticalLayout));
-            PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), ChangeToolbarPositionCommand);
-            PropertyChangedHooker.AddHook(nameof(IAppDesktopToolbarExtendData.IsAutoHide), nameof(IsAutoHide));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedAppMenu), nameof(IsOpenedAppMenu));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedFileItemMenu), nameof(IsOpenedFileItemMenu));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedStoreAppItemMenu), nameof(IsOpenedStoreAppItemMenu));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsOpenedAddonItemMenu), nameof(IsOpenedAddonItemMenu));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
-            PropertyChangedHooker.AddHook(nameof(LauncherToolbarElement.ExistsFullScreenWindow), nameof(ExistsFullScreenWindow));
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddProperties<IReadOnlyAppDesktopToolbarExtendData>();
+            PropertyChangedObserver.AddObserver(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), nameof(IsVerticalLayout));
+            PropertyChangedObserver.AddObserver(nameof(IAppDesktopToolbarExtendData.ToolbarPosition), ChangeToolbarPositionCommand);
+            PropertyChangedObserver.AddObserver(nameof(IAppDesktopToolbarExtendData.IsAutoHide), nameof(IsAutoHide));
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.IsOpenedAppMenu), nameof(IsOpenedAppMenu));
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.IsOpenedFileItemMenu), nameof(IsOpenedFileItemMenu));
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.IsOpenedStoreAppItemMenu), nameof(IsOpenedStoreAppItemMenu));
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.IsOpenedAddonItemMenu), nameof(IsOpenedAddonItemMenu));
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.IsTopmost), nameof(IsTopmost));
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.SelectedLauncherGroup), nameof(SelectedLauncherGroup));
+            PropertyChangedObserver.AddObserver(nameof(LauncherToolbarElement.ExistsFullScreenWindow), nameof(ExistsFullScreenWindow));
 
             PlatformThemeLoader.Changed += PlatformThemeLoader_Changed;
             ThemeProperties = new ThemeProperties(this);
@@ -118,7 +118,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
         private IPlatformTheme PlatformThemeLoader { get; }
         private ILauncherToolbarTheme LauncherToolbarTheme { get; }
         private IGeneralTheme GeneralTheme { get; }
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
         private ThemeProperties ThemeProperties { get; }
 
         private DispatcherTimer? AutoHideShowWaitTimer { get; set; }
@@ -697,7 +697,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
 
         private void PlatformThemeLoader_Changed(object? sender, EventArgs e)

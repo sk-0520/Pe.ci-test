@@ -30,8 +30,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             DispatcherWrapper = dispatcherWrapper;
             NoteConfiguration = noteConfiguration;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(IsLink), nameof(IsLink));
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(IsLink), nameof(IsLink));
         }
 
         #region property
@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         public bool IsLink => Model.IsLink;
 
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         protected bool EnabledUpdate { get; private set; } = true;
 

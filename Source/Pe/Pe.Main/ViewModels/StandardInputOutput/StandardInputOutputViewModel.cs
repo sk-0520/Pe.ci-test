@@ -51,12 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
             this._isTopmost = model.IsTopmost;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.PreparedReceive), AttachReceiver);
-            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
-            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
-            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), SendInputCommand);
-            PropertyChangedHooker.AddHook(nameof(StandardInputOutputElement.ProcessExited), KillOutputCommand);
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(StandardInputOutputElement.PreparedReceive), AttachReceiver);
+            PropertyChangedObserver.AddObserver(nameof(StandardInputOutputElement.ProcessExited), nameof(ProcessExited));
+            PropertyChangedObserver.AddObserver(nameof(StandardInputOutputElement.ProcessExited), ClearOutputCommand);
+            PropertyChangedObserver.AddObserver(nameof(StandardInputOutputElement.ProcessExited), SendInputCommand);
+            PropertyChangedObserver.AddObserver(nameof(StandardInputOutputElement.ProcessExited), KillOutputCommand);
         }
 
         #region property
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         public TextDocument TextDocument { get; } = new TextDocument();
 
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         private TextEditor? Terminal { get; set; }
 
@@ -342,7 +342,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
                         Model.ErrorStreamReceiver.StreamReceived -= ErrorStreamReceiver_StreamReceived;
                     }
 
-                    PropertyChangedHooker.Dispose();
+                    PropertyChangedObserver.Dispose();
                 }
             }
 
@@ -354,7 +354,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.StandardInputOutput
 
         private void Model_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
 
         private void Terminal_TextChanged(object? sender, EventArgs e)

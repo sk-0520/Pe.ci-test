@@ -24,7 +24,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             ExtendData.Disposing += ExtendData_Disposing;
             ExtendData.PropertyChanged += ExtendData_PropertyChanged;
 
-            PropertyChangedHooker = new PropertyChangedHooker(new DispatcherWrapper(View.Dispatcher), loggerFactory);
+            PropertyChangedHooker = new PropertyChangedObserver(new DispatcherWrapper(View.Dispatcher), loggerFactory);
             PropertyChangedHooker.AddProperties<TExtendData>();
         }
 
@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         protected ILogger Logger { get; }
 
         /// <inheritdoc cref="PropertyChangedHooker"/>
-        protected PropertyChangedHooker PropertyChangedHooker { get; }
+        protected PropertyChangedObserver PropertyChangedHooker { get; }
 
         #endregion
 

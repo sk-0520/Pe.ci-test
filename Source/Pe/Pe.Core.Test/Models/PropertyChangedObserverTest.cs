@@ -11,7 +11,7 @@ using Xunit;
 
 namespace ContentTypeTextNet.Pe.Core.Test.Models
 {
-    public class HookItemTest
+    public class ObserverItemTest
     {
         #region function
 
@@ -19,7 +19,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         public void ConstructorTest()
         {
             Action action = new Action(() => { });
-            IReadOnlyHookItem actual = new HookItem(
+            IReadOnlyObserveItem actual = new ObserveItem(
                 "notify",
                 ["A", "B", "C"],
                 [
@@ -43,7 +43,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         #endregion
     }
 
-    public class CachedHookItemTest
+    public class CachedObserverItemTest
     {
         #region function
 
@@ -56,7 +56,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
             Action action1 = new Action(() => { });
             Action action2 = new Action(() => { });
 
-            var actual = new CachedHookItem(
+            var actual = new CachedObserveItem(
                 ["raisePropertyName1", "raisePropertyName2"],
                 [ApplicationCommands.New, ApplicationCommands.Undo],
                 [dgCommand1, dgCommand2],
@@ -72,7 +72,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         #endregion
     }
 
-    public class PropertyChangedHookerTest
+    public class PropertyChangedObserverTest
     {
         #region define
 
@@ -80,6 +80,7 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         {
             #region variable
 
+            [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S2933:Fields that are only assigned in the constructor should be \"readonly\"", Justification = "<保留中>")]
             private bool _canExecute;
 
             #endregion
@@ -118,21 +119,21 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         #region function
 
         [Fact]
-        public void AddHook_HookItem_Test()
+        public void AddObserver_HookItem_Test()
         {
-            var test = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(HookItem)!));
-            Assert.Throws<ArgumentException>(() => test.AddHook(new HookItem(null!, null, null, null)));
-            Assert.Throws<ArgumentException>(() => test.AddHook(new HookItem("", null, null, null)));
+            var test = new PropertyChangedObserver(new CurrentDispatcherWrapper(), NullLogger.Instance);
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(ObserveItem)!));
+            Assert.Throws<ArgumentException>(() => test.AddObserver(new ObserveItem(null!, null, null, null)));
+            Assert.Throws<ArgumentException>(() => test.AddObserver(new ObserveItem("", null, null, null)));
         }
 
         [Fact]
-        public void AddHook_string_Test()
+        public void AddObserver_string_Test()
         {
-            var test = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!));
-            Assert.Throws<ArgumentException>(() => test.AddHook(""));
-            var result = test.AddHook("A");
+            var test = new PropertyChangedObserver(new CurrentDispatcherWrapper(), NullLogger.Instance);
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!));
+            Assert.Throws<ArgumentException>(() => test.AddObserver(""));
+            var result = test.AddObserver("A");
             Assert.Equal("A", result.NotifyPropertyName);
             Assert.NotNull(result.RaisePropertyNames);
             Assert.Single(result.RaisePropertyNames);
@@ -140,13 +141,13 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 
         [Fact]
-        public void AddHook_string_string_Test()
+        public void AddObserver_string_string_Test()
         {
-            var test = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, default(string)!));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook("A", default(string)!));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, "B"));
-            var result = test.AddHook("a", "b");
+            var test = new PropertyChangedObserver(new CurrentDispatcherWrapper(), NullLogger.Instance);
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, default(string)!));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver("A", default(string)!));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, "B"));
+            var result = test.AddObserver("a", "b");
             Assert.Equal("a", result.NotifyPropertyName);
             Assert.NotNull(result.RaisePropertyNames);
             Assert.Single(result.RaisePropertyNames);
@@ -154,14 +155,14 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 
         [Fact]
-        public void AddHook_string_IEnumerableXstringX_Test()
+        public void AddObserver_string_IEnumerableXstringX_Test()
         {
-            var test = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, Array.Empty<string>()));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook("A", (IEnumerable<string>)null!));
-            Assert.Throws<ArgumentEmptyCollectionException>(() => test.AddHook("A", Array.Empty<string>()));
+            var test = new PropertyChangedObserver(new CurrentDispatcherWrapper(), NullLogger.Instance);
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, Array.Empty<string>()));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver("A", (IEnumerable<string>)null!));
+            Assert.Throws<ArgumentEmptyCollectionException>(() => test.AddObserver("A", Array.Empty<string>()));
 
-            var result = test.AddHook("a", new[] { "A", "B" });
+            var result = test.AddObserver("a", new[] { "A", "B" });
             Assert.Equal("a", result.NotifyPropertyName);
             Assert.NotNull(result.RaisePropertyNames);
             Assert.Equal(2, result.RaisePropertyNames.Count);
@@ -170,15 +171,15 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 
         [Fact]
-        public void AddHook_string_ICommand_Test()
+        public void AddObserver_string_ICommand_Test()
         {
-            var test = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, default(ICommand)!));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, new Command(true)));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook("A", default(ICommand)!));
+            var test = new PropertyChangedObserver(new CurrentDispatcherWrapper(), NullLogger.Instance);
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, default(ICommand)!));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, new Command(true)));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver("A", default(ICommand)!));
 
             var command = new Command(true);
-            var result = test.AddHook("a", command);
+            var result = test.AddObserver("a", command);
             Assert.Equal("a", result.NotifyPropertyName);
             Assert.Null(result.RaisePropertyNames);
             Assert.NotNull(result.RaiseCommands);
@@ -187,17 +188,17 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 
         [Fact]
-        public void AddHook_string_IEnumerableXICommandX_Test()
+        public void AddObserver_string_IEnumerableXICommandX_Test()
         {
-            var test = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, default(ICommand[])!));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, new [] { new Command(true)}));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook("A", default(ICommand[])!));
-            Assert.Throws<ArgumentEmptyCollectionException>(() => test.AddHook("A", Array.Empty<ICommand>()));
+            var test = new PropertyChangedObserver(new CurrentDispatcherWrapper(), NullLogger.Instance);
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, default(ICommand[])!));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, new [] { new Command(true)}));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver("A", default(ICommand[])!));
+            Assert.Throws<ArgumentEmptyCollectionException>(() => test.AddObserver("A", Array.Empty<ICommand>()));
 
             var command1 = new Command(true);
             var command2 = new Command(true);
-            var result = test.AddHook("a", new [] { command1 , command2});
+            var result = test.AddObserver("a", new [] { command1 , command2});
             Assert.Equal("a", result.NotifyPropertyName);
             Assert.Null(result.RaisePropertyNames);
             Assert.NotNull(result.RaiseCommands);
@@ -207,15 +208,15 @@ namespace ContentTypeTextNet.Pe.Core.Test.Models
         }
 
         [Fact]
-        public void AddHook_string_Action_Test()
+        public void AddObserver_string_Action_Test()
         {
-            var test = new PropertyChangedHooker(new CurrentDispatcherWrapper(), NullLogger.Instance);
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, default(Action)!));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook(default(string)!, () => { }));
-            Assert.Throws<ArgumentNullException>(() => test.AddHook("A", default(Action)!));
+            var test = new PropertyChangedObserver(new CurrentDispatcherWrapper(), NullLogger.Instance);
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, default(Action)!));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver(default(string)!, () => { }));
+            Assert.Throws<ArgumentNullException>(() => test.AddObserver("A", default(Action)!));
 
             var action = () => { };
-            var result = test.AddHook("a", action);
+            var result = test.AddObserver("a", action);
 
             Assert.Equal("a", result.NotifyPropertyName);
             Assert.Null(result.RaisePropertyNames);
