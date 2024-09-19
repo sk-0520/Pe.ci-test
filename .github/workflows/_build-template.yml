@@ -247,6 +247,7 @@ jobs:
 
       - name: <Check> Release Note
         shell: bash
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
         run: npm run check-release-note
 
       - name: <Generate> Release Note
