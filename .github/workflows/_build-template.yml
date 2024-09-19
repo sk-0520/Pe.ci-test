@@ -245,6 +245,10 @@ jobs:
         shell: bash
         run: npm ci
 
+      - name: <Check> Release Note
+        shell: bash
+        run: npm run check-release-note
+
       - name: <Generate> Release Note
         shell: pwsh
         run: |
