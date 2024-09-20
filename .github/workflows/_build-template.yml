@@ -227,7 +227,7 @@ jobs:
 
   history:
     name: Release Note
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
@@ -252,13 +252,7 @@ jobs:
 
       - name: <Generate> Release Note
         shell: pwsh
-        run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          $ignoreEmpty = !$productMode
-          if( '${{ github.ref }}' -eq 'refs/heads/ci-test' ) {
-            $ignoreEmpty = $true
-          }
-          .\Build\generate-release-note.ps1 -InformationAction Continue -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
+        run: npm run generate-release-note
 
       - name: <Artifact> Release Note
         uses: actions/upload-artifact@v4

@@ -2,7 +2,6 @@ import fs from "node:fs";
 import { getElement } from "../../Source/Help/script/utils/access";
 
 export interface Input {
-	rootDirPath: string;
 	changelogsPath: string;
 	outputChangelogPath: string;
 }
