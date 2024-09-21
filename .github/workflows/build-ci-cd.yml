@@ -27,7 +27,7 @@ jobs:
       PLUGINS_ARCHIVE: 7z
       IS_PRODUCT: ${{ github.ref != 'refs/heads/develop' }}
       PE_RELEASE_ARCHIVE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@ARCHIVENAME@
-      PE_RELEASE_NOTE_BASE_URL: https://pe.invalid/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
+      PE_RELEASE_NOTE_BASE_URL: https://github.com/${{ github.repository }}/releases/download/@VERSION@/@NOTENAME@
       INVOKE_PLUGIN_TEMPLATE: false
 
   deploy:

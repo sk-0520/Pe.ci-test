@@ -859,7 +859,9 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
+        run: |
+          $pluginNoteBaseUrl = "${{ inputs.PE_RELEASE_NOTE_BASE_URL }}".Replace("github.com", "pe.invalid")
+          .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl $pluginNoteBaseUrl -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
       - name: <🌳> 🌲
         shell: pwsh
