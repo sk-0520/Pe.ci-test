@@ -30,7 +30,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#968: リリースノート生成処理をヘルプの更新履歴処理に差し替える",
+						"comments": [
+							"プレーンなHTMLが死んじゃうけど WebView2 がよしなにしてくれると信じとく"
+						]
 					},
 					{
 						"revision": "",

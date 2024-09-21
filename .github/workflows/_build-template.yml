@@ -227,13 +227,11 @@ jobs:
 
   history:
     name: Release Note
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.OS_WINDOWS }}
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v4
-        # with:
-        #   fetch-depth: 0
 
       - name: <Add> Node/NPM
         uses: actions/setup-node@v4
@@ -245,15 +243,14 @@ jobs:
         shell: bash
         run: npm ci
 
+      - name: <Check> Release Note
+        shell: bash
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        run: npm run check-release-note
+
       - name: <Generate> Release Note
         shell: pwsh
-        run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          $ignoreEmpty = !$productMode
-          if( '${{ github.ref }}' -eq 'refs/heads/ci-test' ) {
-            $ignoreEmpty = $true
-          }
-          .\Build\generate-release-note.ps1 -InformationAction Continue -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
+        run: npm run generate-release-note
 
       - name: <Artifact> Release Note
         uses: actions/upload-artifact@v4
@@ -862,7 +859,9 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
+        run: |
+          $pluginNoteBaseUrl = "${{ inputs.PE_RELEASE_NOTE_BASE_URL }}".Replace("github.com", "pe.invalid")
+          .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl $pluginNoteBaseUrl -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
       - name: <🌳> 🌲
         shell: pwsh

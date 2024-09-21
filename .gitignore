@@ -9,6 +9,7 @@ $*
 [Re]elease/
 /Output/
 /Changelog/
+/history/
 *.Settings
 packages/
 TestResults/
