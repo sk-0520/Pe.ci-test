@@ -36,6 +36,13 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
             }
         );
 
+        private ICommand? _OutputHtmlSettingCommand;
+        public ICommand OutputHtmlSettingCommand => this._OutputHtmlSettingCommand ??= new DelegateCommand<RequestEventArgs>(
+            o => {
+                DialogRequestReceiver.ReceiveFileSystemSelectDialogRequest(o);
+            }
+        );
+
         private ICommand? _OpenCommonMessageDialogCommand;
         public ICommand OpenCommonMessageDialogCommand => this._OpenCommonMessageDialogCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {

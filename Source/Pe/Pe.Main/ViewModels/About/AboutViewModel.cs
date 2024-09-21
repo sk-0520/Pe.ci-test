@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
+        public RequestSender OutputHtmlSettingRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
         private ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
@@ -162,6 +163,29 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         public ICommand OpenTemporaryDirectoryCommand => this._OpenTemporaryDirectoryCommand ??= new DelegateCommand(
             () => {
                 Model.OpenTemporaryDirectory();
+            }
+        );
+
+        private ICommand? _OutputHtmlSettingCommand;
+        public ICommand OutputHtmlSettingCommand => this._OutputHtmlSettingCommand ??= new DelegateCommand(
+            () => {
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
+                    OutputHtmlSettingRequest,
+                    string.Empty,
+                    false,
+                    new[] {
+                        new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_About_OutputHtml, "html", "*.html"),
+                    },
+                    r => {
+                        var path = r.ResponseFilePaths[0];
+                        try {
+                            Logger.LogDebug("path: {Path}", path);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                        }
+                    }
+                );
             }
         );
 
