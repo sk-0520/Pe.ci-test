@@ -7,6 +7,8 @@ export interface Input {
 }
 
 export function main(input: Input): void {
+	console.debug({ input });
+
 	const dir = path.dirname(input.outputFilePath);
 	if (!fs.existsSync(dir)) {
 		fs.mkdirSync(dir);

@@ -19,9 +19,9 @@
 		"help-build:module": "ts-node Build/scripts/tune-module-entry.ts",
 		"help-build": "npm-run-all --sequential asset help-build:output help-build:module",
 		"check-release-note": "ts-node Build/scripts/check-release-note-entry.ts",
-		"generate-release-note:tune": "ts-node Build/generate-release-note/tune-release-note-entry.ts",
-		"generate-release-note:build": "parcel build --no-autoinstall --no-source-maps --dist-dir Output --no-content-hash --public-url . Build/generate-release-note/release-note.html",
-		"generate-release-note:rename": "ts-node Build/generate-release-note/rename-release-note-entry.ts",
+		"generate-release-note:tune": "ts-node Source/ReleaseNote/tune-release-note-entry.ts",
+		"generate-release-note:build": "parcel build --no-autoinstall --no-source-maps --dist-dir Output --no-content-hash --public-url . Source/ReleaseNote/release-note.html",
+		"generate-release-note:rename": "ts-node Source/ReleaseNote/rename-release-note-entry.ts",
 		"generate-release-note": "npm-run-all --sequential generate-release-note:tune generate-release-note:build generate-release-note:rename",
 		"npm-check": "ncu",
 		"npm-update": "ncu -u & npm install"
