@@ -75,7 +75,7 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "NLog.Extensions.Logging 5.3.12 -> 5.3.13"
 					},
 					{
 						"revision": "",
