@@ -1,5 +1,5 @@
 import path from "node:path";
-import { type Input, main } from "./rename-release-note";
+import { type Input, main } from "./output-release-note";
 
 const rootDirPath = path.resolve(__dirname, "..", "..");
 

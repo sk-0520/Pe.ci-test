@@ -1,5 +1,5 @@
 import path from "node:path";
-import { type Input, main } from "./tune-release-note";
+import { type Input, main } from "./cherry-pick-release-note";
 
 const rootDirPath = path.resolve(__dirname, "..", "..");
 
