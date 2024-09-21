@@ -35,6 +35,32 @@ env:
 
 
 jobs:
+  lint-front:
+    name: Lint Front
+    runs-on: ${{ inputs.OS_WINDOWS }}
+
+    steps:
+      - name: <Git> conig
+        run: |
+          git config --global core.autocrlf false
+
+      - name: <Checkout> Repository
+        uses: actions/checkout@v4
+
+      - name: <Add> Node/NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ./.node-version
+          cache: npm
+
+      - name: <Install> NPM
+        shell: bash
+        run: npm ci
+
+      - name: <Lint> Front
+        shell: bash
+        run: npm run lint
+
   powershell-source:
     name: PowerShell
 
@@ -68,6 +94,8 @@ jobs:
   help:
     name: Help
     runs-on: ${{ inputs.OS_WINDOWS }}
+    needs:
+      - lint-front
 
     steps:
       - name: <Checkout> Repository
@@ -228,6 +256,8 @@ jobs:
   history:
     name: Release Note
     runs-on: ${{ inputs.OS_WINDOWS }}
+    needs:
+      - lint-front
 
     steps:
       - name: <Checkout> Repository
@@ -258,7 +288,6 @@ jobs:
           name: History
           path: history/*.html
           if-no-files-found: error
-
 
   build-tools:
     name: Build BuildTools
@@ -298,7 +327,7 @@ jobs:
           if-no-files-found: error
 
   lint-sql:
-    name: "Lint: SQL"
+    name: "Lint SQL"
     runs-on: ubuntu-latest
 
     steps:
@@ -310,7 +339,7 @@ jobs:
         run: .\Build\lint-sql.ps1 -InformationAction Continue -RunCi
 
   build-tools-sql:
-    name: "BuildTools: SQL"
+    name: "BuildTools SQL"
     needs:
       - build-tools
       - lint-sql

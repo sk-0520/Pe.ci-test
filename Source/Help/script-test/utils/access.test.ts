@@ -62,7 +62,7 @@ describe("getElement:Map", () => {
 		});
 	});
 
-	describe("undefined", () =>{
+	describe("undefined", () => {
 		const input1 = new Map([
 			["a", "A"],
 			["b", undefined],
@@ -80,14 +80,14 @@ describe("getElement:Map", () => {
 				new OutOfRangeError("key = b"),
 			);
 		});
-	})
+	});
 });
 
 describe("getElement:Record", () => {
 	const commonInput: Record<PropertyKey, number | string | undefined> = {
 		a: "A",
 		b: 2,
-		c: undefined
+		c: undefined,
 	};
 
 	test("normal", () => {
@@ -110,8 +110,8 @@ describe("getElement:Record", () => {
 describe("getElement:?", () => {
 	test("unknown", () => {
 		const input = 123;
-		expect(() => getElement(input as unknown as Record<PropertyKey, object>, "key")).toThrow(
-			new ItemsTypeError("[object Number]"),
-		);
-	})
+		expect(() =>
+			getElement(input as unknown as Record<PropertyKey, object>, "key"),
+		).toThrow(new ItemsTypeError("[object Number]"));
+	});
 });

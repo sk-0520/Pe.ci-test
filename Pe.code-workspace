@@ -1,101 +1,98 @@
 {
-    "folders": [
-        {
-            "name": "ROOT",
-            "path": "."
-        }
-    ],
-    "settings": {
-        "files.exclude": {
-            "**/bin": true,
-            "**/obj": true,
-            ".vs": true,
-            ".vscode": true,
-            "dist/": true,
-            "Output": true,
-            "*.lnk": true,
-            "Source/Benchmark": true,
-            "Source/BuildTools": true,
-            "Source/Plugin.Template": false,
-            "Source/Pe": false,
-        },
-        "files.watcherExclude": {
-            "**/.git/objects/**": true,
-            "**/.git/subtree-cache/**": true,
-            "**/node_modules/*/**": true,
-            ".vs": true,
-            ".vscode": true,
-            "**/dist/**": true,
-            "**/bin/**": true,
-            "**/obj/**": true,
-            "*.lnk": true,
-            "Source/Benchmark": true,
-            "Source/BuildTools": true,
-            "Source/Plugin.Template": false,
-            "Source/Pe": false,
-        },
-        "markdownlint.config": {
-            "MD024": false,
-            "MD036": false
-        },
-        "cSpell.words": [
-            "endregion",
-            "msbuild",
-            "pwsh",
-            "THTML",
-            "biomejs",
-            "noqa"
-        ],
-        "powershell.scriptAnalysis.enable": true,
-        "powershell.scriptAnalysis.settingsPath": "./PSScriptAnalyzerSettings.psd1",
-        "powershell.codeFormatting.newLineAfterCloseBrace": false,
-        "powershell.codeFormatting.whitespaceAfterSeparator": true,
-        "powershell.codeFormatting.whitespaceAroundOperator": true,
-        "powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
-        "powershell.codeFormatting.whitespaceBeforeOpenParen": true,
-        "powershell.codeFormatting.useCorrectCasing": true,
-        "powershell.codeFormatting.useConstantStrings": true,
-        "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
-        "powershell.codeFormatting.openBraceOnSameLine": true,
-        "powershell.codeFormatting.newLineAfterOpenBrace": true,
-        "powershell.codeFormatting.ignoreOneLineBlock": false,
-        "powershell.codeFormatting.avoidSemicolonsAsLineTerminators": false,
-        "powershell.codeFormatting.autoCorrectAliases": false,
-        "powershell.codeFormatting.alignPropertyValuePairs": false,
-        "powershell.codeFormatting.addWhitespaceAroundPipe": true,
-        "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
-        "[json]": {
-            "editor.defaultFormatter": "vscode.json-language-features"
-        },
-        "[javascript]": {
-            "editor.formatOnSave": true,
-            "editor.codeActionsOnSave": {
-                "quickfix.biome": "explicit",
-                "source.organizeImports.biome": "explicit",
-            },
-            "editor.defaultFormatter": "biomejs.biome",
-        },
-        "[typescript]": {
-            "editor.formatOnSave": true,
-            "editor.codeActionsOnSave": {
-                "quickfix.biome": "explicit",
-                "source.organizeImports.biome": "explicit"
-            },
-            "editor.defaultFormatter": "biomejs.biome",
-        },
-        "[typescriptreact]": {
-            "editor.formatOnSave": true,
-            "editor.codeActionsOnSave": {
-                "quickfix.biome": "explicit",
-                "source.organizeImports.biome": "explicit"
-            },
-            "editor.defaultFormatter": "biomejs.biome",
-        }
-    },
-    "extensions": {
-        "recommendations": [
-            "biomejs.biome",
-            "bierner.comment-tagged-templates"
-        ]
-    }
+	"folders": [
+		{
+			"name": "ROOT",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/bin": true,
+			"**/obj": true,
+			".vs": true,
+			".vscode": true,
+			"dist/": true,
+			"Output": true,
+			"*.lnk": true,
+			"Source/Benchmark": true,
+			"Source/BuildTools": true,
+			"Source/Plugin.Template": false,
+			"Source/Pe": false
+		},
+		"files.watcherExclude": {
+			"**/.git/objects/**": true,
+			"**/.git/subtree-cache/**": true,
+			"**/node_modules/*/**": true,
+			".vs": true,
+			".vscode": true,
+			"**/dist/**": true,
+			"**/bin/**": true,
+			"**/obj/**": true,
+			"*.lnk": true,
+			"Source/Benchmark": true,
+			"Source/BuildTools": true,
+			"Source/Plugin.Template": false,
+			"Source/Pe": false
+		},
+		"markdownlint.config": {
+			"MD024": false,
+			"MD036": false
+		},
+		"cSpell.words": [
+			"endregion",
+			"msbuild",
+			"pwsh",
+			"THTML",
+			"biomejs",
+			"noqa"
+		],
+		"powershell.scriptAnalysis.enable": true,
+		"powershell.scriptAnalysis.settingsPath": "./PSScriptAnalyzerSettings.psd1",
+		"powershell.codeFormatting.newLineAfterCloseBrace": false,
+		"powershell.codeFormatting.whitespaceAfterSeparator": true,
+		"powershell.codeFormatting.whitespaceAroundOperator": true,
+		"powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
+		"powershell.codeFormatting.whitespaceBeforeOpenParen": true,
+		"powershell.codeFormatting.useCorrectCasing": true,
+		"powershell.codeFormatting.useConstantStrings": true,
+		"powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+		"powershell.codeFormatting.openBraceOnSameLine": true,
+		"powershell.codeFormatting.newLineAfterOpenBrace": true,
+		"powershell.codeFormatting.ignoreOneLineBlock": false,
+		"powershell.codeFormatting.avoidSemicolonsAsLineTerminators": false,
+		"powershell.codeFormatting.autoCorrectAliases": false,
+		"powershell.codeFormatting.alignPropertyValuePairs": false,
+		"powershell.codeFormatting.addWhitespaceAroundPipe": true,
+		"powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationForFirstPipeline",
+		"[json]": {
+			"editor.defaultFormatter": "vscode.json-language-features"
+		},
+		"[javascript]": {
+			"editor.formatOnSave": true,
+			"editor.codeActionsOnSave": {
+				"quickfix.biome": "explicit",
+				"source.organizeImports.biome": "explicit"
+			},
+			"editor.defaultFormatter": "biomejs.biome"
+		},
+		"[typescript]": {
+			"editor.formatOnSave": true,
+			"editor.codeActionsOnSave": {
+				"quickfix.biome": "explicit",
+				"source.organizeImports.biome": "explicit"
+			},
+			"editor.defaultFormatter": "biomejs.biome"
+		},
+		"[typescriptreact]": {
+			"editor.formatOnSave": true,
+			"editor.codeActionsOnSave": {
+				"quickfix.biome": "explicit",
+				"source.organizeImports.biome": "explicit"
+			},
+			"editor.defaultFormatter": "biomejs.biome"
+		}
+	},
+	"extensions": {
+		"recommendations": ["biomejs.biome", "bierner.comment-tagged-templates"]
+	}
 }
