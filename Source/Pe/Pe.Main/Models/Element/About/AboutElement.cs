@@ -15,17 +15,22 @@ using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 using System.Threading;
+using ContentTypeTextNet.Pe.Standard.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 {
     public class AboutElement: ElementBase
     {
-        public AboutElement(EnvironmentParameters environmentParameters, IClipboardManager clipboardManager, ILoggerFactory loggerFactory)
+        public AboutElement(EnvironmentParameters environmentParameters, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
             ApplicationConfiguration = EnvironmentParameters.ApplicationConfiguration;
             ClipboardManager = clipboardManager;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
+            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
+            DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
@@ -33,6 +38,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         private EnvironmentParameters EnvironmentParameters { get; }
         private ApplicationConfiguration ApplicationConfiguration { get; }
         private IClipboardManager ClipboardManager { get; }
+
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         private List<AboutComponentItem> ComponentsImpl { get; } = new List<AboutComponentItem>();
         public IReadOnlyList<AboutComponentItem> Components => ComponentsImpl;
@@ -143,6 +153,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         public void OpenTemporaryDirectory()
         {
             OpenDirectory(EnvironmentParameters.TemporaryDirectory);
+        }
+
+        public void OutputHtmlSetting(string outputPath)
+        {
+            using(var mainContext = MainDatabaseBarrier.WaitRead()) {
+                using var largeContext = LargeDatabaseBarrier.WaitRead();
+
+            }
         }
 
         #endregion

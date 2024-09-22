@@ -39,7 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
-        public RequestSender OutputHtmlSettingRequest { get; } = new RequestSender();
+        public RequestSender OutputSettingRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
         private ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
@@ -166,12 +166,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
             }
         );
 
-        private ICommand? _OutputHtmlSettingCommand;
-        public ICommand OutputHtmlSettingCommand => this._OutputHtmlSettingCommand ??= new DelegateCommand(
+        private ICommand? _OutputSettingCommand;
+        public ICommand OutputSettingCommand => this._OutputSettingCommand ??= new DelegateCommand(
             () => {
                 var dialogRequester = new DialogRequester(LoggerFactory);
                 dialogRequester.SelectFile(
-                    OutputHtmlSettingRequest,
+                    OutputSettingRequest,
                     string.Empty,
                     false,
                     new[] {
@@ -181,6 +181,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                         var path = r.ResponseFilePaths[0];
                         try {
                             Logger.LogDebug("path: {Path}", path);
+                            Model.OutputHtmlSetting(path);
                         } catch(Exception ex) {
                             Logger.LogError(ex, ex.Message);
                         }

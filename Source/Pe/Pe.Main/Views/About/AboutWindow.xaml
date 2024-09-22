@@ -33,8 +33,8 @@
     <app_view:RequestTrigger SourceObject="{Binding FileSelectRequest}">
       <prism:InvokeCommandAction Command="{Binding FileSelectCommand, ElementName=root}" />
     </app_view:RequestTrigger>
-    <app_view:RequestTrigger SourceObject="{Binding OutputHtmlSettingRequest}">
-      <prism:InvokeCommandAction Command="{Binding OutputHtmlSettingCommand, ElementName=root}" />
+    <app_view:RequestTrigger SourceObject="{Binding OutputSettingRequest}">
+      <prism:InvokeCommandAction Command="{Binding OutputSettingCommand, ElementName=root}" />
     </app_view:RequestTrigger>
     <app_view:RequestTrigger SourceObject="{Binding ShowMessageRequest}">
       <prism:InvokeCommandAction Command="{Binding OpenCommonMessageDialogCommand, ElementName=root}" />
@@ -138,10 +138,10 @@
                 <AccessText Text="{Binding Resources.String_About_OpenTemporaryDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
-            <Button Command="{Binding OutputHtmlSettingCommand}">
+            <Button Command="{Binding OutputSettingCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Save}" />
-                <AccessText Text="{Binding Resources.String_About_OutputHtmlSetting_A, Source={x:Static app_main:CultureService.Instance}}" />
+                <AccessText Text="{Binding Resources.String_About_OutputSetting_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
           </StackPanel>

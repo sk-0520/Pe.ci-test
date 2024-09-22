@@ -257,11 +257,11 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   設定状態を_HTML出力 に類似しているローカライズされた文字列を検索します。
+        ///   設定状態を出力 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        public static string String_About_OutputHtmlSetting_A {
+        public static string String_About_OutputSetting_A {
             get {
-                return ResourceManager.GetString("String_About_OutputHtmlSetting_A", resourceCulture);
+                return ResourceManager.GetString("String_About_OutputSetting_A", resourceCulture);
             }
         }
         
