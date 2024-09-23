@@ -1,7 +1,7 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import React, { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { AppTheme } from "../Help/script/theme/AppTheme";
+import { AppTheme } from "../Help/theme/AppTheme";
 import { ReleaseNote } from "./ReleaseNote";
 
 const root = createRoot(document.getElementById("release-note") as HTMLElement);

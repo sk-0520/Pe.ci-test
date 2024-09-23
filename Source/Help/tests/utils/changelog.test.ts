@@ -1,4 +1,4 @@
-import { type Token, splitTokens } from "../../script/utils/changelog";
+import { type Token, splitTokens } from "../../utils/changelog";
 
 describe("splitTokens", () => {
 	test("empty", () => {

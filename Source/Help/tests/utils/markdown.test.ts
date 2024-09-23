@@ -4,7 +4,7 @@ import {
 	type TableColumnAlign,
 	buildCell,
 	buildTable,
-} from "../../script/utils/markdown";
+} from "../../utils/markdown";
 
 describe("buildCell", () => {
 	test("equal", () => {

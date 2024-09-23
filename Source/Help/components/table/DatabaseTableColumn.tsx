@@ -3,7 +3,6 @@ import { Box, IconButton, MenuItem, TableRow, Typography } from "@mui/material";
 import { useAtomValue } from "jotai";
 import type { BaseSyntheticEvent, FC, MouseEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { ListGroupHeader } from "../../components/ListGroupHeader";
 import {
 	WorkTablesAtom,
 	useWorkColumn,
@@ -30,6 +29,7 @@ import {
 	type WorkTable,
 	isCommonColumnName,
 } from "../../utils/table";
+import { ListGroupHeader } from "../ListGroupHeader";
 import {
 	EditorCell,
 	EditorCheckbox,

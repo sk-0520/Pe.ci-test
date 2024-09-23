@@ -3,7 +3,7 @@ import {
 	convertIndexes,
 	splitRawEntities,
 	splitRawSection,
-} from "../../script/utils/table";
+} from "../../utils/table";
 
 describe("splitRawEntities", () => {
 	test("empty", () => {

@@ -46,7 +46,7 @@
 			]
 		},
 		"testMatch": [
-			"**/script-test/**/*"
+			"**/tests/**/*"
 		],
 		"collectCoverage": true,
 		"coverageDirectory": "@coverage/script"

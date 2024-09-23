@@ -1,5 +1,5 @@
-import changelogsArchives from "../../../../Define/changelogs-archive.json";
-import changelogs from "../../../../Define/changelogs.json";
+import changelogsArchives from "../../../Define/changelogs-archive.json";
+import changelogs from "../../../Define/changelogs.json";
 import type { Changelogs } from "../types/changelog";
 
 export function getChangelogs(): Changelogs {

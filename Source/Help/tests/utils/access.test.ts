@@ -3,7 +3,7 @@ import {
 	KeyTypeError,
 	OutOfRangeError,
 	getValue,
-} from "../../script/utils/access";
+} from "../../utils/access";
 
 describe("getValue:Array", () => {
 	const commonInput = [10, 20, 30];

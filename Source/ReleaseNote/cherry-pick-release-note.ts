@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { getValue } from "../Help/script/utils/access";
+import { getValue } from "../Help/utils/access";
 
 export interface Input {
 	changelogsPath: string;

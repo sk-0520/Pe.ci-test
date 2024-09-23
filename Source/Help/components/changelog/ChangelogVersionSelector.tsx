@@ -5,9 +5,9 @@ import {
 	useTheme,
 } from "@mui/material";
 import { type FC, type ReactNode, useMemo, useState } from "react";
-import { ListGroupHeader } from "../../components/ListGroupHeader";
 import type { ChangelogVersion, Changelogs } from "../../types/changelog";
 import { getValue } from "../../utils/access";
+import { ListGroupHeader } from "../ListGroupHeader";
 
 function getChangelogGroup(
 	changelogs: Changelogs,

@@ -1,6 +1,6 @@
 import fs from "node:fs";
-import type { ChangelogVersion } from "../../Source/Help/script/types/changelog";
-import { getValue } from "../../Source/Help/script/utils/access";
+import type { ChangelogVersion } from "../../Source/Help/types/changelog";
+import { getValue } from "../../Source/Help/utils/access";
 
 export interface Input {
 	rootDirPath: string;
