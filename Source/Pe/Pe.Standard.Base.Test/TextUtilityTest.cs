@@ -17,6 +17,8 @@ namespace ContentTypeTextNet.Pe.Standard.Base.Test
         [InlineData("<a", "<a", "<", ">")]
         [InlineData("a>", "a>", "<", ">")]
         [InlineData("[a]", "<a>", "<", ">")]
+        [InlineData("<>", "<>", "<", ">")] // 何もない場合は何もしない
+        [InlineData("[<a]>", "<<a>>", "<", ">")] // 近しい範囲
         [InlineData("[a][b]", "<a><b>", "<", ">")]
         public void ReplacePlaceholderTest(string expected, string src, string head, string tail)
         {
