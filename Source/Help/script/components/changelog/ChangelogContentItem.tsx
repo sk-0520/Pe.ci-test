@@ -7,12 +7,11 @@ import {
 } from "@mui/material";
 import type { FC } from "react";
 import type * as changelog from "../../types/changelog";
-import type { ChangelogContentItemType } from "../../types/changelog";
 import { ChangelogReplaceLink } from "./ChangelogReplaceLink";
 import { ChangelogRevision } from "./ChangelogRevision";
 
 const TypeMap: {
-	[key in ChangelogContentItemType]: {
+	[key in changelog.ChangelogContentItemType]: {
 		title: string;
 		styles: { root: SxProps<Theme>; header: SxProps<Theme> };
 	};
