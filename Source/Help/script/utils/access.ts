@@ -9,19 +9,40 @@ export class KeyTypeError extends AccessError {}
 export class OutOfRangeError extends AccessError {}
 export class ItemsTypeError extends AccessError {}
 
-export function getElement<TValue>(
+/**
+ * 配列から要素を取得。
+ *
+ * @param array 配列。
+ * @param index 添え字。
+ * @throws {@link OutOfRangeError} 取得できないか値が `undefine`
+ */
+export function getValue<TValue>(
 	array: ReadonlyArray<TValue>,
 	index: number,
 ): Exclude<TValue, undefined>;
-export function getElement<TKey extends PropertyKey, TValue>(
+/**
+ * マップから値を取得。
+ *
+ * @param map マップ。
+ * @param key キー。
+ * @throws {@link OutOfRangeError} 取得できないか値が `undefine`
+ */
+export function getValue<TKey extends PropertyKey, TValue>(
 	map: Map<TKey, TValue> | ReadonlyMap<TKey, TValue>,
 	key: TKey,
 ): Exclude<TValue, undefined>;
-export function getElement<TKey extends PropertyKey, TValue>(
+/**
+ * レコードから値取得
+ *
+ * @param record レコード。
+ * @param key キー。
+ * @throws {@link OutOfRangeError} 取得できないか値が `undefine`
+ */
+export function getValue<TKey extends PropertyKey, TValue>(
 	record: Record<TKey, TValue>,
 	key: TKey,
 ): Exclude<TValue, undefined>;
-export function getElement<TKey extends PropertyKey | number, TValue>(
+export function getValue<TKey extends PropertyKey | number, TValue>(
 	items:
 		| ReadonlyArray<TValue>
 		| (Map<TKey, TValue> | ReadonlyMap<TKey, TValue>)

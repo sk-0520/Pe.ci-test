@@ -2,7 +2,7 @@ import { Box, TableBody, TableHead, TableRow } from "@mui/material";
 import type { FC, MouseEvent } from "react";
 import { useWorkColumns } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
-import { getElement } from "../../utils/access";
+import { getValue } from "../../utils/access";
 import type { Sqlite3Type } from "../../utils/sqlite";
 import {
 	ClrMap,
@@ -29,7 +29,7 @@ export const DatabaseTableColumns: FC<DatabaseTableColumnsProps> = (
 
 		const newItems = [...workColumns.items];
 		const defaultLogicalType: Sqlite3Type = "integer";
-		const selectableClrTypes = getElement(ClrMap, defaultLogicalType);
+		const selectableClrTypes = getValue(ClrMap, defaultLogicalType);
 
 		newItems.push({
 			id: generateColumnId(),

@@ -10,7 +10,7 @@ import {
 	useWorkColumns,
 } from "../../stores/TableStore";
 import type { TableBaseProps } from "../../types/table";
-import { getElement } from "../../utils/access";
+import { getValue } from "../../utils/access";
 import {
 	Sqlite3AffinityTypes,
 	Sqlite3BasicTypes,
@@ -153,8 +153,8 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 	const isCommonColumn = isCommonCreatedColumn || isCommonUpdatedColumn;
 
 	// この辺データ構造全くわからんわ
-	const physicalType = getElement(SqliteTypeMap, watch("logicalType"));
-	const selectableClrTypes = getElement(ClrMap, watch("logicalType"));
+	const physicalType = getValue(SqliteTypeMap, watch("logicalType"));
+	const selectableClrTypes = getValue(ClrMap, watch("logicalType"));
 	console.debug(selectableClrTypes);
 	if (!selectableClrTypes.includes(clrType)) {
 		const value = selectableClrTypes[0];

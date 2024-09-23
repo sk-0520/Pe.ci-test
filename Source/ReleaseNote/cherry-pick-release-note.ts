@@ -1,5 +1,5 @@
 import fs from "node:fs";
-import { getElement } from "../Help/script/utils/access";
+import { getValue } from "../Help/script/utils/access";
 
 export interface Input {
 	changelogsPath: string;
@@ -11,7 +11,7 @@ export function main(input: Input) {
 
 	const changelogsJson = fs.readFileSync(input.changelogsPath).toString();
 	const changelogs = JSON.parse(changelogsJson);
-	const changelog = getElement(changelogs, 0);
+	const changelog = getValue(changelogs, 0);
 
 	fs.writeFileSync(input.outputChangelogPath, JSON.stringify(changelog));
 }
