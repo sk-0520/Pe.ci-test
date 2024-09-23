@@ -10,7 +10,7 @@ export const ReleaseNote: FC = () => {
 	return (
 		<>
 			<ChangelogVersion {...changelog} />
-			<Divider />
+			<Divider sx={{ marginBlock: "1em" }} />
 			<Typography>
 				手動でアップデートする場合は
 				<Link
