@@ -116,28 +116,3 @@ export const ChangelogContentItem: FC<ChangelogContentItemProps> = (
 		</ListItem>
 	);
 };
-
-/*
-	*.compatibility {
-		color: #f00;
-		&::before {
-			content: "[互換性]";
-		}
-	}
-	*.notice:before {
-		content: "[事前通知]";
-		color: #f00;
-	}
-	*.nuget:before {
-		content: "[NuGet]";
-		color: #0a0;
-	}
-	*.myget:before {
-		content: "[myget]";
-		color: #0a0;
-	}
-	*.plugin-compatibility:before {
-		content: "[プラグイン互換性]";
-		color: #f74;
-	}
-*/
