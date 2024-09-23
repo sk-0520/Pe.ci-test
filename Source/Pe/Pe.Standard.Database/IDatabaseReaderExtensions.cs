@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [Conditional("DEBUG")]
         private static void ThrowIfNotOrderBy(string statement)
         {
-            if(!Regex.IsMatch(statement, @"\border\s+by\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
+            if(!Regex.IsMatch(statement, @"\border\s+by\b", RegexOptions.IgnoreCase | RegexOptions.Multiline, Timeout.InfiniteTimeSpan)) {
                 throw new DatabaseStatementException("order by");
             }
         }
@@ -71,7 +71,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [Conditional("DEBUG")]
         private static void ThrowIfNotSingleCount(string statement)
         {
-            if(!Regex.IsMatch(statement, @"\bselect\s+count\s*\(", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
+            if(!Regex.IsMatch(statement, @"\bselect\s+count\s*\(", RegexOptions.IgnoreCase | RegexOptions.Multiline, Timeout.InfiniteTimeSpan)) {
                 throw new DatabaseStatementException("select count()");
             }
         }

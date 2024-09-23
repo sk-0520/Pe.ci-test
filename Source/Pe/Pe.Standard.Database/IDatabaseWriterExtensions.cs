@@ -23,7 +23,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [Conditional("DEBUG")]
         private static void ThrowIfNotUpdate(string statement)
         {
-            if(!Regex.IsMatch(statement, @"\bupdate\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
+            if(!Regex.IsMatch(statement, @"\bupdate\b", RegexOptions.IgnoreCase | RegexOptions.Multiline, Timeout.InfiniteTimeSpan)) {
                 throw new DatabaseStatementException("update");
             }
         }
@@ -116,7 +116,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [Conditional("DEBUG")]
         private static void ThrowIfNotInsert(string statement)
         {
-            if(!Regex.IsMatch(statement, @"\binsert\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
+            if(!Regex.IsMatch(statement, @"\binsert\b", RegexOptions.IgnoreCase | RegexOptions.Multiline, Timeout.InfiniteTimeSpan)) {
                 throw new DatabaseStatementException("insert");
             }
         }
@@ -175,7 +175,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
         [Conditional("DEBUG")]
         private static void ThrowIfNotDelete(string statement)
         {
-            if(!Regex.IsMatch(statement, @"\bdelete\b", RegexOptions.IgnoreCase | RegexOptions.Multiline)) {
+            if(!Regex.IsMatch(statement, @"\bdelete\b", RegexOptions.IgnoreCase | RegexOptions.Multiline, Timeout.InfiniteTimeSpan)) {
                 throw new DatabaseStatementException("delete");
             }
         }
@@ -220,7 +220,7 @@ namespace ContentTypeTextNet.Pe.Standard.Database
             }
         }
         /// <inheritdoc cref="DeleteByKey(IDatabaseWriter, string, object?)"/>
-        public static async Task DeleteByKeyAsync(this IDatabaseWriter writer, string statement, object? parameter=null, CancellationToken cancellationToken = default)
+        public static async Task DeleteByKeyAsync(this IDatabaseWriter writer, string statement, object? parameter = null, CancellationToken cancellationToken = default)
         {
             ThrowIfNotDelete(statement);
 
