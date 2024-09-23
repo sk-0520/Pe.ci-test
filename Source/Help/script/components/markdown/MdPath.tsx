@@ -4,7 +4,7 @@ import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutl
 import { type SxProps, type Theme, Typography } from "@mui/material";
 import type { FC } from "react";
 
-const FileRegex = /.+\.[\w]+$/;
+const FileRegex = /.+\.\w+$/;
 
 type PathType = "dir" | "file" | "plugin";
 
