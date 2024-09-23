@@ -6,7 +6,7 @@ export interface Token {
 }
 
 const IssueRegex = /(^#(?<ISSUE>\d+))/;
-const UrlRegex = /^(?<URL>(https?:\/\/[\w?=&./\-;#~%]+(?![\w?&./;#~%"=\-]*>)))/;
+const UrlRegex = /^(?<URL>(https?:\/\/[\w?=&./\-;#~%]+(?![\w?&./;#~%"=-]*>)))/;
 
 export function splitTokens(s: string): Token[] {
 	const buffer: Token[] = [];
