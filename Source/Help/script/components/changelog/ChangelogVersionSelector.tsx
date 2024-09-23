@@ -7,6 +7,7 @@ import {
 import { type FC, type ReactNode, useMemo, useState } from "react";
 import { ListGroupHeader } from "../../components/ListGroupHeader";
 import type { ChangelogVersion, Changelogs } from "../../types/changelog";
+import { getValue } from "../../utils/access";
 
 function getChangelogGroup(
 	changelogs: Changelogs,
@@ -45,7 +46,9 @@ export const ChangelogVersionSelector: FC<ChangelogVersionSelectorProps> = (
 	props: ChangelogVersionSelectorProps,
 ) => {
 	const { changelogs } = props;
-	const [selectedValue, setSelectedValue] = useState(changelogs[0].version);
+	const [selectedValue, setSelectedValue] = useState(
+		getValue(changelogs, 0).version,
+	);
 	const theme = useTheme();
 	const items = useMemo(() => getChangelogGroup(changelogs), [changelogs]);
 

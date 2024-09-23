@@ -68,9 +68,11 @@ export function buildTable(
 		}
 		const workRow: string[] = [];
 		for (let i = 0; i < row.length; i++) {
+			// @ts-expect-error ts(2345)
 			const cell = escapeCell(row[i]);
 			workRow.push(cell);
 			cellMaxLengths[i] = Math.max(
+				// @ts-expect-error ts(2345)
 				cellMaxLengths[i],
 				countSingleChar(cell) + CellPadding,
 			);
@@ -83,6 +85,7 @@ export function buildTable(
 	tableRows.push(
 		columns.map(
 			(a, i) =>
+				// @ts-expect-error ts(2345)
 				` ${buildCell(cellMaxLengths[i] - CellPadding, escapeCell(a.title), "center")} `,
 		),
 	);
@@ -91,15 +94,19 @@ export function buildTable(
 		columns.map((a, i) => {
 			switch (a.align) {
 				case "left":
+					// @ts-expect-error ts(2345)
 					return `:${"-".repeat(cellMaxLengths[i] - 1)}`;
 
 				case "right":
+					// @ts-expect-error ts(2345)
 					return `${"-".repeat(cellMaxLengths[i] - 1)}:`;
 
 				case "center":
+					// @ts-expect-error ts(2345)
 					return `:${"-".repeat(cellMaxLengths[i] - 2)}:`;
 
 				case undefined:
+					// @ts-expect-error ts(2345)
 					return `${"-".repeat(cellMaxLengths[i])}`;
 			}
 		}),
@@ -110,6 +117,7 @@ export function buildTable(
 		tableRows.push(
 			row.map(
 				(a, i) =>
+					// @ts-expect-error ts(2345)
 					` ${buildCell(cellMaxLengths[i] - CellPadding, a, columns[i].align)} `,
 			),
 		);

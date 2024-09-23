@@ -17,6 +17,7 @@ import {
 	useState,
 } from "react";
 import { WorkTablesAtom } from "../../stores/TableStore";
+import { getValue } from "../../utils/access";
 import { copy } from "../../utils/clipboard";
 import {
 	convertDefineTable,
@@ -60,7 +61,7 @@ export const DatabaseTables: FC<DatabaseTablesProps> = (
 
 	useEffect(() => {
 		if (tables.length) {
-			setSelectedTableId(tables[0].id);
+			setSelectedTableId(getValue(tables, 0).id);
 		}
 	}, [tables]);
 

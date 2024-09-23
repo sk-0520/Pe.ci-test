@@ -42,6 +42,7 @@ export function trimStart(s: string, characters?: ReadonlySet<string>): string {
 	}
 
 	for (let i = 0; i < s.length; i++) {
+		// @ts-expect-error ts(2345)
 		if (workCharacters.has(s[i])) {
 			continue;
 		}
@@ -66,6 +67,7 @@ export function trimEnd(s: string, characters?: ReadonlySet<string>): string {
 	}
 
 	for (let i = 0; i < s.length; i++) {
+		// @ts-expect-error ts(2345)
 		if (workCharacters.has(s[s.length - i - 1])) {
 			continue;
 		}

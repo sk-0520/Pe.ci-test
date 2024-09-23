@@ -1,3 +1,4 @@
+import { getValue } from "./access";
 import { NewLine } from "./string";
 import type { ForeignKey, TableColumn, TableDefine } from "./table";
 
@@ -49,7 +50,7 @@ export function buildTable(table: TableDefine): string {
 	const hasNext = primaryColumns.length || foreignKeys.length;
 
 	for (let i = 0; i < table.columns.length; i++) {
-		const column = table.columns[i];
+		const column = getValue(table.columns, i);
 		let columnStatement = `${column.physicalName} ${column.logical.type}`;
 		if (column.notNull) {
 			columnStatement += " not null";

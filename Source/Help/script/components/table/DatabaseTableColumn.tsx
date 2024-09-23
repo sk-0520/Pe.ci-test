@@ -171,7 +171,9 @@ export const DatabaseTableColumn: FC<DatabaseTableColumnProps> = (
 			const [foreignKeyTableId, foreignKeyColumnId] =
 				data.foreignKey.split(".");
 			foreignKeyId = {
+				// @ts-expect-error ts(2345)
 				tableId: foreignKeyTableId,
+				// @ts-expect-error ts(2345)
 				columnId: foreignKeyColumnId,
 			};
 			const foreignKeyTable = foreignTables.find(

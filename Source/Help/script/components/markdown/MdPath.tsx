@@ -38,8 +38,10 @@ export const MdPath: FC<MdPathProps> = (props: MdPathProps) => {
 	if (!usingType) {
 		if (1 <= children.length) {
 			const child = children[0];
+			// @ts-expect-error ts(2345) ガチでこの辺何してんのか分からん(配列？ 文字列？)
 			if (child.endsWith(".dll")) {
 				usingType = "plugin";
+				// @ts-expect-error ts(2345)
 			} else if (FileRegex.test(child)) {
 				usingType = "file";
 			}

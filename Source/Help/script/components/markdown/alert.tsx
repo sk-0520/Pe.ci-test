@@ -31,7 +31,7 @@ function getFirstChildren(
 	);
 	if (
 		paragraphIndex === -1 ||
-		node.children[paragraphIndex].type !== RuleType.paragraph
+		node.children[paragraphIndex]?.type !== RuleType.paragraph
 	) {
 		return undefined;
 	}
@@ -62,21 +62,21 @@ export const renderAlert: MarkdownRule = (node, renderChildren, state) => {
 
 	const valid = {
 		head:
-			firstChildren[0].type === RuleType.text && firstChildren[0].text === "[",
+			firstChildren[0]?.type === RuleType.text && firstChildren[0].text === "[",
 		kind:
-			firstChildren[1].type === RuleType.text &&
+			firstChildren[1]?.type === RuleType.text &&
 			firstChildren[1].text.startsWith("!") &&
 			AlertKinds.includes(firstChildren[1].text.substring(1) as AlertKind),
 		tail:
-			firstChildren[2].type === RuleType.text &&
+			firstChildren[2]?.type === RuleType.text &&
 			firstChildren[2].text.startsWith("]"),
 	};
 	if (
 		valid.head &&
 		valid.kind &&
 		valid.tail &&
-		firstChildren[1].type === RuleType.text &&
-		firstChildren[2].type === RuleType.text
+		firstChildren[1]?.type === RuleType.text &&
+		firstChildren[2]?.type === RuleType.text
 	) {
 		const rawKind = firstChildren[1].text.substring(1) as AlertKind;
 
@@ -84,7 +84,7 @@ export const renderAlert: MarkdownRule = (node, renderChildren, state) => {
 		const firstElements = firstChildren.splice(2);
 		if (
 			1 <= firstElements.length &&
-			firstElements[0].type === RuleType.text &&
+			firstElements[0]?.type === RuleType.text &&
 			firstElements[0].text.startsWith("]")
 		) {
 			firstElements[0].text = firstElements[0].text.substring(1).trimStart();

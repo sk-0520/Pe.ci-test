@@ -4,12 +4,12 @@
 	"description": "Pe documents",
 	"//main": "Source/Help/index.pug",
 	"scripts": {
+		"typescript": "tsc --noEmit",
 		"lint:markup": "markuplint \"**/*.html\"",
 		"lint:script": "biome ci",
 		"lint": "npm-run-all --sequential lint:markup lint:script",
 		"fix-lint-script": "biome check --write",
 		"fix-lint-script-unsafe": "biome check --write --unsafe",
-		"typescript": "tsc --noEmit",
 		"test": "jest",
 		"archive:plugin-template": "npm-build-zip --source=Source/Plugin.Template --destination=Source/Help/archives --name=../../plugin-template",
 		"archive": "npm-run-all --sequential archive:plugin-template",

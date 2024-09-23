@@ -131,7 +131,8 @@ describe("convertColumns", () => {
 			"",
 			`${input}|1|2|3|4|5|6|7`,
 		]);
-		expect(columns[0].isPrimary).toBe(expected);
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("isPrimary", expected);
 	});
 
 	test.each([
@@ -144,7 +145,8 @@ describe("convertColumns", () => {
 			"",
 			`0|${input}|2|3|4|5|6|7`,
 		]);
-		expect(columns[0].notNull).toBe(expected);
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("notNull", expected);
 	});
 
 	test("FK", () => {
@@ -153,7 +155,8 @@ describe("convertColumns", () => {
 			"",
 			"0|1|T.C|3|4|5|6|7",
 		]);
-		expect(columns[0].foreignKey).toStrictEqual({
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("foreignKey", {
 			table: "T",
 			column: "C",
 		});
@@ -165,12 +168,14 @@ describe("convertColumns", () => {
 			"",
 			`0|1|${input}|3|4|5|6|7`,
 		]);
-		expect(columns[0].foreignKey).toBeUndefined();
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("foreignKey", undefined);
 	});
 
 	test("logical", () => {
 		const columns = convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6|7"]);
-		expect(columns[0].logical).toStrictEqual({
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("logical", {
 			name: "3",
 			type: "5",
 		});
@@ -178,13 +183,15 @@ describe("convertColumns", () => {
 
 	test("physical", () => {
 		const columns = convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6|7"]);
-		expect(columns[0].physicalName).toBe("4");
-		expect(columns[0].clrType).toBe("6");
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("physicalName", "4");
+		expect(columns[0]).toHaveProperty("clrType", "6");
 	});
 
 	test("check", () => {
 		const columns = convertColumns(["0|1|2|3|4|5|6|7", "", "0|1|2|3|4|5|6|7"]);
-		expect(columns[0].comment).toBe("7");
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("comment", "7");
 	});
 });
 
@@ -225,12 +232,14 @@ describe("convertIndexes", () => {
 		[false, " "],
 	])("UK: 期待値 [%s], 入力値 [%s]", (expected: boolean, input: string) => {
 		const columns = convertIndexes(["0|1|2", "", `${input}|1|2`]);
-		expect(columns[0].isUnique).toBe(expected);
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("isUnique", expected);
 	});
 
 	test("name", () => {
 		const columns = convertIndexes(["0|1|2", "", "0|1|2"]);
-		expect(columns[0].name).toBe("1");
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("name", "1");
 	});
 
 	test.each([
@@ -239,6 +248,7 @@ describe("convertIndexes", () => {
 		[["A", "B", "C"], "A , B, C "],
 	])("columns", (expected: string[], input: string) => {
 		const columns = convertIndexes(["0|1|2", "", `0|1|${input}`]);
-		expect(columns[0].columns).toStrictEqual(expected);
+		expect(columns).toHaveLength(1);
+		expect(columns[0]).toHaveProperty("columns", expected);
 	});
 });

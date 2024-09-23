@@ -1,3 +1,5 @@
+import { getValue } from "./access";
+
 export type Kind = "text" | "issue" | "url";
 
 export interface Token {
@@ -46,13 +48,17 @@ export function splitTokens(s: string): Token[] {
 	const result: Token[] = [];
 	for (let i = 0; i < buffer.length; i++) {
 		if (i) {
-			const work = result[result.length - 1];
+			const work = getValue(result, result.length - 1);
+			// @ts-expect-error ts(2345)
 			if (work.kind === "text" && buffer[i].kind === "text") {
+				// @ts-expect-error ts(2345)
 				work.value += buffer[i].value;
 			} else {
+				// @ts-expect-error ts(2345)
 				result.push(buffer[i]);
 			}
 		} else {
+			// @ts-expect-error ts(2345)
 			result.push(buffer[i]);
 		}
 	}
