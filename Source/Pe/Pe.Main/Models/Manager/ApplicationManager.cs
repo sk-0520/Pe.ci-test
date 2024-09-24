@@ -1364,7 +1364,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
         {
             Logger.LogInformation("がんばる！");
 #if DEBUG
-            DebugExecuteBefore();
+            await DebugExecuteBeforeAsync();
 #endif
             InitializeSystem();
             InitializeHook();

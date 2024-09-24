@@ -190,6 +190,21 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
             }
         );
 
+#if DEBUG
+        private ICommand? _DebugOutputSettingCommand;
+        public ICommand DebugOutputSettingCommand => this._DebugOutputSettingCommand ??= new DelegateCommand(
+            () => {
+                try {
+                    var path = "x:\\a,html";
+                    Model.OutputHtmlSetting(path);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+        );
+
+#endif
+
         private ICommand? _SelectUninstallBatchFilePathCommand;
         public ICommand SelectUninstallBatchFilePathCommand => this._SelectUninstallBatchFilePathCommand ??= new DelegateCommand(
              () => {

@@ -27,6 +27,7 @@ using ContentTypeTextNet.Pe.Main.Views;
 using ContentTypeTextNet.Pe.Main.Views._Debug_;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
+using ContentTypeTextNet.Pe.Main.ViewModels.About;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Manager
 {
@@ -44,13 +45,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
         #region function
 
-        private void DebugExecuteBefore()
+        private async Task DebugExecuteBeforeAsync()
         {
             Logger.LogDebug("デバッグ用前処理");
 
             //DebugColorPicker();
             //DebugIssue714();
+            await ShowAboutViewAsync(default);
+
             //Exit(true);
+            await Task.CompletedTask;
         }
 
         private async Task DebugExecuteAfterAsync()

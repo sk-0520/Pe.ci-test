@@ -138,6 +138,9 @@
                 <AccessText Text="{Binding Resources.String_About_OpenTemporaryDirectory_A, Source={x:Static app_main:CultureService.Instance}}" />
               </StackPanel>
             </Button>
+            <Button Command="{Binding DebugOutputSettingCommand}">
+              DEBUG OUTPUT
+            </Button>
             <Button Command="{Binding OutputSettingCommand}">
               <StackPanel Style="{StaticResource ImageLabel-Small}">
                 <Control Template="{StaticResource App-Image-Save}" />
