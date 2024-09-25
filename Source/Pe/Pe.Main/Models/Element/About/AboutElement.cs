@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 using System.Threading;
 using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Main.Models.Html;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 {
@@ -157,10 +158,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         public void OutputHtmlSetting(string outputPath)
         {
+
             using(var mainContext = MainDatabaseBarrier.WaitRead()) {
                 using var largeContext = LargeDatabaseBarrier.WaitRead();
-
             }
+
+            var html = new HtmlDocument();
+
+            var groupSectionElement = html.CreateElement("section");
+            html.Body.AppendChild(groupSectionElement);
+
         }
 
         #endregion
