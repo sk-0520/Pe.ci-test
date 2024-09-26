@@ -158,10 +158,16 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
         public void OutputHtmlSetting(string outputPath)
         {
+            var settingExporter = new SettingExporter(
+                MainDatabaseBarrier,
+                LargeDatabaseBarrier,
+                TemporaryDatabaseBarrier,
+                DatabaseStatementLoader,
+                LoggerFactory
+            );
 
-            using(var mainContext = MainDatabaseBarrier.WaitRead()) {
-                using var largeContext = LargeDatabaseBarrier.WaitRead();
-            }
+            var groups = settingExporter.GetGroups();
+            var items = settingExporter.GetLauncherItems();
 
             var html = new HtmlDocument();
 
