@@ -72,6 +72,39 @@ namespace ContentTypeTextNet.Pe.Main.Models.Html
             return (THtmlTagElement)result;
         }
 
+        private HtmlElement CreateTreeCore(string tagName, IReadOnlyDictionary<string, string>? attributes, HtmlNode? childElement)
+        {
+            var element = Create(tagName);
+            if(attributes is not null) {
+                foreach(var pair in attributes) {
+                    element.Attributes[pair.Key] = pair.Value;
+                }
+            }
+            if(childElement is not null) {
+                element.AppendChild(childElement);
+            }
+            return element;
+        }
+
+        public HtmlElement CreateTree(string tagName, IReadOnlyDictionary<string, string> attributes, HtmlNode childElement)
+        {
+            return CreateTreeCore(tagName, attributes, childElement);
+        }
+
+        public HtmlElement CreateTree(string tagName, IReadOnlyDictionary<string, string> attributes)
+        {
+            return CreateTreeCore(tagName, attributes, null);
+        }
+
+        public HtmlElement CreateTree(string tagName, HtmlNode childElement)
+        {
+            return CreateTreeCore(tagName, null, childElement);
+        }
+
+        public HtmlElement CreateTree(string tagName)
+        {
+            return CreateTreeCore(tagName, null, null);
+        }
 
         #endregion
     }

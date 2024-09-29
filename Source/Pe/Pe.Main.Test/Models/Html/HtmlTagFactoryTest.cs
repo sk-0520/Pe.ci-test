@@ -32,6 +32,27 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Html
             }
         }
 
+        [Fact]
+        public void CreateTreeTest()
+        {
+            var html = new HtmlDocument();
+            var factory = new HtmlTagFactory(html);
+            html.Body.AppendChild(
+                factory.CreateTree(
+                    "elm",
+                    factory.CreateTree(
+                        "child"
+                    )
+                )
+            );
+
+            var elm = Assert.IsType<HtmlTagElement>(html.Body.Children[0]);
+            Assert.Equal("elm", elm.TagName);
+
+            var child = Assert.IsType<HtmlTagElement>(elm.Children[0]);
+            Assert.Equal("child", child.TagName);
+        }
+
         #endregion
     }
 }

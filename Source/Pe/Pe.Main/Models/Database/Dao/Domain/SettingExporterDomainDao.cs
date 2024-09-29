@@ -13,13 +13,26 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
     {
         #region define
 
-        private sealed record class SettingGroupDao(
+        private sealed record class SettingGroupDto(
             LauncherGroupId LauncherGroupId,
             string LauncherGroupName,
             LauncherItemId LauncherItemId,
             string LauncherItemName,
             string Kind
         );
+
+        private sealed class SettingLauncherItemDto
+        {
+            public LauncherItemId LauncherItemId { get; set; } = LauncherItemId.Empty;
+            public string LauncherItemName { get; set; } = string.Empty;
+            public string LauncherItemKind { get; set; } = string.Empty;
+            public string IconPath { get; set; } = string.Empty;
+            public long IconIndex { get; set; } = 0;
+            public string FilePath { get; set; } = string.Empty;
+            public string FileOption { get; set; } = string.Empty;
+            public string FileWorkDirectory { get; set; } = string.Empty;
+        }
+
 
         #endregion
 
@@ -37,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var launcherItemKindTransfer = new EnumTransfer<LauncherItemKind>();
 
             var statement = LoadStatement();
-            var groups = Context.Query<SettingGroupDao>(statement)
+            var groups = Context.Query<SettingGroupDto>(statement)
                 .GroupBy(a => (a.LauncherGroupId, a.LauncherGroupName))
             ;
 
@@ -56,7 +69,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 
         public IEnumerable<SettingLauncherItem> SelectSettingLauncherItems()
         {
+            var launcherItemKindTransfer = new EnumTransfer<LauncherItemKind>();
 
+            var statement = LoadStatement();
+            var x = Context.SelectOrdered<SettingLauncherItemDto>(statement);
+
+            return Context.SelectOrdered<SettingLauncherItemDto>(statement)
+                .Select(a => new SettingLauncherItem(
+                    a.LauncherItemId,
+                    a.LauncherItemName,
+                    launcherItemKindTransfer.ToEnum(a.LauncherItemKind),
+                    a.IconPath,
+                    a.IconIndex,
+                    a.FilePath,
+                    a.FileOption,
+                    a.FileWorkDirectory
+                ))
+            ;
         }
 
         #endregion

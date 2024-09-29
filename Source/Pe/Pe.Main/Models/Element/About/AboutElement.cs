@@ -171,8 +171,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 
             var html = new HtmlDocument();
 
+            var h1Element = html.CreateElement("h1");
+            h1Element.Append(html.CreateTextNode("Pe"));
+            html.Body.AppendChild(h1Element);
+
+            // グループ
             var groupSectionElement = html.CreateElement("section");
             html.Body.AppendChild(groupSectionElement);
+            var groupParentElement = html.CreateElement("ul");
+            foreach(var group in groups) {
+                var groupItemElement = html.CreateElement("li");
+                groupParentElement.Append(groupItemElement);
+            }
+
+
+            // ランチャーアイテム
+            var launcherItemsSectionElement = html.CreateElement("section");
+            html.Body.AppendChild(launcherItemsSectionElement);
 
         }
 

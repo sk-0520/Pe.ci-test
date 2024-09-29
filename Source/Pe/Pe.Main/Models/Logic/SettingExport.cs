@@ -26,9 +26,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         LauncherItemId LauncherItemId,
         string LauncherItemName,
         LauncherItemKind LauncherItemKind,
-        string Path,
-        string Option,
-        string Work
+        string IconPath,
+        long IconIndex,
+        string FilePath,
+        string FileOption,
+        string FileWorkDirectory
     );
 
     public class SettingExporter
