@@ -61,7 +61,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Html
                     writer.Write(' ');
                     writer.Write(pair.Key);
                     if(!string.IsNullOrEmpty(pair.Value)) {
-                        var value = Document.HtmlCharacters.Encode(pair.Value);
+                        var value = Document.Characters.Encode(pair.Value);
                         writer.Write("=\"");
                         writer.Write(value);
                         writer.Write("\"");

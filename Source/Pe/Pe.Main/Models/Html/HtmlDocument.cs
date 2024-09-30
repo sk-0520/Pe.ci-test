@@ -13,12 +13,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Html
     {
         public HtmlDocument(Func<HtmlDocument, HtmlTagFactory>? htmlTagFactoryCreator = null)
         {
-            HtmlTagFactory = htmlTagFactoryCreator is not null ? htmlTagFactoryCreator(this) : new HtmlTagFactory(this);
-            HtmlCharacters = new HtmlCharacters();
+            Factory = htmlTagFactoryCreator is not null ? htmlTagFactoryCreator(this) : new HtmlTagFactory(this);
+            Characters = new HtmlCharacters();
 
-            Head = HtmlTagFactory.New<HtmlHeadTagElement>();
-            Body = HtmlTagFactory.New<HtmlBodyTagElement>();
-            Root = HtmlTagFactory.New<HtmlHtmlTagElement>();
+            Head = Factory.New<HtmlHeadTagElement>();
+            Body = Factory.New<HtmlBodyTagElement>();
+            Root = Factory.New<HtmlHtmlTagElement>();
 
             Root.AppendChild(Head);
             Root.AppendChild(Body);
@@ -28,8 +28,8 @@ namespace ContentTypeTextNet.Pe.Main.Models.Html
 
         public HtmlVersion Version { get; set; } = HtmlVersion.Html5;
 
-        public HtmlTagFactory HtmlTagFactory { get; }
-        public HtmlCharacters HtmlCharacters { get; }
+        public HtmlTagFactory Factory { get; }
+        public HtmlCharacters Characters { get; }
 
 
         public HtmlHtmlTagElement Root { get; }
@@ -51,12 +51,12 @@ namespace ContentTypeTextNet.Pe.Main.Models.Html
 
         public HtmlElement CreateElement(string tagName)
         {
-            return HtmlTagFactory.Create(tagName);
+            return Factory.Create(tagName);
         }
 
         public THtmlTagElement CreateElement<THtmlTagElement>()
         {
-            return HtmlTagFactory.New<THtmlTagElement>();
+            return Factory.New<THtmlTagElement>();
         }
 
         #endregion

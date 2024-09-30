@@ -41,6 +41,15 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Domain
             Assert.Empty(actual);
         }
 
+        [Fact]
+        public void SelectSettingNotes_Empty_Test()
+        {
+            var testDomain = Test.BuildDao<SettingExporterDomainDao>(AccessorKind.Main);
+
+            var actual = testDomain.SelectSettingNotes();
+            Assert.Empty(actual);
+        }
+
         #endregion
     }
 }

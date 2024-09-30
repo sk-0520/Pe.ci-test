@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Documents;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
@@ -30,7 +31,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
         long IconIndex,
         string FilePath,
         string FileOption,
-        string FileWorkDirectory
+        string FileWorkDirectory,
+        string Comment
+    );
+
+    public record class SettingNote(
+        NoteId NoteId,
+        string Title,
+        string ScreenName,
+        string ForegroundColor,
+        string BackgroundColor,
+        bool IsLocked,
+        bool IsTopmost,
+        bool IsCompact,
+        NoteContentKind ContentKind,
+        NoteHiddenMode HiddenMode,
+        NoteCaptionPosition CaptionPosition,
+        Encoding Encoding,
+        string Content
     );
 
     public class SettingExporter
@@ -72,6 +90,14 @@ namespace ContentTypeTextNet.Pe.Main.Models.Logic
             using(var transaction = MainDatabaseBarrier.WaitRead()) {
                 var dao = new SettingExporterDomainDao(transaction.Context, DatabaseStatementLoader, transaction.Implementation, LoggerFactory);
                 return dao.SelectSettingLauncherItems().ToArray();
+            }
+        }
+
+        public IReadOnlyList<SettingNote> GetNotes()
+        {
+            using(var transaction = MainDatabaseBarrier.WaitRead()) {
+                var dao = new SettingExporterDomainDao(transaction.Context, DatabaseStatementLoader, transaction.Implementation, LoggerFactory);
+                return dao.SelectSettingNotes().ToArray();
             }
         }
 

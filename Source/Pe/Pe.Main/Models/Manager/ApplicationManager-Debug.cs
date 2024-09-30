@@ -51,9 +51,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Manager
 
             //DebugColorPicker();
             //DebugIssue714();
-            await ShowAboutViewAsync(default);
+            //await ShowAboutViewAsync(default);
 
             //Exit(true);
+
             await Task.CompletedTask;
         }
 

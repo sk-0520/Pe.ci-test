@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Html
 
         protected override void WriteCore(TextWriter writer, HtmlNodeOutputOptions options, int parentNodeLevel)
         {
-            var text = Document.HtmlCharacters.Encode(TextContent);
+            var text = Document.Characters.Encode(TextContent);
             writer.Write(text);
         }
 

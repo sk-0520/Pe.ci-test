@@ -33,7 +33,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Html
         }
 
         [Fact]
-        public void CreateTreeTest()
+        public void CreateTree_Single_Test()
         {
             var html = new HtmlDocument();
             var factory = new HtmlTagFactory(html);
@@ -51,6 +51,35 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Html
 
             var child = Assert.IsType<HtmlTagElement>(elm.Children[0]);
             Assert.Equal("child", child.TagName);
+        }
+
+        [Fact]
+        public void CreateTree_Multi_Test()
+        {
+            var html = new HtmlDocument();
+            var factory = new HtmlTagFactory(html);
+            html.Body.AppendChild(
+                factory.CreateTree(
+                    "elm",
+                    [
+                        factory.CreateTree(
+                            "child1"
+                        ),
+                        factory.CreateTree(
+                            "child2"
+                        )
+                    ]
+                )
+            );
+
+            var elm = Assert.IsType<HtmlTagElement>(html.Body.Children[0]);
+            Assert.Equal("elm", elm.TagName);
+
+            var child1 = Assert.IsType<HtmlTagElement>(elm.Children[0]);
+            Assert.Equal("child1", child1.TagName);
+
+            var child2 = Assert.IsType<HtmlTagElement>(elm.Children[1]);
+            Assert.Equal("child2", child2.TagName);
         }
 
         #endregion

@@ -6,6 +6,8 @@ using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Standard.Database;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Main.Models.Data;
+using System.Text;
+using ContentTypeTextNet.Pe.Core.Models;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
 {
@@ -31,8 +33,24 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             public string FilePath { get; set; } = string.Empty;
             public string FileOption { get; set; } = string.Empty;
             public string FileWorkDirectory { get; set; } = string.Empty;
+            public string Comment { get; set; } = string.Empty;
         }
 
+        public record class SettingNoteDto(
+            NoteId NoteId,
+            string Title,
+            string ScreenName,
+            string ForegroundColor,
+            string BackgroundColor,
+            bool IsLocked,
+            bool IsTopmost,
+            bool IsCompact,
+            string ContentKind,
+            string HiddenMode,
+            string CaptionPosition,
+            string Encoding,
+            string Content
+        );
 
         #endregion
 
@@ -72,8 +90,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
             var launcherItemKindTransfer = new EnumTransfer<LauncherItemKind>();
 
             var statement = LoadStatement();
-            var x = Context.SelectOrdered<SettingLauncherItemDto>(statement);
-
             return Context.SelectOrdered<SettingLauncherItemDto>(statement)
                 .Select(a => new SettingLauncherItem(
                     a.LauncherItemId,
@@ -83,7 +99,34 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Domain
                     a.IconIndex,
                     a.FilePath,
                     a.FileOption,
-                    a.FileWorkDirectory
+                    a.FileWorkDirectory,
+                    a.Comment
+                ))
+            ;
+        }
+
+        public IEnumerable<SettingNote> SelectSettingNotes()
+        {
+            var noteContentKindTransfer = new EnumTransfer<NoteContentKind>();
+            var noteHiddenModeTransfer = new EnumTransfer<NoteHiddenMode>();
+            var noteCaptionPositionTransfer = new EnumTransfer<NoteCaptionPosition>();
+
+            var statement = LoadStatement();
+            return Context.SelectOrdered<SettingNoteDto>(statement)
+                .Select(a => new SettingNote(
+                    a.NoteId,
+                    a.Title,
+                    a.ScreenName,
+                    a.ForegroundColor,
+                    a.BackgroundColor,
+                    a.IsLocked,
+                    a.IsTopmost,
+                    a.IsCompact,
+                    noteContentKindTransfer.ToEnum(a.ContentKind),
+                    noteHiddenModeTransfer.ToEnum(a.HiddenMode),
+                    noteCaptionPositionTransfer.ToEnum(a.CaptionPosition),
+                    EncodingUtility.Parse(a.Encoding),
+                    a.Content
                 ))
             ;
         }

@@ -15,7 +15,8 @@ select
 	case
 		when LauncherFiles.WorkDirectory is null then ''
 		else LauncherFiles.WorkDirectory
-	end as FileWorkDirectory
+	end as FileWorkDirectory,
+	LauncherItems.Comment
 from
 	LauncherItems
 	left join

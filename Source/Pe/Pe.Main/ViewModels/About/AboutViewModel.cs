@@ -195,7 +195,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
         public ICommand DebugOutputSettingCommand => this._DebugOutputSettingCommand ??= new DelegateCommand(
             () => {
                 try {
-                    var path = "x:\\a,html";
+                    var path = "x:\\a.html";
                     Model.OutputHtmlSetting(path);
                 } catch(Exception ex) {
                     Logger.LogError(ex, ex.Message);
