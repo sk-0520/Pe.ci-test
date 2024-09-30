@@ -39,6 +39,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
+        public RequestSender OutputSettingRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
         private ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
@@ -164,6 +165,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                 Model.OpenTemporaryDirectory();
             }
         );
+
+        private ICommand? _OutputSettingCommand;
+        public ICommand OutputSettingCommand => this._OutputSettingCommand ??= new DelegateCommand(
+            () => {
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
+                    OutputSettingRequest,
+                    string.Empty,
+                    false,
+                    new[] {
+                        new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_About_OutputHtml, "html", "*.html"),
+                    },
+                    r => {
+                        var path = r.ResponseFilePaths[0];
+                        try {
+                            Logger.LogDebug("path: {Path}", path);
+                            Model.OutputHtmlSetting(path);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                        }
+                    }
+                );
+            }
+        );
+
+#if DEBUG
+        private ICommand? _DebugOutputSettingCommand;
+        public ICommand DebugOutputSettingCommand => this._DebugOutputSettingCommand ??= new DelegateCommand(
+            () => {
+                try {
+                    var path = "x:\\a.html";
+                    Model.OutputHtmlSetting(path);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+        );
+
+#endif
 
         private ICommand? _SelectUninstallBatchFilePathCommand;
         public ICommand SelectUninstallBatchFilePathCommand => this._SelectUninstallBatchFilePathCommand ??= new DelegateCommand(

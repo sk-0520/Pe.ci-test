@@ -257,6 +257,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
+        ///   設定状態を出力 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_About_OutputSetting_A {
+            get {
+                return ResourceManager.GetString("String_About_OutputSetting_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   バッチ作成先 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_About_Uninstall_BatchFile_Header_A {
@@ -3847,6 +3856,15 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         public static string String_Feedback_Warning {
             get {
                 return ResourceManager.GetString("String_Feedback_Warning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   HTML ファイル に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_FileDialog_Filter_About_OutputHtml {
+            get {
+                return ResourceManager.GetString("String_FileDialog_Filter_About_OutputHtml", resourceCulture);
             }
         }
         

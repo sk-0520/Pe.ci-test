@@ -32,7 +32,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Domain
 
         #endregion
 
-
         #region property
 
         private Test Test { get; } = Test.Create(TestSetup.Database);

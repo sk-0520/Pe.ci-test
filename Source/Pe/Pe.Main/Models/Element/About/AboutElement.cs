@@ -15,17 +15,24 @@ using ContentTypeTextNet.Pe.Standard.Base;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Standard.Base.Linq;
 using System.Threading;
+using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Main.Models.Html;
+using System.Globalization;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.About
 {
     public class AboutElement: ElementBase
     {
-        public AboutElement(EnvironmentParameters environmentParameters, IClipboardManager clipboardManager, ILoggerFactory loggerFactory)
+        public AboutElement(EnvironmentParameters environmentParameters, IClipboardManager clipboardManager, IMainDatabaseBarrier mainDatabaseBarrier, ILargeDatabaseBarrier largeDatabaseBarrier, ITemporaryDatabaseBarrier temporaryDatabaseBarrier, IDatabaseStatementLoader databaseStatementLoader, ILoggerFactory loggerFactory)
             : base(loggerFactory)
         {
             EnvironmentParameters = environmentParameters;
             ApplicationConfiguration = EnvironmentParameters.ApplicationConfiguration;
             ClipboardManager = clipboardManager;
+            MainDatabaseBarrier = mainDatabaseBarrier;
+            LargeDatabaseBarrier = largeDatabaseBarrier;
+            TemporaryDatabaseBarrier = temporaryDatabaseBarrier;
+            DatabaseStatementLoader = databaseStatementLoader;
         }
 
         #region property
@@ -33,6 +40,11 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         private EnvironmentParameters EnvironmentParameters { get; }
         private ApplicationConfiguration ApplicationConfiguration { get; }
         private IClipboardManager ClipboardManager { get; }
+
+        private IMainDatabaseBarrier MainDatabaseBarrier { get; }
+        private ILargeDatabaseBarrier LargeDatabaseBarrier { get; }
+        private ITemporaryDatabaseBarrier TemporaryDatabaseBarrier { get; }
+        private IDatabaseStatementLoader DatabaseStatementLoader { get; }
 
         private List<AboutComponentItem> ComponentsImpl { get; } = new List<AboutComponentItem>();
         public IReadOnlyList<AboutComponentItem> Components => ComponentsImpl;
@@ -143,6 +155,348 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.About
         public void OpenTemporaryDirectory()
         {
             OpenDirectory(EnvironmentParameters.TemporaryDirectory);
+        }
+
+        public void OutputHtmlSetting(string outputPath)
+        {
+            var settingExporter = new SettingExporter(
+                MainDatabaseBarrier,
+                LargeDatabaseBarrier,
+                TemporaryDatabaseBarrier,
+                DatabaseStatementLoader,
+                LoggerFactory
+            );
+
+            var groups = settingExporter.GetGroups();
+            var items = settingExporter.GetLauncherItems();
+            var notes = settingExporter.GetNotes();
+
+            var html = new HtmlDocument();
+
+            // ヘッダー
+            var headerElement = html.Factory.CreateTree(
+                "header",
+                html.Factory.CreateTree(
+                    "h1",
+                    html.CreateTextNode($"Pe: {BuildStatus.BuildType} {BuildStatus.Version} - {BuildStatus.Revision}")
+                )
+            );
+            html.Body.AppendChild(headerElement);
+
+            // グループ
+            var groupElement = html.Factory.CreateTree(
+                "section",
+                [
+                    html.Factory.CreateTree(
+                        "h2",
+                        html.CreateTextNode("group")
+                    ),
+                    html.Factory.CreateTree(
+                        "ul",
+                        groups.Select(a => {
+                            return html.Factory.CreateTree(
+                                "li",
+                                [
+                                    html.Factory.CreateTree(
+                                        "strong",
+                                        html.CreateTextNode(a.GroupName)
+                                    ),
+                                    html.CreateTextNode(" "),
+                                    html.Factory.CreateTree(
+                                        "code",
+                                        html.CreateTextNode(a.GroupId.ToString())
+                                    ),
+                                    html.Factory.CreateTree(
+                                        "ul",
+                                        a.Items.Select(b => {
+                                            return html.Factory.CreateTree(
+                                                "li",
+                                                [
+                                                    html.Factory.CreateTree(
+                                                        "em",
+                                                        html.CreateTextNode(b.LauncherItemName)
+                                                    ),
+                                                    html.CreateTextNode(" "),
+                                                    html.Factory.CreateTree(
+                                                        "code",
+                                                        html.CreateTextNode(b.LauncherItemId.ToString())
+                                                    ),
+                                                ]
+                                            );
+                                        })
+                                    )
+                                ]
+                            );
+                        })
+                    ),
+                ]
+            );
+            html.Body.AppendChild(groupElement);
+
+            // ランチャーアイテム
+            var launcherItemElement = html.Factory.CreateTree(
+                "section",
+                [
+                    html.Factory.CreateTree(
+                        "h2",
+                        html.CreateTextNode("items")
+                    ),
+                    html.Factory.CreateTree(
+                        "ul",
+                        items.Select(a => {
+                            return html.Factory.CreateTree(
+                                "li",
+                                [
+                                    html.Factory.CreateTree(
+                                        "strong",
+                                        html.CreateTextNode(a.LauncherItemName)
+                                    ),
+                                    html.CreateTextNode(" "),
+                                    html.Factory.CreateTree(
+                                        "code",
+                                        html.CreateTextNode(a.LauncherItemId.ToString())
+                                    ),
+                                    html.Factory.CreateTree(
+                                        "dl",
+                                        [
+                                            // 種別
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("種別") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.LauncherItemKind.ToString())
+                                            ),
+                                            // アイコン
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("アイコン(インデックス)") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                string.IsNullOrEmpty(a.IconPath)
+                                                    ? [html.CreateTextNode("なし")]
+                                                    : [
+                                                        html.Factory.CreateTree(
+                                                            "code",
+                                                            html.CreateTextNode(a.IconPath)
+                                                        ),
+                                                        html.Factory.CreateTree(
+                                                            "em",
+                                                            [
+                                                                html.CreateTextNode("("),
+                                                                html.CreateTextNode(a.IconIndex.ToString(CultureInfo.InvariantCulture)),
+                                                                html.CreateTextNode(")"),
+                                                            ]
+                                                        ),
+                                                    ]
+                                            ),
+                                            // ファイルパス
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("ファイルパス") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.Factory.CreateTree(
+                                                    "code",
+                                                    html.CreateTextNode(a.FilePath)
+                                                )
+                                            ),
+                                            // オプション
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("オプション") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                string.IsNullOrEmpty(a.FileOption)
+                                                    ? html.CreateTextNode("なし")
+                                                    : html.Factory.CreateTree(
+                                                        "code",
+                                                        html.CreateTextNode(a.FileOption)
+                                                    )
+                                            ),
+                                            // 作業ディレクトリ
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("作業ディレクトリ") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                string.IsNullOrEmpty(a.FileWorkDirectory)
+                                                    ? html.CreateTextNode("なし")
+                                                    : html.Factory.CreateTree(
+                                                        "code",
+                                                        html.CreateTextNode(a.FileWorkDirectory)
+                                                    )
+                                            ),
+                                            // コメント
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("コメント") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                string.IsNullOrEmpty(a.Comment)
+                                                    ? html.CreateTextNode("なし")
+                                                    : html.Factory.CreateTree(
+                                                        "pre",
+                                                        html.CreateTextNode(a.Comment)
+                                                    )
+                                            ),
+                                        ]
+                                    )
+                                ]
+                            );
+                        })
+                    ),
+                ]
+            );
+            html.Body.AppendChild(launcherItemElement);
+
+            // ノート
+            var noteElement = html.Factory.CreateTree(
+                "section",
+                [
+                    html.Factory.CreateTree(
+                        "h2",
+                        html.CreateTextNode("note")
+                    ),
+                    html.Factory.CreateTree(
+                        "ul",
+                        notes.Select(a => {
+                            return html.Factory.CreateTree(
+                                "li",
+                                [
+                                    html.Factory.CreateTree(
+                                        "strong",
+                                        html.CreateTextNode(a.Title)
+                                    ),
+                                    html.CreateTextNode(" "),
+                                    html.Factory.CreateTree(
+                                        "code",
+                                        html.CreateTextNode(a.NoteId.ToString())
+                                    ),
+                                    html.Factory.CreateTree(
+                                        "dl",
+                                        [
+                                            // スクリーン
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("ディスプレイ") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.ScreenName)
+                                            ),
+                                            // 前景色/背景色
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("前景色/背景色") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                [
+                                                    html.Factory.CreateTree(
+                                                        "code",
+                                                        html.CreateTextNode(a.ForegroundColor)
+                                                    ),
+                                                    html.CreateTextNode("/"),
+                                                    html.Factory.CreateTree(
+                                                        "code",
+                                                        html.CreateTextNode(a.BackgroundColor)
+                                                    )
+                                                ]
+                                            ),
+                                            // 固定
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("固定") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.IsLocked.ToString())
+                                            ),
+                                            // 最前面
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("最前面") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.IsTopmost.ToString())
+                                            ),
+                                            // 最小化
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("最小化") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.IsCompact.ToString())
+                                            ),
+                                            // 種別
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("種別") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.ContentKind.ToString())
+                                            ),
+                                            // 自動的に隠す
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("自動的に隠す方法") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.HiddenMode.ToString())
+                                            ),
+                                            // タイトルバー位置
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("タイトルバー位置") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.CaptionPosition.ToString())
+                                            ),
+                                            // エンコーディング
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("エンコーディング") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.CreateTextNode(a.Encoding.ToString() ?? a.Encoding.EncodingName)
+                                            ),
+                                            // 内容
+                                            html.Factory.CreateTree(
+                                                "dt",
+                                                html.CreateTextNode("内容") // TODO: i18n
+                                            ),
+                                            html.Factory.CreateTree(
+                                                "dd",
+                                                html.Factory.CreateTree(
+                                                    "pre",
+                                                    html.CreateTextNode(a.Content)
+                                                )
+                                            ),
+                                        ]
+                                    ),
+                                ]
+                            );
+                        })
+                    )
+                ]
+            );
+            html.Body.AppendChild(noteElement);
+
+            using var writer = File.CreateText(outputPath);
+            html.Write(writer, new HtmlNodeOutputOptions() { Optimization = true });
         }
 
         #endregion

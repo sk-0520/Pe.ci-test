@@ -2366,4 +2366,10 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   <data name="String_Setting_Generals_LauncherToolbar_ShortcutModeDropMode_A" xml:space="preserve">
     <value>D&amp;Dファイルがショートカットの場合</value>
   </data>
+  <data name="String_About_OutputSetting_A" xml:space="preserve">
+    <value>設定状態を出力</value>
+  </data>
+  <data name="String_FileDialog_Filter_About_OutputHtml" xml:space="preserve">
+    <value>HTML ファイル</value>
+  </data>
 </root>
