@@ -35,4 +35,3 @@ order by
 	end,
 	LauncherItems.Name,
 	LauncherItems.LauncherItemId
-

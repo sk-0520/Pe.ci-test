@@ -21,6 +21,6 @@ from
 order by
 	LauncherGroups.Sequence,
 	LauncherGroupItems.Sequence
-	
+
 
 --LauncherItems
