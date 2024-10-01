@@ -50,7 +50,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
             o => {
                 var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
                 Forms.TaskDialog.ShowDialog(
-                    HandleUtility.GetWindowHandle(Window.GetWindow(this)),
+                    HandleUtility.GetWindowHandle(this),
                     parameter.ToTaskDialogPage(),
                     Forms.TaskDialogStartupLocation.CenterOwner
                 );

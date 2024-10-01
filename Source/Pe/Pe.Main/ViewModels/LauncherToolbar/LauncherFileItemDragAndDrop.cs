@@ -79,12 +79,12 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                         DefaultButton = Forms.TaskDialogButton.Yes,
                         Icon = Forms.TaskDialogIcon.Information, // Question がねぇ！
                     };
-                    requestSender.Send<YesNoResponse>(request, r => {
-                        if(r.ResponseIsCancel) {
+                    requestSender.Send<CommonMessageDialogRequestResponse>(request, r => {
+                        if(r.Result == Forms.TaskDialogButton.Cancel) {
                             Logger.LogTrace("ショートカット登録取り消し");
                             return;
                         }
-                        register(path, r.ResponseIsYes);
+                        register(path, r.Result == Forms.TaskDialogButton.Yes);
                     });
                 } else {
                     var registerTarget = ShortcutDropMode switch {

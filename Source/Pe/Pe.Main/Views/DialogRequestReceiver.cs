@@ -35,6 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.Views
 
         #region function
 
+        [Obsolete("これはよくない")]
         public void ReceiveCommonMessageDialogRequest(RequestEventArgs o)
         {
             if(OwnerWindow == null) {
