@@ -240,8 +240,10 @@ dotnet_diagnostic.S6617.severity = suggestion
 dotnet_diagnostic.S6603.severity = suggestion
 # S2139: Exceptions should be either logged or rethrown but not both
 dotnet_diagnostic.S2139.severity = silent
-# S2094 // Classes should not be empty
+# S2094: Classes should not be empty
 dotnet_diagnostic.S2094.severity = suggestion
+# S2325: Methods and properties that don't access instance data should be static
+dotnet_diagnostic.S2325.severity = suggestion
 
 
 
