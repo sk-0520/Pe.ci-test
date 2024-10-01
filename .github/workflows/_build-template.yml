@@ -497,9 +497,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
-          key: nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -551,6 +551,14 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -743,9 +751,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
-          key: nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -794,6 +802,14 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -950,6 +966,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.TARGET }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.TARGET }}-${{ hashFiles('**/*.csproj') }}
 
       # - name: <Test> Add Logger ${{ matrix.TARGET }}
       #   shell: bash
