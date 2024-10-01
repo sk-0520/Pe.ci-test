@@ -194,17 +194,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
             var expandedTestPluginDirectoryPath = Environment.ExpandEnvironmentVariables(testPluginDirectoryPath);
 
             if(!Directory.Exists(expandedTestPluginDirectoryPath)) {
-                MessageBox.Show(
-                    TextUtility.ReplaceFromDictionary(
-                        Properties.Resources.String_TestPlugin_NotFound_Message_Format,
-                        new Dictionary<string, string>() {
-                            ["PATH"] = testPluginDirectoryPath,
-                        }
-                    ),
-                    Properties.Resources.String_TestPlugin_NotFound_Caption,
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error
+                Forms.TaskDialog.ShowDialog(
+                    new Forms.TaskDialogPage() {
+                        Caption = Properties.Resources.String_TestPlugin_NotFound_Caption,
+                        Text = TextUtility.ReplaceFromDictionary(
+                            Properties.Resources.String_TestPlugin_NotFound_Message_Format,
+                            new Dictionary<string, string>() {
+                                ["PATH"] = testPluginDirectoryPath,
+                            }
+                        ),
+                        Buttons = [
+                            Forms.TaskDialogButton.OK
+                        ],
+                        Icon = Forms.TaskDialogIcon.Error,
+                    },
+                    Forms.TaskDialogStartupLocation.CenterScreen
                 );
+
                 return false;
             }
 
@@ -214,25 +220,31 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
 
             var hasEmpty = new[] { userDirKey, machineDirKey, tempDirKey, }.Any(i => string.IsNullOrWhiteSpace(i));
             if(hasEmpty) {
-                var result = MessageBox.Show(
-                    TextUtility.ReplaceFromDictionary(
-                        Properties.Resources.String_TestPlugin_Data_Message_Format,
-                        new Dictionary<string, string>() {
-                            ["COMMAND-USER-KEY"] = EnvironmentParameters.CommandLineKeyUserDirectory,
-                            ["COMMAND-MACHINE-KEY"] = EnvironmentParameters.CommandLineKeyMachineDirectory,
-                            ["COMMAND-TEMP-KEY"] = EnvironmentParameters.CommandLineKeyTemporaryDirectory,
-                            ["USER-DIR"] = userDirKey,
-                            ["MACHINE-DIR"] = machineDirKey,
-                            ["TEMP-DIR"] = tempDirKey,
-                        }
-                    ),
-                    Properties.Resources.String_TestPlugin_Data_Caption,
-                    MessageBoxButton.OKCancel,
-                    MessageBoxImage.Warning,
-                    MessageBoxResult.Cancel
+                var result = Forms.TaskDialog.ShowDialog(
+                    new Forms.TaskDialogPage() {
+                        Caption = Properties.Resources.String_TestPlugin_Data_Caption,
+                        Text = TextUtility.ReplaceFromDictionary(
+                            Properties.Resources.String_TestPlugin_Data_Message_Format,
+                            new Dictionary<string, string>() {
+                                ["COMMAND-USER-KEY"] = EnvironmentParameters.CommandLineKeyUserDirectory,
+                                ["COMMAND-MACHINE-KEY"] = EnvironmentParameters.CommandLineKeyMachineDirectory,
+                                ["COMMAND-TEMP-KEY"] = EnvironmentParameters.CommandLineKeyTemporaryDirectory,
+                                ["USER-DIR"] = userDirKey,
+                                ["MACHINE-DIR"] = machineDirKey,
+                                ["TEMP-DIR"] = tempDirKey,
+                            }
+                        ),
+                        Buttons = [
+                            Forms.TaskDialogButton.Continue,
+                            Forms.TaskDialogButton.Abort,
+                        ],
+                        DefaultButton = Forms.TaskDialogButton.Abort,
+                        Icon = Forms.TaskDialogIcon.Warning,
+                    },
+                    Forms.TaskDialogStartupLocation.CenterScreen
                 );
 
-                if(result != MessageBoxResult.OK) {
+                if(result != Forms.TaskDialogButton.Continue) {
                     return false;
                 }
             }

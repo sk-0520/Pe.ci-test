@@ -6774,13 +6774,13 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   テストプラグインが指定されていますがデータディレクトリが指定されていません
-        ///ユーザーデータデータディレクトリ(${COMMAND-USER-KEY}):  ${USER-DIR}
+        ///   テストプラグインが指定されていますがデータディレクトリが指定されていません。
+        ///ユーザーデータデータディレクトリ(${COMMAND-USER-KEY}): ${USER-DIR}
         ///端末データデータディレクトリ(${COMMAND-MACHINE-KEY}): ${MACHINE-DIR}
         ///一時データディレクトリ(${COMMAND-TEMP-KEY}): ${TEMP-DIR}
         ///
-        ///このまま続行すると Pe の既存データを壊す可能性があります
-        ///このまま実行してもよろしいですか。 に類似しているローカライズされた文字列を検索します。
+        ///このまま続行すると Pe の既存データを壊す可能性があります。
+        ///このまま実行してもよろしいですか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_TestPlugin_Data_Message_Format {
             get {
