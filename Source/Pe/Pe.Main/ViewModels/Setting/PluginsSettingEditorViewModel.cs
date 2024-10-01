@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Threading;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -86,10 +87,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         await Model.InstallPluginArchiveAsync(file, CancellationToken.None);
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
-                            Message = ex.ToString(),
-                            Buttons = System.Windows.MessageBoxButton.OK,
                             Caption = ex.Message,
-                            Icon = System.Windows.MessageBoxImage.Error,
+                            Message = ex.ToString(),
+                            Buttons = [
+                                Forms.TaskDialogButton.OK
+                            ],
+                            DefaultButton = Forms.TaskDialogButton.OK,
+                            Icon = Forms.TaskDialogIcon.Error,
                         };
                         ShowMessageRequest.Send(parameter);
                     }
@@ -111,10 +115,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                         await Model.InstallPluginArchiveAsync(response.ArchiveFile, CancellationToken.None);
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
-                            Message = ex.ToString(),
-                            Buttons = System.Windows.MessageBoxButton.OK,
                             Caption = ex.Message,
-                            Icon = System.Windows.MessageBoxImage.Error,
+                            Message = ex.ToString(),
+                            Buttons = [
+                                Forms.TaskDialogButton.OK
+                            ],
+                            DefaultButton = Forms.TaskDialogButton.OK,
+                            Icon = Forms.TaskDialogIcon.Error,
                         };
                         ShowMessageRequest.Send(parameter);
                     }

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -70,9 +71,13 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     var request = new CommonMessageDialogRequestParameter() {
                         Message = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Message,
                         Caption = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Caption,
-                        Buttons = MessageBoxButton.YesNoCancel,
-                        DefaultResult = MessageBoxResult.Yes,
-                        Icon = MessageBoxImage.Question,
+                        Buttons = [
+                            Forms.TaskDialogButton.Yes,
+                            Forms.TaskDialogButton.No,
+                            Forms.TaskDialogButton.Cancel,
+                        ],
+                        DefaultButton = Forms.TaskDialogButton.Yes,
+                        Icon = Forms.TaskDialogIcon.Information, // Question がねぇ！
                     };
                     requestSender.Send<YesNoResponse>(request, r => {
                         if(r.ResponseIsCancel) {
