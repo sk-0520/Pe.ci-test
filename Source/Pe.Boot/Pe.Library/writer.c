@@ -480,7 +480,6 @@ size_t get_write_format_flags(WRITE_FORMAT_FLAGS* result, const TEXT* format)
 
             default:
                 return i;
-                break;
         }
     }
 
