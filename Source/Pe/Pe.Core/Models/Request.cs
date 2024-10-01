@@ -21,17 +21,25 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
+        /// <inheritdoc cref="Forms.TaskDialogPage.Caption"/>
         public string? Caption { get; set; }
+        /// <inheritdoc cref="Forms.TaskDialogPage.Heading"/>
         public string? Heading { get; set; }
+        /// <inheritdoc cref="Forms.TaskDialogPage.Message"/>
         public string? Message { get; set; }
 
+        /// <inheritdoc cref="Forms.TaskDialogPage.Footnote"/>
         public Forms.TaskDialogFootnote? Footer { get; set; }
 
+        /// <inheritdoc cref="Forms.TaskDialogPage.Buttons"/>
         public Forms.TaskDialogButtonCollection Buttons { get; set; } = new Forms.TaskDialogButtonCollection();
+        /// <inheritdoc cref="Forms.TaskDialogPage.DefaultButton"/>
         public required Forms.TaskDialogButton DefaultButton { get; set; }
 
+        /// <inheritdoc cref="Forms.TaskDialogPage.Icon"/>
         public required Forms.TaskDialogIcon Icon { get; set; }
 
+        /// <inheritdoc cref="Forms.TaskDialogPage.Verification"/>
         public Forms.TaskDialogVerificationCheckBox? Verification { get; set; }
 
         #endregion
@@ -58,6 +66,7 @@ namespace ContentTypeTextNet.Pe.Core.Models
                 Verification = parameter.Verification,
 
                 SizeToContent = true,
+                AllowCancel = parameter.Buttons.Count == 1 || parameter.Buttons.Contains(Forms.TaskDialogButton.Cancel),
             };
         }
 
@@ -68,7 +77,14 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
+        /// <summary>
+        /// 応答ボタン。
+        /// </summary>
         public required Forms.TaskDialogButton Result { get; init; }
+        /// <summary>
+        /// チェック状態。
+        /// </summary>
+        /// <remarks><see langword="null"/>の場合はそもそもチェックUIが存在しない。</remarks>
         public bool? IsChecked { get; init; }
 
         #endregion
@@ -79,15 +95,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region property
 
         public bool ResponseIsCancel { get; set; }
-
-        #endregion
-    }
-
-    public class YesNoResponse: CancelResponse
-    {
-        #region property
-
-        public bool ResponseIsYes { get; set; }
 
         #endregion
     }
