@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows;
+using Forms = System.Windows.Forms;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
@@ -164,16 +165,23 @@ namespace ContentTypeTextNet.Pe.Main.Models.Applications
                 }
             );
 
-
-            var result = MessageBox.Show(
-                message,
-                Properties.Resources.String_BetaVersion_Unknown_Caption,
-                MessageBoxButton.OKCancel,
-                MessageBoxImage.Warning,
-                MessageBoxResult.Cancel
+            var result = Forms.TaskDialog.ShowDialog(
+                new Forms.TaskDialogPage() {
+                    Caption = Properties.Resources.String_BetaVersion_Unknown_Caption,
+                    Heading = Properties.Resources.String_BetaVersion_Unknown_Heading,
+                    Text = message,
+                    Buttons = [
+                        Forms.TaskDialogButton.Continue,
+                        Forms.TaskDialogButton.Abort,
+                    ],
+                    DefaultButton = Forms.TaskDialogButton.Abort,
+                    Icon = Forms.TaskDialogIcon.ShieldWarningYellowBar,
+                    SizeToContent = true,
+                },
+                Forms.TaskDialogStartupLocation.CenterScreen
             );
 
-            return result == MessageBoxResult.OK;
+            return result == Forms.TaskDialogButton.Continue;
         }
 
         private bool ShowCommandLineTestPlugin(CommandLine commandLine, EnvironmentParameters environmentParameters)

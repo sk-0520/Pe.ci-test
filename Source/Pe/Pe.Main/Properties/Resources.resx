@@ -1434,16 +1434,15 @@
     <value>β版直接実行注意</value>
   </data>
   <data name="String_BetaVersion_Unknown_Message_Format" xml:space="preserve">
-    <value>本バージョンはβ版です。
-不具合修正・動作確認のために使用します。
-
-このメッセージはβ版 Pe を直接実行した場合に表示されます。
+    <value>このメッセージはβ版 Pe を直接実行した場合に表示されます。
 このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
 
 β版を安全に実行するには以下のバッチファイルを実行してください。
 バッチファイル: ${BETA-BAT}
 
-β版 Pe をこのまま実行してよろしいですか。</value>
+β版 Pe をこのまま実行してよろしいですか？
+
+※本メッセージは Ctrl + C でコピーできます。</value>
   </data>
   <data name="String_LauncherFileItemDragAndDrop_Shortcut_Caption" xml:space="preserve">
     <value>ショートカットファイル登録確認</value>
@@ -2371,5 +2370,9 @@ URL: バージョンチェックURLを指定すればその内容からプラグ
   </data>
   <data name="String_FileDialog_Filter_About_OutputHtml" xml:space="preserve">
     <value>HTML ファイル</value>
+  </data>
+  <data name="String_BetaVersion_Unknown_Heading" xml:space="preserve">
+    <value>本バージョンはβ版です。
+不具合修正・動作確認のために使用します。</value>
   </data>
 </root>
