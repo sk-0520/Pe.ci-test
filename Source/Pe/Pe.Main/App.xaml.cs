@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows;
+using Forms = System.Windows.Forms;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -76,7 +77,7 @@ namespace ContentTypeTextNet.Pe.Main
                 case Models.Data.RunMode.Normal: {
                         ApplicationManager = new ApplicationManager(initializer);
 
-                        if(! await ApplicationManager.StartupAsync(this, e, CancellationToken.None)) {
+                        if(!await ApplicationManager.StartupAsync(this, e, CancellationToken.None)) {
                             Shutdown();
                             return;
                         }
@@ -130,6 +131,24 @@ namespace ContentTypeTextNet.Pe.Main
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
+            void ShowErrorDialog(Exception exception)
+            {
+                Forms.TaskDialog.ShowDialog(
+                    new Forms.TaskDialogPage() {
+                        Caption = $"[{RunMode}] {exception.GetType().FullName}",
+                        Heading = exception.Message,
+                        Text = exception.ToString(),
+                        Buttons = [
+                            Forms.TaskDialogButton.Abort,
+                        ],
+                        DefaultButton = Forms.TaskDialogButton.Abort,
+                        Icon = Forms.TaskDialogIcon.ShieldErrorRedBar,
+                        SizeToContent = true,
+                    },
+                    Forms.TaskDialogStartupLocation.CenterScreen
+                );
+            }
+
             if(!CachedUnhandledException) {
                 CachedUnhandledException = true;
             } else {
@@ -155,12 +174,12 @@ namespace ContentTypeTextNet.Pe.Main
                     }
                 } else {
                     if(VisibleErrorDialog) {
-                        MessageBox.Show(e.Exception.ToString(), $"[{RunMode}] {e.Exception.GetType().FullName}");
+                        ShowErrorDialog(e.Exception);
                     }
                 }
             } else {
                 if(VisibleErrorDialog) {
-                    MessageBox.Show(e.Exception.ToString(), $"[{RunMode}] {e.Exception.GetType().FullName}");
+                    ShowErrorDialog(e.Exception);
                 }
             }
 
