@@ -755,15 +755,24 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         
         /// <summary>
         ///   本バージョンはβ版です。
-        ///不具合修正・動作確認のために使用します。
-        ///
-        ///このメッセージはβ版 Pe を直接実行した場合に表示されます。
+        ///不具合修正・動作確認のために使用します。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string String_BetaVersion_Unknown_Heading {
+            get {
+                return ResourceManager.GetString("String_BetaVersion_Unknown_Heading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   このメッセージはβ版 Pe を直接実行した場合に表示されます。
         ///このまま続行するとリリース版 Pe の設定データを壊す可能性があります。
         ///
         ///β版を安全に実行するには以下のバッチファイルを実行してください。
         ///バッチファイル: ${BETA-BAT}
         ///
-        ///β版 Pe をこのまま実行してよろしいですか。 に類似しているローカライズされた文字列を検索します。
+        ///β版 Pe をこのまま実行してよろしいですか？
+        ///
+        ///※本メッセージは Ctrl + C でコピーできます。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_BetaVersion_Unknown_Message_Format {
             get {
@@ -6765,13 +6774,13 @@ namespace ContentTypeTextNet.Pe.Main.Properties {
         }
         
         /// <summary>
-        ///   テストプラグインが指定されていますがデータディレクトリが指定されていません
-        ///ユーザーデータデータディレクトリ(${COMMAND-USER-KEY}):  ${USER-DIR}
+        ///   テストプラグインが指定されていますがデータディレクトリが指定されていません。
+        ///ユーザーデータデータディレクトリ(${COMMAND-USER-KEY}): ${USER-DIR}
         ///端末データデータディレクトリ(${COMMAND-MACHINE-KEY}): ${MACHINE-DIR}
         ///一時データディレクトリ(${COMMAND-TEMP-KEY}): ${TEMP-DIR}
         ///
-        ///このまま続行すると Pe の既存データを壊す可能性があります
-        ///このまま実行してもよろしいですか。 に類似しているローカライズされた文字列を検索します。
+        ///このまま続行すると Pe の既存データを壊す可能性があります。
+        ///このまま実行してもよろしいですか？ に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string String_TestPlugin_Data_Message_Format {
             get {

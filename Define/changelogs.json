@@ -45,7 +45,10 @@
 					},
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#966: MessageBox を TaskDialog に置き換える",
+						"comments": [
+							"今のインターフェイスで可能な限りできる範囲で、それっぽく"
+						]
 					},
 					{
 						"revision": "",

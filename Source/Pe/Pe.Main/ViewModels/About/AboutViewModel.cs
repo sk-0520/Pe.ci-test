@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -245,18 +246,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                         ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
                             Caption = Properties.Resources.String_About_Uninstall_Create_Caption,
                             Message = Properties.Resources.String_About_Uninstall_Create_Message,
-                            Button = System.Windows.MessageBoxButton.OK,
-                            DefaultResult = System.Windows.MessageBoxResult.OK,
-                            Icon = System.Windows.MessageBoxImage.Information,
+                            Buttons = [Forms.TaskDialogButton.OK],
+                            DefaultButton = Forms.TaskDialogButton.OK,
+                            Icon = Forms.TaskDialogIcon.Information,
                         });
                     } catch(Exception ex) {
                         Logger.LogError(ex, ex.Message);
                         ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
                             Caption = Properties.Resources.String_About_Uninstall_Create_Caption,
                             Message = ex.ToString(),
-                            Button = System.Windows.MessageBoxButton.OK,
-                            DefaultResult = System.Windows.MessageBoxResult.OK,
-                            Icon = System.Windows.MessageBoxImage.Error,
+                            Buttons = [Forms.TaskDialogButton.OK],
+                            DefaultButton = Forms.TaskDialogButton.OK,
+                            Icon = Forms.TaskDialogIcon.Error,
                         });
                     }
                 }
