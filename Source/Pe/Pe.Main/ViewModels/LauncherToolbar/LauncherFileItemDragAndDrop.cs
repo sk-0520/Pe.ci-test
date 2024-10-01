@@ -70,7 +70,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
                     var request = new CommonMessageDialogRequestParameter() {
                         Message = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Message,
                         Caption = Properties.Resources.String_LauncherFileItemDragAndDrop_Shortcut_Caption,
-                        Button = MessageBoxButton.YesNoCancel,
+                        Buttons = MessageBoxButton.YesNoCancel,
                         DefaultResult = MessageBoxResult.Yes,
                         Icon = MessageBoxImage.Question,
                     };

@@ -245,7 +245,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                         ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
                             Caption = Properties.Resources.String_About_Uninstall_Create_Caption,
                             Message = Properties.Resources.String_About_Uninstall_Create_Message,
-                            Button = System.Windows.MessageBoxButton.OK,
+                            Buttons = System.Windows.MessageBoxButton.OK,
                             DefaultResult = System.Windows.MessageBoxResult.OK,
                             Icon = System.Windows.MessageBoxImage.Information,
                         });
@@ -254,7 +254,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                         ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
                             Caption = Properties.Resources.String_About_Uninstall_Create_Caption,
                             Message = ex.ToString(),
-                            Button = System.Windows.MessageBoxButton.OK,
+                            Buttons = System.Windows.MessageBoxButton.OK,
                             DefaultResult = System.Windows.MessageBoxResult.OK,
                             Icon = System.Windows.MessageBoxImage.Error,
                         });

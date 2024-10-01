@@ -41,7 +41,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         public ICommand ShowMessageCommand => this._ShowMessageCommand ??= new DelegateCommand<RequestEventArgs>(
              o => {
                  var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
-                 var result = MessageBox.Show(UIUtility.GetLogicalClosest<Window>(this)!, parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
+                 var result = MessageBox.Show(UIUtility.GetLogicalClosest<Window>(this)!, parameter.Message, parameter.Caption, parameter.Buttons, parameter.Icon, parameter.DefaultResult, parameter.Options);
              }
          );
 

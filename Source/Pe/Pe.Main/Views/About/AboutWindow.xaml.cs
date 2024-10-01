@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
         public ICommand OpenCommonMessageDialogCommand => this._OpenCommonMessageDialogCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
-                MessageBox.Show(Window.GetWindow(this), parameter.Message, parameter.Caption, parameter.Button, parameter.Icon, parameter.DefaultResult, parameter.Options);
+                MessageBox.Show(Window.GetWindow(this), parameter.Message, parameter.Caption, parameter.Buttons, parameter.Icon, parameter.DefaultResult, parameter.Options);
             }
         );
 

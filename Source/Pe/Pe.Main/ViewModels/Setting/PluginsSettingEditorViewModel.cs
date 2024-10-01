@@ -87,7 +87,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
                             Message = ex.ToString(),
-                            Button = System.Windows.MessageBoxButton.OK,
+                            Buttons = System.Windows.MessageBoxButton.OK,
                             Caption = ex.Message,
                             Icon = System.Windows.MessageBoxImage.Error,
                         };
@@ -112,7 +112,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
                     } catch(Exception ex) {
                         var parameter = new CommonMessageDialogRequestParameter() {
                             Message = ex.ToString(),
-                            Button = System.Windows.MessageBoxButton.OK,
+                            Buttons = System.Windows.MessageBoxButton.OK,
                             Caption = ex.Message,
                             Icon = System.Windows.MessageBoxImage.Error,
                         };

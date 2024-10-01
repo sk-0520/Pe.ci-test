@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using Forms = System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -15,13 +16,27 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        public string Message { get; set; } = string.Empty;
-        public string Caption { get; set; } = string.Empty;
+        public string? Caption { get; set; }
+        public string? Heading { get; set; }
+        public string? Message { get; set; }
+        public string? Footer { get; set; }
 
-        public MessageBoxButton Button { get; set; }
-        public MessageBoxImage Icon { get; set; }
-        public MessageBoxResult DefaultResult { get; set; }
-        public MessageBoxOptions Options { get; set; }
+        public Forms.TaskDialogButtonCollection Buttons { get; set; } = new Forms.TaskDialogButtonCollection();
+        public required Forms.TaskDialogButton DefaultButton { get; set; }
+
+        public required Forms.TaskDialogIcon Icon { get; set; }
+
+        public Forms.TaskDialogVerificationCheckBox? Verification { get; set; }
+
+        #endregion
+    }
+
+    public class CommonMessageDialogRequestResponse: RequestResponse
+    {
+        #region property
+
+        public required Forms.TaskDialogButton Result { get; init; }
+        public bool? IsChecked { get; init; }
 
         #endregion
     }
