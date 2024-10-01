@@ -1,5 +1,6 @@
 using System;
 using System.Windows;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Standard.DependencyInjection;
@@ -42,26 +43,14 @@ namespace ContentTypeTextNet.Pe.Main.Views.LauncherToolbar
         public ICommand OpenCommonMessageDialogCommand => this._OpenCommonMessageDialogCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
-                var result = MessageBox.Show(this, parameter.Message, parameter.Caption, parameter.Buttons, parameter.Icon, parameter.DefaultResult, parameter.Options);
-                var response = new YesNoResponse();
-                switch(result) {
-                    case MessageBoxResult.Yes:
-                        response.ResponseIsCancel = false;
-                        response.ResponseIsYes = true;
-                        break;
-
-                    case MessageBoxResult.No:
-                        response.ResponseIsCancel = false;
-                        response.ResponseIsYes = false;
-                        break;
-
-                    default:
-                        response.ResponseIsCancel = true;
-                        response.ResponseIsYes = false;
-                        break;
-                }
-
-                o.Callback(response);
+                var result = Forms.TaskDialog.ShowDialog(
+                    HandleUtility.GetWindowHandle(Window.GetWindow(this)),
+                    parameter.ToTaskDialogPage(),
+                    Forms.TaskDialogStartupLocation.CenterOwner
+                );
+                o.Callback(new CommonMessageDialogRequestResponse() {
+                    Result = result
+                });
             }
         );
 

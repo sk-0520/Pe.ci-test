@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using System.Windows;
+using Forms = System.Windows.Forms;
 using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Views;
@@ -40,7 +42,11 @@ namespace ContentTypeTextNet.Pe.Main.Views
             }
 
             var messageParameter = (CommonMessageDialogRequestParameter)o.Parameter;
-            MessageBox.Show(OwnerWindow, messageParameter.Message, messageParameter.Caption, messageParameter.Buttons, messageParameter.Icon, messageParameter.DefaultResult, messageParameter.Options);
+            Forms.TaskDialog.ShowDialog(
+                HandleUtility.GetWindowHandle(Window.GetWindow(OwnerWindow)),
+                messageParameter.ToTaskDialogPage(),
+                Forms.TaskDialogStartupLocation.CenterOwner
+            );
         }
 
         public void ReceiveFileSystemSelectDialogRequest(RequestEventArgs o)

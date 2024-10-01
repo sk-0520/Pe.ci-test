@@ -1,6 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
@@ -41,7 +43,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.Setting
         public ICommand ShowMessageCommand => this._ShowMessageCommand ??= new DelegateCommand<RequestEventArgs>(
              o => {
                  var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
-                 var result = MessageBox.Show(UIUtility.GetLogicalClosest<Window>(this)!, parameter.Message, parameter.Caption, parameter.Buttons, parameter.Icon, parameter.DefaultResult, parameter.Options);
+                 var result = Forms.TaskDialog.ShowDialog(
+                     HandleUtility.GetWindowHandle(Window.GetWindow(this)),
+                     parameter.ToTaskDialogPage(),
+                     Forms.TaskDialogStartupLocation.CenterOwner
+                 );
              }
          );
 

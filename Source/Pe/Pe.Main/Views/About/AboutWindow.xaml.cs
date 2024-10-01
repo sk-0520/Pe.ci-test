@@ -1,7 +1,9 @@
 using System.Windows;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Core.Models;
 using Prism.Commands;
+using ContentTypeTextNet.Pe.Core.Compatibility.Windows;
 
 namespace ContentTypeTextNet.Pe.Main.Views.About
 {
@@ -47,7 +49,11 @@ namespace ContentTypeTextNet.Pe.Main.Views.About
         public ICommand OpenCommonMessageDialogCommand => this._OpenCommonMessageDialogCommand ??= new DelegateCommand<RequestEventArgs>(
             o => {
                 var parameter = (CommonMessageDialogRequestParameter)o.Parameter;
-                MessageBox.Show(Window.GetWindow(this), parameter.Message, parameter.Caption, parameter.Buttons, parameter.Icon, parameter.DefaultResult, parameter.Options);
+                Forms.TaskDialog.ShowDialog(
+                    HandleUtility.GetWindowHandle(Window.GetWindow(this)),
+                    parameter.ToTaskDialogPage(),
+                    Forms.TaskDialogStartupLocation.CenterOwner
+                );
             }
         );
 
