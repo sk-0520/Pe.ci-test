@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
@@ -161,7 +162,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             return plainName ?? Path.GetFileName(path) ?? string.Empty;
         }
 
-        private static string GenerateTemporaryPath(Random random, DirectoryInfo baseDirectory, string prefix, string suffix, int randomNameLength, IReadOnlyList<char> randomNameCharacters)
+        private static string GenerateTemporaryPath(DirectoryInfo baseDirectory, string prefix, string suffix, int randomNameLength, IReadOnlyList<char> randomNameCharacters)
         {
             Span<char> dirName = stackalloc char[prefix.Length + randomNameLength + suffix.Length];
             for(var i = 0; i < prefix.Length; i++) {
@@ -169,7 +170,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             for(var i = 0; i < randomNameLength; i++) {
-                var randIndex = random.Next(randomNameCharacters.Count - 1);
+                var randIndex = RandomNumberGenerator.GetInt32(randomNameCharacters.Count);
                 dirName[prefix.Length + i] = randomNameCharacters[randIndex];
             }
 
@@ -204,10 +205,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             }
 
             var randomNameCharacters = options.RandomNameCharacters.ToArray();
-            var random = new Random();
 
             foreach(var c in new Counter(options.RetryCount)) {
-                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
+                var path = GenerateTemporaryPath(baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
                 if(Directory.Exists(path)) {
                     continue;
                 }
@@ -249,10 +249,9 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             ThrowIfInvalidOptions(options);
 
             var randomNameCharacters = options.RandomNameCharacters.ToArray();
-            var random = new Random();
 
             foreach(var c in new Counter(options.RetryCount)) {
-                var path = GenerateTemporaryPath(random, baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
+                var path = GenerateTemporaryPath(baseDirectory, options.Prefix, options.Suffix, options.RandomNameLength, randomNameCharacters);
                 if(File.Exists(path)) {
                     continue;
                 }

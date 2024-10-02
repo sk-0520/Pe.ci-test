@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -94,9 +95,9 @@ namespace ContentTypeTextNet.Pe.Embedded.Abstract
         {
             static string CreateRandomText(string format, int count)
             {
-                var rand = new Random();
+                using var rand = RandomNumberGenerator.Create();
                 var randomValues = new byte[count];
-                rand.NextBytes(randomValues);
+                rand.GetBytes(randomValues);
                 return string.Format(CultureInfo.InvariantCulture, format, BitConverter.ToString(randomValues));
             }
 
