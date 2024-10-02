@@ -75,7 +75,10 @@ namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting
                     Options.Add(pair.Key, pair.Value);
                 }
 
-                Mappings.AddRange(mappings);
+                if(mappings.Any()) {
+                    Mappings.AddRange(mappings);
+                }
+
                 if(Mappings.Count == 0) {
                     if(!IsNewJob) {
                         Logger.LogWarning("マッピングデータが存在しないため補正: {0}", KeyActionId);
