@@ -95,7 +95,7 @@ static TEXT split_path_core(const TEXT* source, size_t* next_index, const MEMORY
     }
 
     *next_index = source->length;
-    if (source->length && 0 < source->length - skip_index) {
+    if (source->length && 0 < (source->length - skip_index)) {
         return reference_text_width_length(source, skip_index, source->length - skip_index);
     }
 
