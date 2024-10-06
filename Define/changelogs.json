@@ -94,6 +94,10 @@
 					},
 					{
 						"revision": "",
+						"subject": "Microsoft.Web.WebView2 1.0.2739.15 -> 1.0.2792.45"
+					},
+					{
+						"revision": "",
 						"subject": ""
 					}
 				]
