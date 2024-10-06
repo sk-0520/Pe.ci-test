@@ -948,7 +948,6 @@ jobs:
           - ubuntu-20.04
           # - macos-14
           - macos-13
-          - macos-12
         TARGET:
           - Pe.Standard.CliProxy.Test
           - Pe.Standard.Property.Test
