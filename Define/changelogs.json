@@ -1,42 +1,20 @@
 [
 	{
-		"date": "YYYY/MM/DD",
-		"version": "0.99.242+",
+		"date": "2024/10/06",
+		"version": "0.99.243",
 		"contents": [
-			{
-				"type": "note",
-				"logs": [
-					{
-						"revision": "",
-						"class": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					}
-				]
-			},
 			{
 				"type": "features",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "5524166987884da82150012ca833b82ae8e28978",
 						"subject": "#968: リリースノート生成処理をヘルプの更新履歴処理に差し替える",
 						"comments": [
 							"プレーンなHTMLが死んじゃうけど WebView2 がよしなにしてくれると信じとく"
 						]
 					},
 					{
-						"revision": "",
+						"revision": "f99f664c6da8efd91b7425eadf0b65a65f315da9",
 						"subject": "#967: 現在設定をファイル出力する",
 						"comments": [
 							"個人的には多分これでOK",
@@ -44,15 +22,11 @@
 						]
 					},
 					{
-						"revision": "",
+						"revision": "42ccfe9d4fbf87c320e17db77a5ebe0074659899",
 						"subject": "#966: MessageBox を TaskDialog に置き換える",
 						"comments": [
 							"今のインターフェイスで可能な限りできる範囲で、それっぽく"
 						]
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -60,20 +34,8 @@
 				"type": "fixes",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "d54f7e8693cd2c7e20929adba969129c44b4ca5e",
 						"subject": "色選択UIで色一覧自体にフォーカスできる不備の修正"
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
-					},
-					{
-						"revision": "",
-						"subject": ""
 					}
 				]
 			},
@@ -81,23 +43,27 @@
 				"type": "developer",
 				"logs": [
 					{
-						"revision": "",
+						"revision": "007475e19f97e08abffaa9eca43299b32e9f212c",
+						"class": "nuget",
 						"subject": "NLog.Extensions.Logging 5.3.12 -> 5.3.14"
 					},
 					{
-						"revision": "",
+						"revision": "e138367046e0d266917f354644e06b743e70c195",
 						"subject": "update npm"
 					},
 					{
-						"revision": "",
+						"revision": "13becb946097ef8fddebc37d36aa295a71fe4025",
+						"class": "nuget",
 						"subject": "xunit 2.9.0 -> 2.9.2"
 					},
 					{
-						"revision": "",
+						"revision": "5647d848627279e10d3530db21e748ea88629c79",
+						"class": "nuget",
 						"subject": "Microsoft.Web.WebView2 1.0.2739.15 -> 1.0.2792.45"
 					},
 					{
-						"revision": "",
+						"revision": "6106726c69390230fb55ee96ae5bae9d24361111",
+						"class": "nuget",
 						"subject": "System.Data.SQLite.Core 1.0.118 -> 1.0.119"
 					}
 				]
