@@ -35,6 +35,32 @@ env:
 
 
 jobs:
+  lint-front:
+    name: Lint Front
+    runs-on: ${{ inputs.OS_WINDOWS }}
+
+    steps:
+      - name: <Git> conig
+        run: |
+          git config --global core.autocrlf false
+
+      - name: <Checkout> Repository
+        uses: actions/checkout@v4
+
+      - name: <Add> Node/NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ./.node-version
+          cache: npm
+
+      - name: <Install> NPM
+        shell: bash
+        run: npm ci
+
+      - name: <Lint> Front
+        shell: bash
+        run: npm run lint
+
   powershell-source:
     name: PowerShell
 
@@ -68,6 +94,8 @@ jobs:
   help:
     name: Help
     runs-on: ${{ inputs.OS_WINDOWS }}
+    needs:
+      - lint-front
 
     steps:
       - name: <Checkout> Repository
@@ -227,13 +255,13 @@ jobs:
 
   history:
     name: Release Note
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.OS_WINDOWS }}
+    needs:
+      - lint-front
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v4
-        # with:
-        #   fetch-depth: 0
 
       - name: <Add> Node/NPM
         uses: actions/setup-node@v4
@@ -245,15 +273,14 @@ jobs:
         shell: bash
         run: npm ci
 
+      - name: <Check> Release Note
+        shell: bash
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+        run: npm run check-release-note
+
       - name: <Generate> Release Note
         shell: pwsh
-        run: |
-          $productMode = [System.Convert]::ToBoolean('${{ inputs.IS_PRODUCT }}')
-          $ignoreEmpty = !$productMode
-          if( '${{ github.ref }}' -eq 'refs/heads/ci-test' ) {
-            $ignoreEmpty = $true
-          }
-          .\Build\generate-release-note.ps1 -InformationAction Continue -OutputDirectory history -IgnoreEmpty:$ignoreEmpty
+        run: npm run generate-release-note
 
       - name: <Artifact> Release Note
         uses: actions/upload-artifact@v4
@@ -261,7 +288,6 @@ jobs:
           name: History
           path: history/*.html
           if-no-files-found: error
-
 
   build-tools:
     name: Build BuildTools
@@ -301,7 +327,7 @@ jobs:
           if-no-files-found: error
 
   lint-sql:
-    name: "Lint: SQL"
+    name: "Lint SQL"
     runs-on: ubuntu-latest
 
     steps:
@@ -313,7 +339,7 @@ jobs:
         run: .\Build\lint-sql.ps1 -InformationAction Continue -RunCi
 
   build-tools-sql:
-    name: "BuildTools: SQL"
+    name: "BuildTools SQL"
     needs:
       - build-tools
       - lint-sql
@@ -471,9 +497,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
-          key: nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -525,6 +551,14 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -717,9 +751,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
-          key: nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            nuget-${{ github.job }}-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -768,6 +802,14 @@ jobs:
         uses: microsoft/setup-msbuild@v2
         with:
           msbuild-architecture: ${{ matrix.PLATFORM }}
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.PLATFORM }}-${{ hashFiles('**/*.csproj') }}
 
       - name: <Rewrite> Module
         shell: pwsh
@@ -862,7 +904,9 @@ jobs:
 
       - name: <Generate> Update Information
         shell: pwsh
-        run: .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl ${{ inputs.PE_RELEASE_NOTE_BASE_URL }} -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
+        run: |
+          $pluginNoteBaseUrl = "${{ inputs.PE_RELEASE_NOTE_BASE_URL }}".Replace("github.com", "pe.invalid")
+          .\Build\generate-update-information.ps1 -InformationAction Continue -Revision '${{ github.sha }}' -MinimumVersion ${{ env.MINIMUM_VERSION }} -ArchiveBaseUrl ${{ inputs.PE_RELEASE_ARCHIVE_BASE_URL }} -NoteBaseUrl $pluginNoteBaseUrl -OutputDirectory Output -Module 'plugins' -Archive ${{ inputs.PLUGINS_ARCHIVE }} -ArtifactDirectory (Join-Path -Path 'artifacts' -ChildPath 'Pe.Plugins.Reference') -Platforms ${{ env.PLATFORMS }}
 
       - name: <🌳> 🌲
         shell: pwsh
@@ -904,7 +948,6 @@ jobs:
           - ubuntu-20.04
           # - macos-14
           - macos-13
-          - macos-12
         TARGET:
           - Pe.Standard.CliProxy.Test
           - Pe.Standard.Property.Test
@@ -922,6 +965,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: <Cache> Nuget
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.TARGET }}-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            nuget-${{ github.job }}-${{ runner.os }}-${{ matrix.TARGET }}-${{ hashFiles('**/*.csproj') }}
 
       # - name: <Test> Add Logger ${{ matrix.TARGET }}
       #   shell: bash

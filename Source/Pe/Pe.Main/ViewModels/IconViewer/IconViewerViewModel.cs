@@ -90,8 +90,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
             IconImageLoader.PropertyChanged += Model_PropertyChanged;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(RunningStatus), new string[] { nameof(RunningStatus), nameof(ImageSource) });
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(RunningStatus), new string[] { nameof(RunningStatus), nameof(ImageSource) });
         }
 
         public IconViewerViewModel(LauncherItemId launcherItemId, ILauncherItemExtension launcherItemExtension, IDispatcherWrapper dispatcherWrapper, ILoggerFactory loggerFactory)
@@ -127,7 +127,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
         /// <para><see cref="IDisposable.Dispose"/>時にVM側で<see cref="IDisposable.Dispose"/>される。</para>
         /// </remarks>
         IconImageLoaderBase? IconImageLoader { get; }
-        PropertyChangedHooker? PropertyChangedHooker { get; }
+        PropertyChangedObserver? PropertyChangedObserver { get; }
         public RunningStatusViewModel? RunningStatus { get; }
 
         #endregion
@@ -231,7 +231,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
                 if(disposing) {
                     RunningStatus?.Dispose();
-                    PropertyChangedHooker?.Dispose();
+                    PropertyChangedObserver?.Dispose();
                 }
             }
 
@@ -242,7 +242,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.IconViewer
 
         private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker!.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver!.Execute(e, RaisePropertyChanged);
         }
     }
 }

@@ -46,7 +46,7 @@
   <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=UserControl}}">
     <StackPanel>
 
-      <ItemsControl Margin="10,0,10,0" ItemsSource="{Binding DefaultColorItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
+      <ItemsControl IsTabStop="False" Margin="10,0,10,0" ItemsSource="{Binding DefaultColorItemsSource, RelativeSource={RelativeSource AncestorType=UserControl}}">
         <ItemsControl.Style>
           <Style TargetType="ItemsControl">
             <Style.Triggers>

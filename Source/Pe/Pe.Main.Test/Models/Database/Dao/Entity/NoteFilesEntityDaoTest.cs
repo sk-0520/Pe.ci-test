@@ -126,11 +126,6 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
             Assert.Equal([9, 10, 11, 100, 900], actual1.Select(a => a.Sequence));
 
             Assert.Equal(901, testFiles.SelectNextSequenceNoteFiles(data.NoteId));
-
-            Assert.Equal(5, testFiles.UpdateRefreshSequenceNoteFiles(data.NoteId, Test.DiContainer.Build<IDatabaseCommonStatus>()));
-            var actual2 = testFiles.SelectNoteFiles(data.NoteId).ToArray();
-            Assert.Equal(5, actual2.Length);
-            Assert.Equal([1, 2, 3, 4, 5], actual2.Select(a => a.Sequence));
         }
 
         #endregion

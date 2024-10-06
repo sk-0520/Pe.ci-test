@@ -20,16 +20,16 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
                 throw new ArgumentException(nameof(Model) + "." + nameof(Model.InitializeAsync), nameof(model));
             }
 
-            PropertyChangedHooker = new PropertyChangedHooker(dispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(Model.FamilyName), nameof(FontFamily));
-            PropertyChangedHooker.AddHook(nameof(Model.Size), new[] { nameof(Size), nameof(FontSize) });
-            PropertyChangedHooker.AddHook(nameof(Model.IsItalic), new[] { nameof(IsItalic), nameof(FontStyle) });
-            PropertyChangedHooker.AddHook(nameof(Model.IsBold), new[] { nameof(IsBold), nameof(FontWeight) });
+            PropertyChangedObserver = new PropertyChangedObserver(dispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(Model.FamilyName), nameof(FontFamily));
+            PropertyChangedObserver.AddObserver(nameof(Model.Size), new[] { nameof(Size), nameof(FontSize) });
+            PropertyChangedObserver.AddObserver(nameof(Model.IsItalic), new[] { nameof(IsItalic), nameof(FontStyle) });
+            PropertyChangedObserver.AddObserver(nameof(Model.IsBold), new[] { nameof(IsBold), nameof(FontWeight) });
         }
 
         #region property
 
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         public FontFamily FontFamily
         {
@@ -117,7 +117,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Font
 
         private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
     }
 }

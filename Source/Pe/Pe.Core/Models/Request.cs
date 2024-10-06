@@ -1,5 +1,11 @@
 using System;
+using System.Drawing;
+using System.Reflection.Metadata;
 using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using System.Windows.Documents;
+using System.Windows.Forms;
+using Forms = System.Windows.Forms;
 
 namespace ContentTypeTextNet.Pe.Core.Models
 {
@@ -15,13 +21,71 @@ namespace ContentTypeTextNet.Pe.Core.Models
     {
         #region property
 
-        public string Message { get; set; } = string.Empty;
-        public string Caption { get; set; } = string.Empty;
+        /// <inheritdoc cref="Forms.TaskDialogPage.Caption"/>
+        public string? Caption { get; set; }
+        /// <inheritdoc cref="Forms.TaskDialogPage.Heading"/>
+        public string? Heading { get; set; }
+        /// <inheritdoc cref="Forms.TaskDialogPage.Message"/>
+        public string? Message { get; set; }
 
-        public MessageBoxButton Button { get; set; }
-        public MessageBoxImage Icon { get; set; }
-        public MessageBoxResult DefaultResult { get; set; }
-        public MessageBoxOptions Options { get; set; }
+        /// <inheritdoc cref="Forms.TaskDialogPage.Footnote"/>
+        public Forms.TaskDialogFootnote? Footer { get; set; }
+
+        /// <inheritdoc cref="Forms.TaskDialogPage.Buttons"/>
+        public Forms.TaskDialogButtonCollection Buttons { get; set; } = new Forms.TaskDialogButtonCollection();
+        /// <inheritdoc cref="Forms.TaskDialogPage.DefaultButton"/>
+        public required Forms.TaskDialogButton DefaultButton { get; set; }
+
+        /// <inheritdoc cref="Forms.TaskDialogPage.Icon"/>
+        public required Forms.TaskDialogIcon Icon { get; set; }
+
+        /// <inheritdoc cref="Forms.TaskDialogPage.Verification"/>
+        public Forms.TaskDialogVerificationCheckBox? Verification { get; set; }
+
+        #endregion
+    }
+
+    public static class CommonMessageDialogRequestParameterExtensions
+    {
+        #region function
+
+        public static Forms.TaskDialogPage ToTaskDialogPage(this CommonMessageDialogRequestParameter parameter)
+        {
+            return new Forms.TaskDialogPage() {
+                Caption = parameter.Caption,
+                Heading = parameter.Heading,
+                Text = parameter.Message,
+
+                Footnote = parameter.Footer,
+
+                Buttons = parameter.Buttons,
+                DefaultButton = parameter.DefaultButton,
+
+                Icon = parameter.Icon,
+
+                Verification = parameter.Verification,
+
+                SizeToContent = true,
+                AllowCancel = parameter.Buttons.Count == 1 || parameter.Buttons.Contains(Forms.TaskDialogButton.Cancel),
+            };
+        }
+
+        #endregion
+    }
+
+    public class CommonMessageDialogRequestResponse: RequestResponse
+    {
+        #region property
+
+        /// <summary>
+        /// 応答ボタン。
+        /// </summary>
+        public required Forms.TaskDialogButton Result { get; init; }
+        /// <summary>
+        /// チェック状態。
+        /// </summary>
+        /// <remarks><see langword="null"/>の場合はそもそもチェックUIが存在しない。</remarks>
+        public bool? IsChecked { get; init; }
 
         #endregion
     }
@@ -31,15 +95,6 @@ namespace ContentTypeTextNet.Pe.Core.Models
         #region property
 
         public bool ResponseIsCancel { get; set; }
-
-        #endregion
-    }
-
-    public class YesNoResponse: CancelResponse
-    {
-        #region property
-
-        public bool ResponseIsYes { get; set; }
 
         #endregion
     }

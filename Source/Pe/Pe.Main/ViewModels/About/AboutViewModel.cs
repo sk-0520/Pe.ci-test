@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
+using Forms = System.Windows.Forms;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using ContentTypeTextNet.Pe.Core.Models;
@@ -39,6 +40,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
 
         public RequestSender CloseRequest { get; } = new RequestSender();
         public RequestSender FileSelectRequest { get; } = new RequestSender();
+        public RequestSender OutputSettingRequest { get; } = new RequestSender();
         public RequestSender ShowMessageRequest { get; } = new RequestSender();
 
         private ObservableCollection<AboutComponentItemViewModel> ComponentCollection { get; }
@@ -165,6 +167,45 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
             }
         );
 
+        private ICommand? _OutputSettingCommand;
+        public ICommand OutputSettingCommand => this._OutputSettingCommand ??= new DelegateCommand(
+            () => {
+                var dialogRequester = new DialogRequester(LoggerFactory);
+                dialogRequester.SelectFile(
+                    OutputSettingRequest,
+                    string.Empty,
+                    false,
+                    new[] {
+                        new DialogFilterItem(Properties.Resources.String_FileDialog_Filter_About_OutputHtml, "html", "*.html"),
+                    },
+                    r => {
+                        var path = r.ResponseFilePaths[0];
+                        try {
+                            Logger.LogDebug("path: {Path}", path);
+                            Model.OutputHtmlSetting(path);
+                        } catch(Exception ex) {
+                            Logger.LogError(ex, ex.Message);
+                        }
+                    }
+                );
+            }
+        );
+
+#if DEBUG
+        private ICommand? _DebugOutputSettingCommand;
+        public ICommand DebugOutputSettingCommand => this._DebugOutputSettingCommand ??= new DelegateCommand(
+            () => {
+                try {
+                    var path = "x:\\a.html";
+                    Model.OutputHtmlSetting(path);
+                } catch(Exception ex) {
+                    Logger.LogError(ex, ex.Message);
+                }
+            }
+        );
+
+#endif
+
         private ICommand? _SelectUninstallBatchFilePathCommand;
         public ICommand SelectUninstallBatchFilePathCommand => this._SelectUninstallBatchFilePathCommand ??= new DelegateCommand(
              () => {
@@ -205,18 +246,18 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.About
                         ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
                             Caption = Properties.Resources.String_About_Uninstall_Create_Caption,
                             Message = Properties.Resources.String_About_Uninstall_Create_Message,
-                            Button = System.Windows.MessageBoxButton.OK,
-                            DefaultResult = System.Windows.MessageBoxResult.OK,
-                            Icon = System.Windows.MessageBoxImage.Information,
+                            Buttons = [Forms.TaskDialogButton.OK],
+                            DefaultButton = Forms.TaskDialogButton.OK,
+                            Icon = Forms.TaskDialogIcon.Information,
                         });
                     } catch(Exception ex) {
                         Logger.LogError(ex, ex.Message);
                         ShowMessageRequest.Send(new CommonMessageDialogRequestParameter() {
                             Caption = Properties.Resources.String_About_Uninstall_Create_Caption,
                             Message = ex.ToString(),
-                            Button = System.Windows.MessageBoxButton.OK,
-                            DefaultResult = System.Windows.MessageBoxResult.OK,
-                            Icon = System.Windows.MessageBoxImage.Error,
+                            Buttons = [Forms.TaskDialogButton.OK],
+                            DefaultButton = Forms.TaskDialogButton.OK,
+                            Icon = Forms.TaskDialogIcon.Error,
                         });
                     }
                 }

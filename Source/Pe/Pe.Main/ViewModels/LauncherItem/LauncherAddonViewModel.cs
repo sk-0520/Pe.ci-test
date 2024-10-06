@@ -22,7 +22,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         #region property
         private LauncherAddonDetailData? Detail { get; set; }
-        private PropertyChangedHooker? ExtensionPropertyChangedHooker { get; set; }
+        private PropertyChangedObserver? ExtensionPropertyChangedObserver { get; set; }
 
         #endregion
 
@@ -60,7 +60,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                 if(Detail?.Extension != null) {
                     Detail.Extension.PropertyChanged -= Extension_PropertyChanged;
                 }
-                ExtensionPropertyChangedHooker?.Dispose();
+                ExtensionPropertyChangedObserver?.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -73,11 +73,11 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
                     throw new InvalidOperationException(nameof(Detail.Extension));
                 }
 
-                ExtensionPropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
+                ExtensionPropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
                 Detail.Extension.PropertyChanged += Extension_PropertyChanged;
 
                 if(Detail.Extension.CustomDisplayText) {
-                    ExtensionPropertyChangedHooker.AddHook(nameof(Detail.Extension.DisplayText), nameof(Name));
+                    ExtensionPropertyChangedObserver.AddObserver(nameof(Detail.Extension.DisplayText), nameof(Name));
                 }
 
             }
@@ -109,7 +109,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherItem
 
         private void Extension_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            ExtensionPropertyChangedHooker!.Execute(e, RaisePropertyChanged);
+            ExtensionPropertyChangedObserver!.Execute(e, RaisePropertyChanged);
         }
 
 

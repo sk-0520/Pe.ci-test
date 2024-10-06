@@ -14,11 +14,6 @@
 		"clientKind": "git"
 	},
 	"files": {
-		"ignore": [
-			"node_modules",
-			"bin",
-			"obj",
-			"*.json"
-		]
+		"ignore": ["node_modules", "bin", "obj", "*.json"]
 	}
 }

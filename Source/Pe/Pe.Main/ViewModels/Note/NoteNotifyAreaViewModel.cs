@@ -25,8 +25,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
             DispatcherWrapper = dispatcherWrapper;
             NoteTheme = noteTheme;
 
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(Model.IsVisible), nameof(IsVisible));
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(Model.IsVisible), nameof(IsVisible));
         }
 
         #region property
@@ -35,7 +35,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
         private IDispatcherWrapper DispatcherWrapper { get; }
         private INoteTheme NoteTheme { get; }
 
-        private PropertyChangedHooker PropertyChangedHooker { get; }
+        private PropertyChangedObserver PropertyChangedObserver { get; }
 
         private NoteIconMaker NoteIconFactory { get; } = new NoteIconMaker();
 
@@ -99,7 +99,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Note
 
         private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
     }
 }

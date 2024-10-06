@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>0.99.242</Version>
+    <Version>0.99.243</Version>
 
     <TargetFramework>net8.0-windows</TargetFramework>
     <Platforms>x64;x86</Platforms>
@@ -16,6 +16,10 @@
     <IsPackable>false</IsPackable>
     <PathMap>$(MSBuildThisFileDirectory)=.</PathMap>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">

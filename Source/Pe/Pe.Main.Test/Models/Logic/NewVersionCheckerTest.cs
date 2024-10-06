@@ -19,7 +19,6 @@ using ContentTypeTextNet.Pe.Standard.Base;
 using ContentTypeTextNet.Pe.Standard.Property;
 using ContentTypeTextNet.Pe.CommonTest;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using Xunit;
@@ -31,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Logic
     {
         #region property
 
-        private ApplicationInformation IgnoreApplicationProcessInformation => new ApplicationInformation(new Version(), string.Empty);
+        private static ApplicationInformation IgnoreApplicationProcessInformation => new ApplicationInformation(new Version(), string.Empty);
 
         private Test Test { get; } = Test.Create(TestSetup.Http);
 

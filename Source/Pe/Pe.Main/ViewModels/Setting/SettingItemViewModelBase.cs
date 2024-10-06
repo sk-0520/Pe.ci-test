@@ -20,8 +20,8 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
             : base(model, loggerFactory)
         {
             DispatcherWrapper = dispatcherWrapper;
-            PropertyChangedHooker = new PropertyChangedHooker(DispatcherWrapper, LoggerFactory);
-            PropertyChangedHooker.AddHook(nameof(Model.IsInitialized), OnInitialized);
+            PropertyChangedObserver = new PropertyChangedObserver(DispatcherWrapper, LoggerFactory);
+            PropertyChangedObserver.AddObserver(nameof(Model.IsInitialized), OnInitialized);
             if(Model.IsInitialized) {
                 OnInitialized();
             }
@@ -30,7 +30,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         #region property
 
         protected IDispatcherWrapper DispatcherWrapper { get; }
-        protected PropertyChangedHooker PropertyChangedHooker { get; }
+        protected PropertyChangedObserver PropertyChangedObserver { get; }
 
         public bool IsInitialized
         {
@@ -92,7 +92,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
         {
             if(!IsDisposed) {
                 if(disposing) {
-                    PropertyChangedHooker.Dispose();
+                    PropertyChangedObserver.Dispose();
                 }
             }
 
@@ -103,7 +103,7 @@ namespace ContentTypeTextNet.Pe.Main.ViewModels.Setting
 
         private void Model_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            PropertyChangedHooker.Execute(e, RaisePropertyChanged);
+            PropertyChangedObserver.Execute(e, RaisePropertyChanged);
         }
     }
 }

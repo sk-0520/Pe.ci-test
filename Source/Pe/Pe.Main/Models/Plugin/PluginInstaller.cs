@@ -138,7 +138,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Plugin
 
         public string GetArchiveExtension(FileInfo archiveFile)
         {
-            var ext = archiveFile.Extension.Substring(1)?.ToLowerInvariant() ?? string.Empty;
+            var ext = archiveFile.Extension.Substring(1).ToLowerInvariant();
             if(!Extensions.Contains(ext)) {
                 throw new PluginInvalidArchiveKindException();
             }

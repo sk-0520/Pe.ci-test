@@ -57,7 +57,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         /// <summary>
         /// 状態変更内部処理。
         /// </summary>
-        protected virtual void ChangeStatusImple()
+        protected virtual void ChangeStatusImpl()
         { }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
         /// </summary>
         internal void ChangeStatus()
         {
-            ChangeStatusImple();
+            ChangeStatusImpl();
         }
 
         #endregion
@@ -229,7 +229,7 @@ namespace ContentTypeTextNet.Pe.Core.Views
             FileDialogCustomize!.Instance.SetSelectedControlItem(ControlId, SelectedIndex);
         }
 
-        protected override void ChangeStatusImple()
+        protected override void ChangeStatusImpl()
         {
             FileDialogCustomize!.Instance.GetSelectedControlItem(ControlId, out var index);
             SelectedIndex = index;

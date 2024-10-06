@@ -119,13 +119,7 @@ namespace ContentTypeTextNet.Pe.Main.Models.Platform
 
             var result = new List<PlatformInformationItem>(props.Length);
 
-            var ignoreProperties = new HashSet<string>() {
-            };
-
             foreach(var prop in props) {
-                if(ignoreProperties.Contains(prop.Name)) {
-                    continue;
-                }
                 var value = prop.GetValue(type, null);
                 switch(prop.Name) {
                     default:
