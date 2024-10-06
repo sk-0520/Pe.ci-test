@@ -115,24 +115,6 @@ namespace ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity
             Context.InsertSingle(statement, dto);
         }
 
-        /// <summary>
-        /// シーケンスを再採番。
-        /// </summary>
-        /// <remarks>
-        /// <para>あかんっぽいから使ってない。</para>
-        /// </remarks>
-        /// <param name="noteId"></param>
-        /// <param name="databaseCommonStatus"></param>
-        /// <returns></returns>
-        public int UpdateRefreshSequenceNoteFiles(NoteId noteId, IDatabaseCommonStatus databaseCommonStatus)
-        {
-            var statement = LoadStatement();
-            var parameter = databaseCommonStatus.CreateCommonDtoMapping();
-            parameter[Column.NoteId] = noteId;
-
-            return Context.Update(statement, parameter);
-        }
-
         public void DeleteNoteFilesById(NoteId noteId, NoteFileId noteFileId)
         {
             var statement = LoadStatement();
