@@ -7,6 +7,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
     <Nullable>enable</Nullable>
+    <StartupObject>Benchmark.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

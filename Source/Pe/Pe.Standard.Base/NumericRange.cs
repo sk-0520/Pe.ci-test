@@ -74,18 +74,20 @@ namespace ContentTypeTextNet.Pe.Standard.Base
 
             var orderedValues = values
                 .OrderBy(i => i)
-                .ToList()
+                .ToArray()
             ;
 
-            if(orderedValues.Count == 0) {
+            if(orderedValues.Length == 0) {
                 return string.Empty;
             }
 
             var builder = new StringBuilder(64);
-            var prevValue = orderedValues.First();
+            var prevValue = orderedValues[0];
             builder.Append(prevValue);
             var nowRange = false;
-            foreach(var value in orderedValues.Skip(1)) {
+            for(var i =1; i < orderedValues.Length; i++) {
+                var value = orderedValues[i];
+            
                 if(prevValue == value) {
                     continue;
                 }
