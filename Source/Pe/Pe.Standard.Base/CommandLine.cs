@@ -323,6 +323,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
             UnknownItems.Add(value);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S127:\"for\" loop stop conditions should be invariant", Justification = "<保留中>")]
         private bool ParseCore()
         {
             try {

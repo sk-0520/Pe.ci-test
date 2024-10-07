@@ -501,6 +501,7 @@ namespace ContentTypeTextNet.Pe.Standard.Base
         protected virtual bool IsAsciiDigit(char c) => '0' <= c && c <= '9';
         protected virtual bool IsFullDigit(char c) => '０' <= c && c <= '９';
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S127:\"for\" loop stop conditions should be invariant", Justification = "<保留中>")]
         protected string ConvertCore(string input, IEnumerable<TextConvertDelegate> converters)
         {
             var sb = new StringBuilder(input.Length);
