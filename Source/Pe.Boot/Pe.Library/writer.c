@@ -94,15 +94,6 @@ WRITE_RESULT write_primitive_boolean(func_string_writer writer, void* receiver, 
     return writer(&data);
 }
 
-//static TCHAR* allocate_number(bool isHex, size_t width, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
-//{
-//    if (isHex) {
-//        return new_memory(sizeof(size_t) * 2 + 2 + width, sizeof(TCHAR), memory_arena_resource);
-//    } else {
-//        return new_memory(sizeof(size_t) * 8 + 1 + width + ((sizeof(size_t) * 8) / 3), sizeof(TCHAR), memory_arena_resource);
-//    }
-//}
-
 #define number_bytes(is_hex, width) \
 (is_hex \
     ? (sizeof(size_t) * 2 + 2 + width) \
@@ -181,7 +172,6 @@ static size_t fill_last(TCHAR* buffer, size_t fill_buffer_length, size_t width, 
 
 WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    //TCHAR* buffer = allocate_number(false, width, memory_arena_resource);
     new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_arena_resource);
 
     size_t buffer_length = 0;
@@ -220,7 +210,6 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
 
     WRITE_RESULT result = writer(&data);
 
-    //release_string(buffer, memory_arena_resource);
     release_stack_or_heap_array(array);
 
     return result;
@@ -228,7 +217,6 @@ WRITE_RESULT write_primitive_integer(func_string_writer writer, void* receiver, 
 
 WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool show_sign, size_t width, TCHAR separator)
 {
-    //TCHAR* buffer = allocate_number(false, width, memory_arena_resource);
     new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(false, width), TEXT_STACK_COUNT, memory_arena_resource);
     size_t buffer_length = 0;
     bool is_negative = false;
@@ -265,7 +253,6 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
     };
     WRITE_RESULT result = writer(&data);
 
-    //release_string(buffer, memory_arena_resource);
     release_stack_or_heap_array(array);
 
     return result;
@@ -274,7 +261,6 @@ WRITE_RESULT write_primitive_uinteger(func_string_writer writer, void* receiver,
 //TODO: 諸々間違ってる
 WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, ssize_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
-    //TCHAR* buffer = allocate_number(true, width, memory_arena_resource);
     new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_arena_resource);
     ssize_t work_value = value;
     size_t buffer_length = 0;
@@ -304,7 +290,6 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
     };
     WRITE_RESULT result = writer(&data);
 
-    //release_string(buffer, memory_arena_resource);
     release_stack_or_heap_array(array);
 
     return result;
@@ -313,7 +298,6 @@ WRITE_RESULT write_primitive_hex(func_string_writer writer, void* receiver, cons
 //TODO: 諸々間違ってる
 WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, const MEMORY_ARENA_RESOURCE* memory_arena_resource, size_t value, WRITE_PADDING write_padding, WRITE_ALIGN write_align, bool is_upper, bool alternate_form, size_t width)
 {
-    //TCHAR* buffer = allocate_number(true, width, memory_arena_resource);
     new_stack_or_heap_array(buffer, array, TCHAR, number_bytes(true, width), TEXT_STACK_COUNT, memory_arena_resource);
     size_t work_value = value;
     size_t buffer_length = 0;
@@ -343,7 +327,6 @@ WRITE_RESULT write_primitive_uhex(func_string_writer writer, void* receiver, con
     };
     WRITE_RESULT result = writer(&data);
 
-    //release_string(buffer, memory_arena_resource);
     release_stack_or_heap_array(array);
 
     return result;
@@ -353,7 +336,6 @@ WRITE_RESULT write_primitive_character(func_string_writer writer, void* receiver
 {
     size_t buffer_length = width ? width : 1;
     TCHAR buffer_core[TEXT_STACK_COUNT * sizeof(TCHAR)];
-    //TCHAR* buffer = new_memory(buffer_length, sizeof(TCHAR), memory_arena_resource);
     TCHAR* buffer = buffer_length < TEXT_STACK_COUNT
         ? buffer_core
         : new_memory(buffer_length, sizeof(TCHAR), memory_arena_resource)

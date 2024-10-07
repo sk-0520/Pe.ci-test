@@ -163,7 +163,6 @@ static void logging(LOG_LEVEL log_level, const TCHAR* caller_file, size_t caller
     new_stack_or_heap_array(caller_buffer, caller_array, TCHAR, ref_caller_text.length + 1, 1024, library_log_memory_arena_resource);
     copy_memory(caller_buffer, ref_caller_text.value, ref_caller_text.length * sizeof(TCHAR));
     TEXT caller_text = wrap_text_with_length(caller_buffer, ref_caller_text.length, false, library_log_memory_arena_resource);
-    //clear_builder(&sb);
 
     release_string_builder(&sb);
 

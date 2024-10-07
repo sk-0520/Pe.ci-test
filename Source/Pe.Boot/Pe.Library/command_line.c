@@ -11,7 +11,6 @@ static bool equals_command_line_item_key(const TEXT* a, const TEXT* b)
 static void release_command_line_item_core(COMMAND_LINE_ITEM* item, const MEMORY_ARENA_RESOURCE* memory_arena_resource)
 {
     release_text(&item->value);
-    //release_memory(item, memory_arena_resource);
 }
 
 static void release_command_line_item_value(const TEXT* key, void* value, const MEMORY_ARENA_RESOURCE* memory_arena_resource)

@@ -6,7 +6,7 @@ using System.Text;
 namespace ContentTypeTextNet.Pe.Standard.Base
 {
     /// <summary>
-    /// <c>foreach</c> でくるくる回ってるよ！
+    /// <see langword="foreach" /> でくるくる回ってるよ！
     /// </summary>
     public interface ICounter
     {

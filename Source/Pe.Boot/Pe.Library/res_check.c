@@ -172,7 +172,6 @@ static void rc_check_core(void* p, const void* data, bool allocate, RES_CHECK_TY
         for (size_t i = 0; p && i < rc_item.stock_items_length; i++) {
             if (rc_item.stock_items[i].p == p) {
                 output(rc_item.formats->free_mgs, p, RES_CHECK_CALL_ARGS, rc_item.stock_items[i].file, rc_item.stock_items[i].line);
-                //HeapFree(rc__heap, 0, rc_item.stock_items->file);
 
                 *rc_item.stock_item_count = *rc_item.stock_item_count - 1;
                 memset(&rc_item.stock_items[i], 0, sizeof(RES_CHECK_STOCK_ITEM));
