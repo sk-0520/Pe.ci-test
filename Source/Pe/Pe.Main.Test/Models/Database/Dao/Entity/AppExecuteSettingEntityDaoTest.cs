@@ -8,7 +8,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using Microsoft.VisualBasic.ApplicationServices;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using ContentTypeTextNet.Pe.Library.DependencyInjection;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity

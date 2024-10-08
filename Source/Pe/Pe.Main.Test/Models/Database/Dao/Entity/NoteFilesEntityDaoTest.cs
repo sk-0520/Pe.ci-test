@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using ContentTypeTextNet.Pe.Library.DependencyInjection;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
@@ -54,8 +54,8 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
             }
 
             var actual = testFiles.SelectNoteFiles(data.NoteId).ToArray();
-            Assert.Equal(2, actual.Length); 
-            Assert.Equal("Path1", actual[0].NoteFilePath); 
+            Assert.Equal(2, actual.Length);
+            Assert.Equal("Path1", actual[0].NoteFilePath);
             Assert.Equal("Path2", actual[1].NoteFilePath);
 
             Assert.Equal(files[0].NoteFileId, testFiles.SelectNoteFileExistsFilePath(data.NoteId, "Path1"));

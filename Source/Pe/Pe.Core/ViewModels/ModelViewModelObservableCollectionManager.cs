@@ -10,7 +10,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Library.Base;
 
 namespace ContentTypeTextNet.Pe.Core.ViewModels
 {

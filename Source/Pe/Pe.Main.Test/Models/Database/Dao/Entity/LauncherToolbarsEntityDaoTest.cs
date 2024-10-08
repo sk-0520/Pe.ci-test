@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using ContentTypeTextNet.Pe.Library.DependencyInjection;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
@@ -226,7 +226,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
             Assert.True(actual1.IsTopmost);
             Assert.False(actual1.IsAutoHide);
             Assert.True(actual1.IsIconOnly);
-            
+
             testToolbars.UpdateDisplayData(new LauncherToolbarsDisplayData() {
                 LauncherToolbarId = toolbarId,
                 LauncherGroupId = groupId,

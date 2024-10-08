@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using ContentTypeTextNet.Pe.Library.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Xunit;

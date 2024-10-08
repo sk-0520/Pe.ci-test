@@ -13,9 +13,9 @@ using ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup;
 using ContentTypeTextNet.Pe.Main.Models.Launcher;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Library.Database;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using ContentTypeTextNet.Pe.Library.Base.Linq;
 using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.Setting

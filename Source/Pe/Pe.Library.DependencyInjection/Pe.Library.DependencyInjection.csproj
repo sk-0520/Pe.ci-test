@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Pe.Library.DependencyInjection</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.DependencyInjection</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pe.Library.Base\Pe.Library.Base.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DiContainerCreate.txt">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DiContainerCreate.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="DiConstructorCacheImpl.tt">
+      <LastGenOutput>DiConstructorCacheImpl.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="DiConstructorCacheImpl.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DiConstructorCacheImpl.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

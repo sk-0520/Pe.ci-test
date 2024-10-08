@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using ContentTypeTextNet.Pe.Bridge.Models;
-using ContentTypeTextNet.Pe.Standard.Base;
-using ContentTypeTextNet.Pe.Standard.Base.Throw;
+using ContentTypeTextNet.Pe.Library.Base;
+using ContentTypeTextNet.Pe.Library.Base.Throw;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
 

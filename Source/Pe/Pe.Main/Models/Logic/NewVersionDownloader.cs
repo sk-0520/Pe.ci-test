@@ -7,7 +7,7 @@ using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Main.Models.Applications.Configuration;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Library.Base;
 using Microsoft.Extensions.Logging;
 using ContentTypeTextNet.Pe.Bridge.Models;
 using System.Threading;

@@ -9,7 +9,7 @@ using ContentTypeTextNet.Pe.Bridge.Plugin.Theme;
 using ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem;
 using ContentTypeTextNet.Pe.Main.Models.KeyAction;
 using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Library.Base;
 using System.IO;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using System.Windows;

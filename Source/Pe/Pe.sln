@@ -44,29 +44,29 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.Eyes",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.Reference.FileFinder", "Pe.Plugins.Reference.FileFinder\Pe.Plugins.Reference.FileFinder.csproj", "{1DF129D6-E2BC-4671-9012-646B8CE7C023}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base", "Pe.Standard.Base\Pe.Standard.Base.csproj", "{EF043BDE-4205-42A8-BEA1-E26B4FED0457}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Base", "Pe.Library.Base\Pe.Library.Base.csproj", "{EF043BDE-4205-42A8-BEA1-E26B4FED0457}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base.Test", "Pe.Standard.Base.Test\Pe.Standard.Base.Test.csproj", "{18425900-CBF3-46FE-905A-838140538B12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Base.Test", "Pe.Library.Base.Test\Pe.Library.Base.Test.csproj", "{18425900-CBF3-46FE-905A-838140538B12}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "standard", "standard", "{7D2653BF-3D84-44F4-8158-21179F8EE206}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "library", "library", "{7D2653BF-3D84-44F4-8158-21179F8EE206}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database", "Pe.Standard.Database\Pe.Standard.Database.csproj", "{48679959-1A87-4678-9F16-E25ABA9367C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Database", "Pe.Library.Database\Pe.Library.Database.csproj", "{48679959-1A87-4678-9F16-E25ABA9367C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection", "Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj", "{29ED4EF5-E878-45A7-8273-7A5ACCB5A200}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.DependencyInjection", "Pe.Library.DependencyInjection\Pe.Library.DependencyInjection.csproj", "{29ED4EF5-E878-45A7-8273-7A5ACCB5A200}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection.Test", "Pe.Standard.DependencyInjection.Test\Pe.Standard.DependencyInjection.Test.csproj", "{13665FFC-B8BB-4E27-B5EF-6B1B0035C497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.DependencyInjection.Test", "Pe.Library.DependencyInjection.Test\Pe.Library.DependencyInjection.Test.csproj", "{13665FFC-B8BB-4E27-B5EF-6B1B0035C497}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database.Test", "Pe.Standard.Database.Test\Pe.Standard.Database.Test.csproj", "{B2C00064-2CE7-4D45-895A-D3BBE333C75C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Database.Test", "Pe.Library.Database.Test\Pe.Library.Database.Test.csproj", "{B2C00064-2CE7-4D45-895A-D3BBE333C75C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Embedded.Test", "Pe.Embedded.Test\Pe.Embedded.Test.csproj", "{739EDCF5-37F4-4F99-84BF-797C062BEE94}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Property", "Pe.Standard.Property\Pe.Standard.Property.csproj", "{4F3B87B3-4820-4F08-90A2-0C90410E911C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Property", "Pe.Library.Property\Pe.Library.Property.csproj", "{4F3B87B3-4820-4F08-90A2-0C90410E911C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Property.Test", "Pe.Standard.Property.Test\Pe.Standard.Property.Test.csproj", "{2C126598-F933-4F0B-AF12-BD4642A37EFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Property.Test", "Pe.Library.Property.Test\Pe.Library.Property.Test.csproj", "{2C126598-F933-4F0B-AF12-BD4642A37EFF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.CliProxy", "Pe.Standard.CliProxy\Pe.Standard.CliProxy.csproj", "{391E9157-81A9-47D1-A757-D110C6D2D375}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.CliProxy", "Pe.Library.CliProxy\Pe.Library.CliProxy.csproj", "{391E9157-81A9-47D1-A757-D110C6D2D375}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.CliProxy.Test", "Pe.Standard.CliProxy.Test\Pe.Standard.CliProxy.Test.csproj", "{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.CliProxy.Test", "Pe.Library.CliProxy.Test\Pe.Library.CliProxy.Test.csproj", "{8CAF4F50-CE0B-4D6B-948C-C7B83CD59E27}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common-test", "common-test", "{0A9EE77F-5AB6-4D3C-8493-145E5122DD0E}"
 EndProject
@@ -324,8 +324,8 @@ Global
 		{A038DE95-CF05-49C1-890D-D602088F8983} = {0A9EE77F-5AB6-4D3C-8493-145E5122DD0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_NeutralResourcesLanguage = ja-JP
-		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
 		RESX_PrefixTranslations = False
+		SolutionGuid = {2A7A6231-6BA0-4928-AF4D-59F81862C278}
+		RESX_NeutralResourcesLanguage = ja-JP
 	EndGlobalSection
 EndGlobal

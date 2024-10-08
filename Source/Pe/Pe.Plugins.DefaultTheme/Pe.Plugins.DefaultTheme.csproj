@@ -23,7 +23,7 @@
       <Private>false</Private>
       <ExcludeAssets>All</ExcludeAssets>
     </ProjectReference>
-    <ProjectReference Include="..\Pe.Standard.Base\Pe.Standard.Base.csproj" />
+    <ProjectReference Include="..\Pe.Library.Base\Pe.Library.Base.csproj" />
   </ItemGroup>
-  
+
 </Project>

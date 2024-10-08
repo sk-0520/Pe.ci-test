@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.PInvoke.Windows;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Library.Base;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Platform
 {

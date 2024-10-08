@@ -72,7 +72,10 @@
 				"logs": [
 					{
 						"revision": "",
-						"subject": ""
+						"subject": "#972: .NET Standard 基準のソースはもう .NET n に移したい",
+						"comments": [
+							"Pe.Standard.* -> Pe.Library.*"
+						]
 					},
 					{
 						"revision": "",

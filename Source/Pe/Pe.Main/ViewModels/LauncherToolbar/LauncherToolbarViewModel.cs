@@ -29,14 +29,14 @@ using ContentTypeTextNet.Pe.Main.Views.Extend;
 using ContentTypeTextNet.Pe.Main.Views.LauncherToolbar;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Library.Base;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using ContentTypeTextNet.Pe.Library.Base.Linq;
 using System.Threading;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Library.Database;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.LauncherToolbar
 {

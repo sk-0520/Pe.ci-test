@@ -4,10 +4,12 @@
 		"mutex_name": "Pe-debug",
 		"unhandled_exception_handled": false,
 		"project_plugins_uri": "http://localhost/plugin",
+		"//version_check_uri": "http://localhost/api/application/version/update",
 		"version_check_url_items": [
-			"http://localhost/api/application/version/update",
-			"http://localhost:8888/update.json"
-		]
+			"http://localhost:8888/update.json",
+			"http://localhost/api/application/version/update"
+		],
+		"can_send_crash_report": true
 	},
 	"api": {
 		"crash_report_uri": "http://localhost/api/application/crash-report",

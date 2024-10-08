@@ -17,10 +17,10 @@ using ContentTypeTextNet.Pe.Main.Models.Manager;
 using ContentTypeTextNet.Pe.Main.Models.Platform;
 using ContentTypeTextNet.Pe.Main.Models.Plugin.Addon;
 using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Standard.Database;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Library.Database;
+using ContentTypeTextNet.Pe.Library.Base;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using ContentTypeTextNet.Pe.Library.Base.Linq;
 using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherItem

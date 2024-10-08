@@ -23,9 +23,9 @@ using ContentTypeTextNet.Pe.PInvoke.Windows;
 using ICSharpCode.AvalonEdit.Document;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using ContentTypeTextNet.Pe.Standard.Base;
+using ContentTypeTextNet.Pe.Library.Base;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using ContentTypeTextNet.Pe.Library.Base.Linq;
 using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.ViewModels.ExtendsExecute

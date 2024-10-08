@@ -922,22 +922,22 @@ jobs:
           if-no-files-found: error
 
 
-  check-dotnet-standard-library:
-    name: Check .NET Standard Library
+  check-dotnet-app-library:
+    name: Check Pe.Library.*
     runs-on: ubuntu-latest
 
     steps:
       - name: <Checkout> Repository
         uses: actions/checkout@v4
 
-      - name: <Check> .NET Standard Library + workflow
+      - name: <Check> Pe.Library + workflow
         shell: pwsh
-        run: Build/dotnet-standard-library-workflow.ps1
+        run: Build/app-library-workflow.ps1
 
-  test-dotnet-standard-library:
-    name: Test .NET Standard Library
+  test-dotnet-app-library:
+    name: Test Pe.Library.*
     needs:
-      - check-dotnet-standard-library
+      - check-dotnet-app-library
 
     strategy:
       matrix:
@@ -949,11 +949,11 @@ jobs:
           # - macos-14
           - macos-13
         TARGET:
-          - Pe.Standard.CliProxy.Test
-          - Pe.Standard.Property.Test
-          - Pe.Standard.Base.Test
-          - Pe.Standard.Database.Test
-          - Pe.Standard.DependencyInjection.Test
+          - Pe.Library.CliProxy.Test
+          - Pe.Library.Property.Test
+          - Pe.Library.Base.Test
+          - Pe.Library.Database.Test
+          - Pe.Library.DependencyInjection.Test
 
     runs-on: ${{ matrix.OS }}
 

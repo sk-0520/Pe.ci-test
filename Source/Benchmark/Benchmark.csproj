@@ -23,11 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Pe\Pe.Standard.Base\Pe.Standard.Base.csproj" />
-    <ProjectReference Include="..\Pe\Pe.Standard.Database\Pe.Standard.Database.csproj" />
-    <ProjectReference Include="..\Pe\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
-    <ProjectReference Include="..\Pe\Pe.Standard.Property\Pe.Standard.Property.csproj" />
+    <ProjectReference Include="..\Pe\Pe.Library.Base\Pe.Library.Base.csproj" />
+    <ProjectReference Include="..\Pe\Pe.Library.Database\Pe.Library.Database.csproj" />
+    <ProjectReference Include="..\Pe\Pe.Library.DependencyInjection\Pe.Library.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Pe\Pe.Library.Property\Pe.Library.Property.csproj" />
   </ItemGroup>
-  
+
 
 </Project>

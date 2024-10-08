@@ -315,23 +315,23 @@ try {
 			directory = 'Pe\bridge'
 		},
 		@{
-			project = 'Pe.Standard.Base'
+			project = 'Pe.Library.Base'
 			directory = 'Pe\lib\standard'
 		},
 		@{
-			project = 'Pe.Standard.CliProxy'
+			project = 'Pe.Library.CliProxy'
 			directory = 'Pe\lib\standard'
 		},
 		@{
-			project = 'Pe.Standard.Property'
+			project = 'Pe.Library.Property'
 			directory = 'Pe\lib\standard'
 		},
 		@{
-			project = 'Pe.Standard.Database'
+			project = 'Pe.Library.Database'
 			directory = 'Pe\lib\standard'
 		},
 		@{
-			project = 'Pe.Standard.DependencyInjection'
+			project = 'Pe.Library.DependencyInjection'
 			directory = 'Pe\lib\standard'
 		},
 		@{

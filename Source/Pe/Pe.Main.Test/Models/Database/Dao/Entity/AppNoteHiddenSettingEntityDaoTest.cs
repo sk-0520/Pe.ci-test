@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Standard.Database;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using ContentTypeTextNet.Pe.Library.Database;
+using ContentTypeTextNet.Pe.Library.DependencyInjection;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
@@ -47,7 +47,7 @@ namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity
         public void UpdateHiddenWaitTimeTest()
         {
             var test = Test.BuildDao<AppNoteHiddenSettingEntityDao>(AccessorKind.Main);
-            test.UpdateHiddenWaitTime(NoteHiddenMode.Compact, TimeSpan.FromMinutes(10), Test.DiContainer.Build<IDatabaseCommonStatus>()); 
+            test.UpdateHiddenWaitTime(NoteHiddenMode.Compact, TimeSpan.FromMinutes(10), Test.DiContainer.Build<IDatabaseCommonStatus>());
             test.UpdateHiddenWaitTime(NoteHiddenMode.Blind, TimeSpan.FromMinutes(20), Test.DiContainer.Build<IDatabaseCommonStatus>());
 
             var actualCompact = test.SelectHiddenWaitTime(NoteHiddenMode.Compact);

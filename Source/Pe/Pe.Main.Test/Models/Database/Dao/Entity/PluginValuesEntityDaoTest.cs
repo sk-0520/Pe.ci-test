@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.Bridge.Models.Data;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
 using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
-using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Library.DependencyInjection;
+using ContentTypeTextNet.Pe.Library.Database;
 using Xunit;
 
 namespace ContentTypeTextNet.Pe.Main.Test.Models.Database.Dao.Entity

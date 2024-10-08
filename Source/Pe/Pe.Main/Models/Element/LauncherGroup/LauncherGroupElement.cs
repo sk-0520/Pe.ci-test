@@ -11,9 +11,9 @@ using ContentTypeTextNet.Pe.Main.Models.Database.Dao.Entity;
 using ContentTypeTextNet.Pe.Main.Models.Logic;
 using ContentTypeTextNet.Pe.Main.Models.Manager;
 using Microsoft.Extensions.Logging;
-using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Library.Database;
 using System.Threading.Tasks;
-using ContentTypeTextNet.Pe.Standard.Base.Linq;
+using ContentTypeTextNet.Pe.Library.Base.Linq;
 using System.Threading;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Element.LauncherGroup

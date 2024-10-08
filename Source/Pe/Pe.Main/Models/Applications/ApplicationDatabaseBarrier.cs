@@ -1,7 +1,7 @@
 using ContentTypeTextNet.Pe.Core.Models;
 using ContentTypeTextNet.Pe.Core.Models.Database;
-using ContentTypeTextNet.Pe.Standard.Base;
-using ContentTypeTextNet.Pe.Standard.Database;
+using ContentTypeTextNet.Pe.Library.Base;
+using ContentTypeTextNet.Pe.Library.Database;
 
 namespace ContentTypeTextNet.Pe.Main.Models.Applications
 {

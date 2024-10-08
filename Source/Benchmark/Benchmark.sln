@@ -21,17 +21,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.PInvoke", "..\Pe\Pe.PInv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Plugins.DefaultTheme", "..\Pe\Pe.Plugins.DefaultTheme\Pe.Plugins.DefaultTheme.csproj", "{537A8721-90D4-4C49-811C-457F65828B86}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Base", "..\Pe\Pe.Standard.Base\Pe.Standard.Base.csproj", "{7DED2843-A1A8-496B-93E6-B68F76FC6B21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Base", "..\Pe\Pe.Library.Base\Pe.Library.Base.csproj", "{7DED2843-A1A8-496B-93E6-B68F76FC6B21}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "standard", "standard", "{A99BC63C-7FEC-422F-9A76-AD1201D216B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Database", "..\Pe\Pe.Standard.Database\Pe.Standard.Database.csproj", "{A5B22D83-0067-495A-84AA-E937A366D984}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Database", "..\Pe\Pe.Library.Database\Pe.Library.Database.csproj", "{A5B22D83-0067-495A-84AA-E937A366D984}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.DependencyInjection", "..\Pe\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj", "{1D540342-3899-43BA-AEB1-EB58A9584F79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.DependencyInjection", "..\Pe\Pe.Library.DependencyInjection\Pe.Library.DependencyInjection.csproj", "{1D540342-3899-43BA-AEB1-EB58A9584F79}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.Property", "..\Pe\Pe.Standard.Property\Pe.Standard.Property.csproj", "{CA2F36F1-A571-4DEB-80FF-160B21B40781}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.Property", "..\Pe\Pe.Library.Property\Pe.Library.Property.csproj", "{CA2F36F1-A571-4DEB-80FF-160B21B40781}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Standard.CliProxy", "..\Pe\Pe.Standard.CliProxy\Pe.Standard.CliProxy.csproj", "{799481AA-2BF8-45E1-AE38-1896F11A2699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pe.Library.CliProxy", "..\Pe\Pe.Library.CliProxy\Pe.Library.CliProxy.csproj", "{799481AA-2BF8-45E1-AE38-1896F11A2699}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

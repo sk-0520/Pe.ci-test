@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Pe.Library.Property</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.Property</RootNamespace>
+  </PropertyGroup>
+
+</Project>

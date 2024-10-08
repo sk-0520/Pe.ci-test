@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Pe.Library.CliProxy</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.CliProxy</RootNamespace>
+  </PropertyGroup>
+
+</Project>

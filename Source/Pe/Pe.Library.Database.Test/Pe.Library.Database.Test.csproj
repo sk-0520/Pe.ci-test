@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Pe.Library.Database.Test</AssemblyName>
+    <RootNamespace>ContentTypeTextNet.Pe.Library.Database.Test</RootNamespace>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteAccessor.cs" Link="TestImpl\Vender\Public\SQLite\SqliteAccessor.cs" />
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteFactory.cs" Link="TestImpl\Vender\Public\SQLite\SqliteFactory.cs" />
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteImplementation.cs" Link="TestImpl\Vender\Public\SQLite\SqliteImplementation.cs" />
+    <Compile Include="..\Pe.Core\Models\Database\Vender\Public\SQLite\SqliteManagement.cs" Link="TestImpl\Vender\Public\SQLite\SqliteManagement.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="TestResults\**" />
+    <EmbeddedResource Remove="TestResults\**" />
+    <None Remove="TestResults\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
+    <ProjectReference Include="..\Pe.Library.Database\Pe.Library.Database.csproj" />
+  </ItemGroup>
+
+</Project>

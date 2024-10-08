@@ -38,7 +38,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Pe.CommonTest\Pe.CommonTest.csproj" />
     <ProjectReference Include="..\Pe.Core\Pe.Core.csproj" />
-    <ProjectReference Include="..\Pe.Standard.DependencyInjection\Pe.Standard.DependencyInjection.csproj" />
+    <ProjectReference Include="..\Pe.Library.DependencyInjection\Pe.Library.DependencyInjection.csproj" />
   </ItemGroup>
 
 </Project>

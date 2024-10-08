@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ContentTypeTextNet.Pe.CommonTest;
 using ContentTypeTextNet.Pe.Main.Models.Applications;
-using ContentTypeTextNet.Pe.Standard.DependencyInjection;
+using ContentTypeTextNet.Pe.Library.DependencyInjection;
 using Dapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;

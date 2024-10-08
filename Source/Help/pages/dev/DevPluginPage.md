@@ -17,7 +17,7 @@ Pe ではプラグインによる機能拡張に対応しており、Pe の有�
 `Pe.Bridge` さえあれば作成そのものに問題はないが、 `Pe.Embedded` のソースを流用するとある程度は楽に実装できる。
 
 > [!TIP]
-> Pe 自体を参照しても問題はないが `Pe.Bridge` < `Pe.Standard.*` < `Pe.Core` < `Pe.Main` でバージョン追従が難しくなる。
+> Pe 自体を参照しても問題はないが `Pe.Bridge` < `Pe.Library.*` < `Pe.Core` < `Pe.Main` でバージョン追従が難しくなる。
 
 # プラグイン機能
 

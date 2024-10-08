@@ -98,7 +98,7 @@ namespace ContentTypeTextNet.Pe.Main
 
                 case Models.Data.RunMode.CrashReport: {
                         ShutdownMode = ShutdownMode.OnMainWindowClose;
-                        var options = new Standard.Base.CommandLineSimpleConverter<CrashReport.Models.Data.CrashReportOptions>(new Standard.Base.CommandLine(e.Args, false)).GetMappingData();
+                        var options = new Library.Base.CommandLineSimpleConverter<CrashReport.Models.Data.CrashReportOptions>(new Library.Base.CommandLine(e.Args, false)).GetMappingData();
                         if(options == null) {
                             Logger.LogError("クラッシュレポート起動できず: {0}", string.Join(" ", e.Args));
                             Shutdown(-1);
